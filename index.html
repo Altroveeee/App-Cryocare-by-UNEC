@@ -2,399 +2,651 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>UNEC App Concept</title>
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
+        /* --- CONFIGURAZIONE FONT AVENIR NEXT --- */
+        
+        /* 1. REGULAR (Corpo del testo) */
+        @font-face {
+            font-family: 'Avenir Next';
+            src: url('assets/AvenirNextLTPro-Regular.otf') format('opentype');
+            font-weight: 400;
+            font-style: normal;
+        }
+
+        /* 2. MEDIUM (Titoli) */
+        @font-face {
+            font-family: 'Avenir Next';
+            src: url('assets/AvenirNextLTPro-Medium.otf') format('opentype');
+            font-weight: 500;
+            font-style: normal;
+        }
+
+        /* 3. DEMI (Sottotitoli / Enfasi) */
+        @font-face {
+            font-family: 'Avenir Next';
+            src: url('assets/AvenirNextLTPro-Demi.otf') format('opentype');
+            font-weight: 600;
+            font-style: normal;
+        }
+
         :root {
             --primary-blue: #8899B9;
-            --bg-color: #F5F7FB;
-            --card-bg: #FFFFFF;
+            --selected-gray: #B0B0B0;
+            --bg-color: #F2F4F8; 
             --text-dark: #1A1A1A;
             --text-light: #666666;
-            --shadow-light: rgba(0,0,0,0.05);
-            
-            /* TIMING & CURVE */
-            --anim-speed: 0.6s; 
+            --soft-shadow: 0 15px 35px -5px rgba(0,0,0,0.1);
+            --deep-shadow: 0 30px 60px -15px rgba(0,0,0,0.25);
             --anim-curve: cubic-bezier(0.2, 0.8, 0.2, 1);
+            --anim-speed: 0.5s;
         }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; }
+        * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+
+        html, body { height: 100%; width: 100%; overflow: hidden; }
 
         body {
-            font-family: 'Nunito', sans-serif;
-            background-color: #e0e5ec;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
+            font-family: 'Avenir Next', sans-serif;
+            background-color: #d1dbe8; 
+            display: flex; justify-content: center; align-items: center;
+            /* DEFAULT: REGULAR (400) */
+            font-weight: 400; 
         }
 
+        /* --- FRAME --- */
         .mobile-container {
-            width: 375px;
-            height: 812px;
+            width: 375px; height: 812px;
             background-color: var(--bg-color);
             border-radius: 40px;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.2);
+            box-shadow: 0 30px 60px -10px rgba(0,0,0,0.3); 
+            position: relative; display: flex; flex-direction: column;
             overflow: hidden;
-            position: relative;
-            display: flex;
-            flex-direction: column;
+            transform: translate3d(0,0,0); 
         }
 
-        /* --- HEADER --- */
-        .header { padding: 60px 24px 10px; z-index: 5; background-color: var(--bg-color); }
+        .screen-mask {
+            width: 100%; height: 100%;
+            border-radius: 40px; overflow: hidden;
+            position: relative; display: flex; flex-direction: column;
+            background-color: var(--bg-color); z-index: 1;
+        }
+
+        @media (max-width: 480px) {
+            body { background-color: var(--bg-color); }
+            .mobile-container { width: 100%; height: 100%; border-radius: 0; box-shadow: none; }
+            .screen-mask { border-radius: 0; }
+        }
+
+        /* --- FIXED HEADER --- */
+        .header { 
+            position: absolute; top: 0; left: 0; right: 0;
+            padding: 40px 24px 20px; z-index: 50; 
+            background: linear-gradient(to bottom, var(--bg-color) 90%, rgba(242, 244, 248, 0) 100%);
+            height: 110px; 
+            pointer-events: none;
+        }
         
         h1 {
-            color: var(--primary-blue);
-            font-size: 28px;
-            font-weight: 800;
-            line-height: 1.2;
-            text-transform: uppercase;
-            min-height: 70px; /* Altezza fissa per evitare salti */
+            color: var(--primary-blue); 
+            font-size: 28px; 
+            /* TITOLO -> MEDIUM (500) */
+            font-weight: 500; 
+            line-height: 1.1; text-transform: uppercase;
             transition: opacity 0.3s;
+            pointer-events: auto;
         }
 
-        .subtitle {
-            font-size: 14px; color: var(--text-light); margin-bottom: 20px; line-height: 1.4;
+        .subtitle { 
+            font-size: 14px; color: var(--text-light); margin-bottom: 10px; line-height: 1.4; display: block; 
+            /* SOTTOTITOLO -> DEMI (600) */
+            font-weight: 600; 
         }
 
-        /* --- CONTENT AREA --- */
+        /* --- SCROLLABLE CONTENT --- */
         .content {
-            flex: 1;
-            padding: 0 24px;
-            overflow-y: scroll; 
-            padding-bottom: 120px; /* Spazio extra per il footer della personal area */
-            scrollbar-width: none; 
+            flex: 1; padding: 0 24px;
+            padding-top: 110px; 
+            padding-bottom: 100px;
+            overflow-y: auto; 
+            scrollbar-width: none; -webkit-overflow-scrolling: touch; 
+            position: relative; z-index: 10;
         }
         .content::-webkit-scrollbar { display: none; }
 
         /* --- DYNAMIC WRAPPER --- */
         .dynamic-wrapper {
-            position: relative;
-            min-height: 100px; 
-            transition: height var(--anim-speed) var(--anim-curve);
-            overflow: hidden;
-            margin-bottom: 24px;
-            will-change: height; 
+            position: relative; height: 100px; 
+            transition: height 0.5s var(--anim-curve);
+            overflow: visible; will-change: height;
+            padding-bottom: 20px;
         }
 
         .view-section {
-            width: 100%;
-            position: absolute;
-            top: 0; left: 0;
-            opacity: 0;
-            transform: translateY(15px);
-            pointer-events: none;
-            visibility: hidden;
-            transition: 
-                opacity var(--anim-speed) var(--anim-curve),
-                transform var(--anim-speed) var(--anim-curve);
+            width: 100%; position: absolute; top: 0; left: 0;
+            opacity: 0; transform: translateY(20px);
+            pointer-events: none; visibility: hidden;
+            transition: opacity 0.4s ease, transform 0.4s var(--anim-curve);
         }
 
         .view-section.active {
-            opacity: 1;
-            transform: translateY(0);
-            pointer-events: auto;
-            visibility: visible;
-            position: relative; 
+            opacity: 1; transform: translateY(0); pointer-events: auto; visibility: visible;
         }
-
-        .measuring {
-            display: block !important;
-            visibility: hidden !important;
-            position: absolute !important;
-            opacity: 0 !important;
-            pointer-events: none !important;
-        }
-
-        /* --- COMPONENTI SPECIFICI --- */
         
-        /* 1. Profile Card (Home) */
-        .profile-card {
-            background: var(--card-bg); border-radius: 24px; padding: 20px;
-            display: flex; align-items: center; box-shadow: 0 10px 20px var(--shadow-light);
+        .view-section.measuring {
+            visibility: hidden !important; display: block !important; position: absolute !important; opacity: 0 !important; z-index: -100;
         }
-        .avatar-placeholder { width: 80px; height: 80px; font-size: 60px; color: black; display: flex; justify-content: center; align-items: center; margin-right: 20px; }
-        .profile-info h2 { font-size: 18px; color: var(--text-dark); margin-bottom: 10px; }
+
+        /* --- CARDS --- */
+        .profile-card, .text-card, .plan-card, .personal-footer-card {
+            background-color: #F4F6F9; margin-bottom: 20px; padding: 20px;
+            box-shadow: var(--soft-shadow); border-radius: 30px;
+        }
+        .profile-card { display: flex; align-items: center; }
+        .avatar-placeholder { width: 80px; height: 80px; font-size: 60px; color: black; display: flex; justify-content: center; align-items: center; margin-right: 20px; flex-shrink: 0; }
+        
+        .profile-info h2 { 
+            font-size: 18px; color: var(--text-dark); margin-bottom: 10px; 
+            /* Titolo interno -> Medium */
+            font-weight: 500; 
+        }
+        
         .info-grid { display: grid; grid-template-columns: auto auto; gap: 4px 15px; font-size: 14px; }
-        .label { color: #666; } .value { font-weight: 600; color: var(--text-dark); }
+        .label { color: #666; font-weight: 400; /* Regular */ } 
+        .value { color: var(--text-dark); font-weight: 600; /* Demi per i valori */ }
+        
+        .text-card p { font-size: 14px; color: var(--text-light); line-height: 1.6; margin-bottom: 10px; font-weight: 400; }
+        .text-card h3 { 
+            font-size: 16px; color: var(--primary-blue); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px;
+            /* Sottotitolo -> Demi */
+            font-weight: 600; 
+        }
+        .contact-detail { font-weight: 600; color: var(--text-dark); display: block; margin-top: 5px; }
 
-        /* 2. Calendar (Progress) */
-        .calendar-container { margin-bottom: 10px; }
-        .calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 10px; text-align: center; font-size: 14px; font-weight: 600; color: #333; }
-        .day { width: 32px; height: 32px; display: flex; justify-content: center; align-items: center; border-radius: 50%; cursor: pointer; }
-        .day:hover { background-color: #eee; }
-        .day.selected { background-color: var(--primary-blue); color: white; box-shadow: 0 4px 10px rgba(136, 153, 185, 0.4); }
-
-        /* 3. Personal Area Components */
         .culture-card {
-            height: 200px;
-            border-radius: 24px;
-            /* Placeholder Gradiente - Sostituisci con url('tua-immagine.jpg') */
-            background: linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.6)), #777;
-            background-size: cover;
-            background-position: center;
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-end;
-            padding: 20px;
-            color: white;
-            margin-bottom: 24px;
-            box-shadow: 0 10px 20px var(--shadow-light);
+            height: 200px; background: linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.6)), #777; 
+            background-size: cover; background-position: center;
+            display: flex; flex-direction: column; justify-content: flex-end;
+            padding: 20px; color: white; margin-bottom: 20px;
+            box-shadow: 0 20px 40px -5px rgba(0,0,0,0.3); border-radius: 30px;
         }
-        .culture-label { font-size: 14px; opacity: 0.9; margin-bottom: 5px; }
-        .culture-title { font-size: 32px; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; }
+        .culture-label { font-size: 14px; opacity: 0.9; margin-bottom: 5px; font-weight: 400; }
+        .culture-title { font-size: 32px; font-weight: 500; text-transform: uppercase; letter-spacing: 1px; }
 
-        .plan-card {
-            background: var(--card-bg); border-radius: 24px; padding: 24px;
-            margin-bottom: 24px; box-shadow: 0 10px 20px var(--shadow-light);
+        .plan-title { font-size: 18px; color: var(--text-dark); margin-bottom: 10px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.5px; }
+        .plan-price { font-size: 36px; font-weight: 600; color: var(--text-dark); margin-bottom: 20px; text-align: right;}
+        .personal-footer-card { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px; }
+
+        /* --- CALENDAR --- */
+        .calendar-container { margin-bottom: 24px; padding: 0 10px; opacity: 0; }
+        @keyframes introSlideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        .animate-entrance { animation: introSlideUp 0.6s var(--anim-curve) forwards; }
+
+        .calendar-grid { 
+            display: grid; grid-template-columns: repeat(7, 1fr); gap: 12px; text-align: center; 
+            font-size: 14px; 
+            font-weight: 600; /* Demi per i numeri del calendario */
+            color: #333; 
         }
-        .plan-title { font-size: 18px; color: var(--text-dark); margin-bottom: 10px; }
-        .plan-price { font-size: 36px; font-weight: 700; color: var(--text-dark); margin-bottom: 20px; }
-        .btn-primary {
-            background-color: var(--primary-blue); color: white; border: none;
-            padding: 12px 24px; border-radius: 12px; font-weight: 700; font-size: 14px;
-            cursor: pointer; text-transform: uppercase; float: right;
+        .day { width: 36px; height: 36px; display: flex; justify-content: center; align-items: center; border-radius: 50%; cursor: pointer; transition: all 0.2s; }
+        .day.today { background-color: var(--primary-blue); color: white; box-shadow: 0 5px 15px rgba(136, 153, 185, 0.4); }
+        .day.selected { background-color: var(--selected-gray); color: white; }
+        .day.today.selected { background-color: var(--primary-blue); }
+
+        /* --- STACK FOLDER SYSTEM --- */
+        .archive-stack { display: flex; flex-direction: column; padding-top: 10px; }
+        
+        .folder-item { 
+            position: relative; width: 100%; 
+            margin-bottom: -45px; 
+            transition: margin-bottom 0.5s var(--anim-curve), transform 0.5s var(--anim-curve); z-index: 1; cursor: pointer; transform: translate3d(0,0,0); 
+        }
+        .folder-item:last-child { margin-bottom: 0; }
+
+        .folder-tab-area { 
+            height: 40px; width: 50%; background-color: #E2E6EA; 
+            border-top-left-radius: 20px; border-top-right-radius: 20px; 
+            display: flex; align-items: center; padding-left: 20px; 
+            font-size: 12px; 
+            font-weight: 600; /* Demi per la tab */
+            color: var(--primary-blue); text-transform: uppercase; 
+            position: relative; z-index: 1; box-shadow: inset 0 -5px 10px rgba(0,0,0,0.05); transition: background-color 0.3s; 
+        }
+        
+        .folder-face { 
+            background-color: #F8F9FB; border-radius: 25px; border-top-left-radius: 0; 
+            height: 120px; 
+            position: relative; top: -1px; z-index: 2; padding: 20px; 
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.03), 0 10px 20px rgba(0,0,0,0.1); 
+            transition: height 0.5s var(--anim-curve), background-color 0.3s, box-shadow 0.3s; 
+            overflow: hidden; display: flex; flex-direction: column; 
+            will-change: height; 
         }
 
-        .personal-footer {
-            display: grid; grid-template-columns: 1fr 1fr; gap: 15px;
-            margin-bottom: 20px;
+        /* LABEL TITOLO FOLDER */
+        .folder-label-large { 
+            font-size: 24px; 
+            font-weight: 500; /* Titolo -> Medium */
+            color: var(--text-dark); 
+            max-height: 0; opacity: 0; margin-bottom: 0; 
+            transform: translateY(-20px);
+            transition: all 0.5s var(--anim-curve); 
         }
-        .btn-secondary {
-            background-color: #99AACC; color: white; border: none;
-            padding: 10px; border-radius: 20px; font-weight: 600; font-size: 12px;
-            cursor: pointer; text-transform: uppercase; text-align: center;
-        }
-        .footer-links {
-            text-align: right; font-size: 12px; color: var(--text-dark);
-            display: flex; flex-direction: column; justify-content: center;
-        }
-        .footer-links a { color: var(--text-dark); text-decoration: none; margin-bottom: 5px; display: block; }
-        .footer-links i { margin-right: 5px; }
 
-        /* 4. Categories Grid (Shared) */
-        .categories-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-        .cat-card {
-            background: var(--card-bg); border-radius: 24px; aspect-ratio: 1;
-            display: flex; flex-direction: column; justify-content: center; align-items: center;
-            box-shadow: 0 10px 20px var(--shadow-light); transition: transform 0.2s;
+        .folder-index { 
+            position: absolute;
+            top: 33%; left: 20px; 
+            transform: translateY(-50%);
+            display: flex; gap: 10px; 
+            transition: all 0.6s var(--anim-curve);
+            z-index: 5;
         }
-        .cat-card:hover { transform: translateY(-2px); }
+        
+        .pittogram { 
+            width: 40px; height: 40px; 
+            background-color: rgba(0,0,0,0.05); border-radius: 12px; 
+            display: flex; justify-content: center; align-items: center; 
+            color: #1A1A1A; font-size: 18px; 
+            transition: all 0.5s ease;
+        }
+
+        .folder-icon-bg { position: absolute; right: -10px; bottom: -15px; font-size: 60px; color: rgba(136, 153, 185, 0.1); transform: rotate(-10deg); transition: 0.5s; }
+
+        /* --- ACTIVE STATE --- */
+        .folder-item.active { margin-bottom: 20px; z-index: 100 !important; transform: scale(1.02); }
+        .folder-item.active .folder-tab-area { background-color: var(--primary-blue); color: white; }
+        
+        .folder-item.active .folder-face { 
+            background-color: #FFFFFF; 
+            box-shadow: var(--deep-shadow); 
+            height: 300px; 
+        }
+
+        .folder-item.active .folder-label-large { 
+            max-height: 40px; opacity: 1; margin-bottom: 10px; 
+            transform: translateY(0);
+        }
+
+        .folder-item.active .folder-index {
+            top: 70px; left: 20px; 
+            transform: translateY(0);
+        }
+        
+        .folder-item.active .pittogram { background-color: #F0F2F5; color: #1A1A1A; }
+        .folder-item.active .folder-icon-bg { transform: rotate(0deg) scale(0.6); right: 15px; top: 15px; bottom: auto; opacity: 0.1; }
+
+        .folder-content { opacity: 0; transition: opacity 0.3s 0.2s ease; margin-top: 60px; pointer-events: none; }
+        .folder-item.active .folder-content { opacity: 1; pointer-events: auto; }
+
+        .file-list-item { display: flex; align-items: center; padding: 10px 0; border-bottom: 1px dashed #EEE; }
+        .file-list-item:last-child { border-bottom: none; }
+        .file-text h4 { font-size: 13px; color: var(--text-dark); margin-bottom: 2px; font-weight: 600; /* Demi */ }
+        .file-text span { font-size: 11px; color: #888; text-transform: uppercase; font-weight: 400; /* Regular */ }
+
+        /* --- SHARED GRID --- */
+        #shared-grid-wrapper { 
+            transform: translateZ(0);
+            transition: opacity 0.4s ease, max-height 0.4s ease; 
+            max-height: 1000px; 
+            opacity: 1; 
+            overflow: visible; margin-top: 0px; 
+        }
+        
+        #shared-grid-wrapper.collapsed { max-height: 0; opacity: 0; margin: 0; padding: 0; pointer-events: none; }
+
+        .categories-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; padding: 5px; margin: -5px; }
+        .cat-card { aspect-ratio: 1; display: flex; flex-direction: column; justify-content: center; align-items: center; background-color: #F4F6F9; box-shadow: var(--soft-shadow); border-radius: 30px; position: relative; overflow: hidden; }
+        .cat-content { display: flex; flex-direction: column; align-items: center; width: 100%; }
         .cat-icon { font-size: 40px; margin-bottom: 15px; color: black; }
-        .cat-title { font-weight: 700; font-size: 16px; color: var(--text-dark); }
+        .cat-title { font-weight: 500; font-size: 16px; color: var(--text-dark); }
+        .cat-card.locked { background-color: #E6E9EF; pointer-events: none; }
+        .cat-card.locked .cat-content { opacity: 0.4; filter: blur(4px) grayscale(100%); }
+        .lock-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; opacity: 0; }
+        .cat-card.locked .lock-overlay { opacity: 1; }
+        .lock-icon { font-size: 24px; color: #8899B9; margin-bottom: 5px; }
+        .lock-text { font-size: 12px; font-weight: 600; color: #8899B9; text-transform: uppercase; letter-spacing: 1px; }
 
-        /* --- BOTTOM NAV --- */
-        .bottom-nav {
-            position: absolute; bottom: 0; left: 0; width: 100%; height: 90px;
-            background: var(--card-bg); border-top-left-radius: 30px; border-top-right-radius: 30px;
-            display: flex; justify-content: space-around; align-items: center; padding-bottom: 20px;
-            box-shadow: 0 -5px 20px var(--shadow-light); z-index: 10;
-        }
+        /* BUTTONS & NAV */
+        .btn-primary { background-color: var(--primary-blue); color: white; border: none; padding: 12px 30px; border-radius: 20px; font-weight: 600; font-size: 14px; cursor: pointer; text-transform: uppercase; float: right; }
+        .btn-secondary { background-color: #99AACC; color: white; border: none; padding: 10px; border-radius: 20px; font-weight: 600; font-size: 12px; cursor: pointer; text-transform: uppercase; text-align: center; width: 100%; }
+        .btn-back { background: none; border: none; color: var(--text-dark); font-weight: 600; font-size: 14px; cursor: pointer; text-transform: uppercase; display: inline-flex; align-items: center; gap: 8px; margin-bottom: 15px; }
+        .back-btn-container { text-align: left; margin-bottom: 15px; padding-left: 5px; }
+        .footer-links { text-align: right; font-size: 12px; color: var(--text-dark); display: flex; flex-direction: column; justify-content: center; }
+        .footer-links a { color: var(--text-dark); text-decoration: none; margin-bottom: 5px; display: block; }
+
+        .bottom-nav { position: absolute; bottom: 0; left: 0; width: 100%; height: 90px; background: rgba(242, 244, 248, 0.7); backdrop-filter: blur(20px) saturate(180%); border-top: 1px solid rgba(255, 255, 255, 0.6); box-shadow: 0 -10px 30px rgba(0,0,0,0.05); border-top-left-radius: 30px; border-top-right-radius: 30px; display: flex; justify-content: space-around; align-items: center; padding-bottom: 20px; z-index: 100; }
         .nav-item { font-size: 24px; color: var(--primary-blue); cursor: pointer; opacity: 0.5; transition: 0.3s; border: none; background: none; }
-        .nav-item.active { opacity: 1; transform: scale(1.1); }
-        .status-bar { position: absolute; top: 15px; left: 0; width: 100%; padding: 0 24px; display: flex; justify-content: space-between; font-size: 14px; font-weight: bold; color: #333; z-index: 10; }
+        .nav-item.active { opacity: 1; transform: scale(1.1); text-shadow: 0 0 10px rgba(136, 153, 185, 0.5); }
     </style>
 </head>
 <body>
 
     <div class="mobile-container">
-        <div class="status-bar">
-            <span>9:41</span>
-            <span><i class="fas fa-signal"></i> <i class="fas fa-wifi"></i> <i class="fas fa-battery-full"></i></span>
-        </div>
+        
+        <div class="screen-mask">
 
-        <div class="header">
-            <h1 id="page-title">TODAY'S<br>DISCOVERIES</h1>
-        </div>
+            <div class="header" id="main-header">
+                <h1 id="page-title">TODAY'S<br>DISCOVERIES</h1>
+            </div>
 
-        <div class="content">
-            
-            <div class="dynamic-wrapper" id="dynamic-wrapper">
+            <div class="content" id="main-content">
                 
-                <div id="home-view" class="view-section active">
-                    <div class="profile-card">
-                        <div class="avatar-placeholder"><i class="fas fa-child-reaching"></i></div>
-                        <div class="profile-info">
-                            <h2>Rojan Ehmed</h2>
-                            <div class="info-grid">
-                                <span class="label">Age</span> <span class="value">21</span>
-                                <span class="label">Culture</span> <span class="value">Kurdish</span>
-                                <span class="label">Location</span> <span class="value">Şırnak</span>
-                                <span class="label">Cryo</span> <span class="value">2075</span>
+                <div class="dynamic-wrapper" id="dynamic-wrapper">
+                    
+                    <div id="home-view" class="view-section active">
+                        <div class="profile-card">
+                            <div class="avatar-placeholder"><i class="fas fa-child-reaching"></i></div>
+                            <div class="profile-info">
+                                <h2>Rojan Ehmed</h2>
+                                <div class="info-grid">
+                                    <span class="label">Age</span> <span class="value">21</span>
+                                    <span class="label">Culture</span> <span class="value">Kurdish</span>
+                                    <span class="label">Location</span> <span class="value">Şırnak</span>
+                                    <span class="label">Cryo</span> <span class="value">2075</span>
+                                </div>
                             </div>
                         </div>
                     </div>
+
+                    <div id="progress-view" class="view-section">
+                        <p class="subtitle" style="margin-left: 10px;">Track your discoveries: select a day.</p>
+                        <div class="calendar-container">
+                            <div class="calendar-grid">
+                                <div class="day today" onclick="selectDay(this, 1)">1</div>
+                                <div class="day" onclick="selectDay(this, 2)">2</div>
+                                <div class="day" onclick="selectDay(this, 3)">3</div>
+                                <div class="day" onclick="selectDay(this, 4)">4</div>
+                                <div class="day" onclick="selectDay(this, 5)">5</div>
+                                <div class="day" onclick="selectDay(this, 6)">6</div>
+                                <div class="day" onclick="selectDay(this, 7)">7</div>
+                                <div class="day" onclick="selectDay(this, 8)">8</div>
+                                <div class="day" onclick="selectDay(this, 9)">9</div>
+                                <div class="day" onclick="selectDay(this, 10)">10</div>
+                                <div class="day" onclick="selectDay(this, 11)">11</div>
+                                <div class="day" onclick="selectDay(this, 12)">12</div>
+                                <div class="day" onclick="selectDay(this, 13)">13</div>
+                                <div class="day" onclick="selectDay(this, 14)">14</div>
+                                <div class="day" onclick="selectDay(this, 15)">15</div>
+                                <div class="day" onclick="selectDay(this, 16)">16</div>
+                                <div class="day" onclick="selectDay(this, 17)">17</div>
+                                <div class="day" onclick="selectDay(this, 18)">18</div>
+                                <div class="day" onclick="selectDay(this, 19)">19</div>
+                                <div class="day" onclick="selectDay(this, 20)">20</div>
+                                <div class="day" onclick="selectDay(this, 21)">21</div>
+                                <div class="day" onclick="selectDay(this, 22)">22</div>
+                                <div class="day" onclick="selectDay(this, 23)">23</div>
+                                <div class="day" onclick="selectDay(this, 24)">24</div>
+                                <div class="day" onclick="selectDay(this, 25)">25</div>
+                                <div class="day" onclick="selectDay(this, 26)">26</div>
+                                <div class="day" onclick="selectDay(this, 27)">27</div>
+                                <div class="day" onclick="selectDay(this, 28)">28</div>
+                                <div class="day" onclick="selectDay(this, 29)">29</div>
+                                <div class="day" onclick="selectDay(this, 30)">30</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="archive-view" class="view-section">
+                        <p class="subtitle" style="margin-left: 5px;">Your digital preservation archive.</p>
+                        <div class="archive-stack" id="stack-container">
+                            
+                            <div class="folder-item" onclick="toggleFolder(this)">
+                                <div class="folder-tab-area">FOOD</div>
+                                <div class="folder-face">
+                                    <div class="folder-label-large">Cuisine</div>
+                                    <div class="folder-index">
+                                        <div class="pittogram"><i class="fas fa-utensil-spoon"></i></div>
+                                        <div class="pittogram"><i class="fas fa-bowl-rice"></i></div>
+                                    </div>
+                                    <i class="fas fa-bread-slice folder-icon-bg"></i>
+                                    <div class="folder-content">
+                                        <div class="file-list-item"><div class="file-text"><h4>Nanê Tîrî</h4><span>Recipe</span></div></div>
+                                        <div class="file-list-item"><div class="file-text"><h4>Kutilk</h4><span>Dish</span></div></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="folder-item" onclick="toggleFolder(this)">
+                                <div class="folder-tab-area">CLOTHES</div>
+                                <div class="folder-face">
+                                    <div class="folder-label-large">Attire</div>
+                                    <div class="folder-index"><div class="pittogram"><i class="fas fa-hat-cowboy"></i></div></div>
+                                    <i class="fas fa-shirt folder-icon-bg"></i>
+                                    <div class="folder-content">
+                                        <div class="file-list-item"><div class="file-text"><h4>Şal û Şapik</h4><span>Suit</span></div></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                             <div class="folder-item" onclick="toggleFolder(this)">
+                                <div class="folder-tab-area">RITUALS</div>
+                                <div class="folder-face">
+                                    <div class="folder-label-large">Rituals</div>
+                                    <div class="folder-index">
+                                        <div class="pittogram"><i class="fas fa-drum"></i></div>
+                                        <div class="pittogram"><i class="fas fa-fire"></i></div>
+                                    </div>
+                                    <i class="fas fa-music folder-icon-bg"></i>
+                                    <div class="folder-content">
+                                        <div class="file-list-item"><div class="file-text"><h4>Newroz</h4><span>Festival</span></div></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="folder-item" onclick="toggleFolder(this)">
+                                <div class="folder-tab-area">MEMORIES</div>
+                                <div class="folder-face">
+                                    <div class="folder-label-large">Memories</div>
+                                    <div class="folder-index">
+                                        <div class="pittogram"><i class="fas fa-microphone"></i></div>
+                                        <div class="pittogram"><i class="fas fa-map-location-dot"></i></div>
+                                    </div>
+                                    <i class="fas fa-brain folder-icon-bg"></i>
+                                    <div class="folder-content">
+                                        <div class="file-list-item"><div class="file-text"><h4>Echoes</h4><span>Audio</span></div></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div id="personal-view" class="view-section">
+                        <p class="subtitle">UNEC thanks you for supporting cryoconservation.</p>
+                        <div class="culture-card"><span class="culture-label">Your adopted culture</span><span class="culture-title">KURD</span></div>
+                        <div class="plan-card"><div class="plan-title">Your plan</div><div class="plan-price">0$/month</div><button class="btn-primary">VIEW PLANS</button><div style="clear:both;"></div></div>
+                        <div class="personal-footer-card">
+                            <div style="display:flex; flex-direction:column; gap:10px;">
+                                <button class="btn-secondary" onclick="switchTab('about')">WHO WE ARE</button>
+                                <button class="btn-secondary" onclick="switchTab('contact')">CONTACT US</button>
+                            </div>
+                            <div class="footer-links"><a href="#">Terms & conditions</a><a href="#"><i class="fab fa-instagram"></i> unec_org</a></div>
+                        </div>
+                    </div>
+
+                    <div id="about-view" class="view-section">
+                        <div class="back-btn-container"><button class="btn-back" onclick="switchTab('personal')"><i class="fas fa-arrow-left"></i> BACK</button></div>
+                        <div class="text-card"><p>Established by the UN in 2075, UNEC responds to the rise in cultural conflicts, recognizing cultural preservation as a fundamental imperative for global peace. For cultures facing imminent extinction, UNEC offers a secure scientific procedure to enter biostasis, preserving the living source of cultural knowledge and tradition.</p></div>
+                        <div class="text-card"><h3>Vision</h3><p>UNEC envisions a world where every culture can continue to thrive through its own community.</p><h3>Mission</h3><p>Our mission is to preserve endangered cultures through a safe practice of cryoconservation.</p></div>
+                    </div>
+
+                    <div id="contact-view" class="view-section">
+                        <div class="back-btn-container"><button class="btn-back" onclick="switchTab('personal')"><i class="fas fa-arrow-left"></i> BACK</button></div>
+                        <div class="text-card"><h3>Headquarters</h3><p>Our central headquarters is located in a secured, climate-controlled facility in <strong>Antarctica</strong>.</p><p style="color:#888; font-size:12px; margin-top:5px;">Access is restricted to authorized personnel only, in accordance with international preservation protocols.</p></div>
+                        <div class="text-card"><h3>Liaison Network</h3><p>For all inquiries, our global liaison network is available to assist you. You can reach our dedicated operators via:</p><span class="contact-detail">Phone: +672 361 784 6525</span><span class="contact-detail">Email: unec@mail.org</span></div>
+                        <div class="text-card"><h3>Field Operations</h3><p>Our field operators are continuously deployed worldwide to document cultural conflict and manage our cryopreservation process. Your message will be routed to the regional team best equipped to respond to your specific situation.</p></div>
+                    </div>
+
                 </div>
-
-                <div id="progress-view" class="view-section">
-                    <p class="subtitle">Track your discoveries: select a day to see the cultural knowledge you unlocked that day.</p>
-                    <div class="calendar-container">
-                        <div class="calendar-grid">
-                            <div class="day selected">1</div> <div class="day">2</div> <div class="day">3</div> <div class="day">4</div> <div class="day">5</div> <div class="day">6</div>
-                            <div class="day">7</div> <div class="day">8</div> <div class="day">9</div> <div class="day">10</div> <div class="day">11</div> <div class="day">12</div>
-                            <div class="day">13</div> <div class="day">14</div> <div class="day">15</div> <div class="day">16</div> <div class="day">17</div> <div class="day">18</div>
-                            <div class="day">19</div> <div class="day">20</div> <div class="day">21</div> <div class="day">22</div> <div class="day">23</div> <div class="day">24</div>
-                            <div class="day">25</div> <div class="day">26</div> <div class="day">27</div> <div class="day">28</div> <div class="day">29</div> <div class="day">30</div>
-                        </div>
-                    </div>
-                </div>
-
-                <div id="personal-view" class="view-section">
-                    <p class="subtitle">UNEC thanks you for supporting the cryopreservation of endangered cultures.</p>
-                    
-                    <div class="culture-card">
-                        <span class="culture-label">Your adopted culture</span>
-                        <span class="culture-title">KURD</span>
-                    </div>
-
-                    <div class="plan-card">
-                        <div class="plan-title">Your plan</div>
-                        <div class="plan-price">0$/month</div>
-                        <button class="btn-primary">VIEW PLANS</button>
-                        <div style="clear:both;"></div>
-                    </div>
-
-                    <div class="personal-footer">
-                        <div style="display:flex; flex-direction:column; gap:10px;">
-                            <button class="btn-secondary">WHO WE ARE</button>
-                            <button class="btn-secondary">CONTACT US</button>
-                        </div>
-                        <div class="footer-links">
-                            <a href="#">Terms & conditions</a>
-                            <a href="#"><i class="fab fa-instagram"></i> unec_org</a>
-                        </div>
+                
+                <div id="shared-grid-wrapper">
+                    <div class="categories-grid" id="shared-grid">
+                        <div class="cat-card" id="card-food"><div class="cat-content"><div class="cat-icon"><i class="fas fa-bread-slice"></i></div><span class="cat-title">Food</span></div><div class="lock-overlay"><i class="fas fa-lock lock-icon"></i><span class="lock-text">LOCKED</span></div></div>
+                        <div class="cat-card" id="card-clothes"><div class="cat-content"><div class="cat-icon"><i class="fas fa-shirt"></i></div><span class="cat-title">Clothes</span></div><div class="lock-overlay"><i class="fas fa-lock lock-icon"></i><span class="lock-text">LOCKED</span></div></div>
+                        <div class="cat-card" id="card-ritual"><div class="cat-content"><div class="cat-icon"><i class="fas fa-music"></i></div><span class="cat-title">Ritual</span></div><div class="lock-overlay"><i class="fas fa-lock lock-icon"></i><span class="lock-text">LOCKED</span></div></div>
+                        <div class="cat-card" id="card-memories"><div class="cat-content"><div class="cat-icon"><i class="fas fa-brain"></i></div><span class="cat-title">Memories</span></div><div class="lock-overlay"><i class="fas fa-lock lock-icon"></i><span class="lock-text">LOCKED</span></div></div>
                     </div>
                 </div>
 
             </div>
 
-            <div class="categories-grid">
-                <div class="cat-card">
-                    <div class="cat-icon"><i class="fas fa-bread-slice"></i></div>
-                    <span class="cat-title">Food</span>
-                </div>
-                <div class="cat-card">
-                    <div class="cat-icon"><i class="fas fa-shirt"></i></div>
-                    <span class="cat-title">Clothes</span>
-                </div>
-                <div class="cat-card">
-                    <div class="cat-icon"><i class="fas fa-music"></i></div>
-                    <span class="cat-title">Ritual</span>
-                </div>
-                <div class="cat-card">
-                    <div class="cat-icon"><i class="fas fa-brain"></i></div>
-                    <span class="cat-title">Memories</span>
-                </div>
+            <div class="bottom-nav">
+                <button class="nav-item active" onclick="switchTab('home')"><i class="fas fa-layer-group"></i></button>
+                <button class="nav-item" onclick="switchTab('progress')"><i class="far fa-calendar-check"></i></button>
+                <button class="nav-item" onclick="switchTab('archive')"><i class="far fa-folder"></i></button>
+                <button class="nav-item" onclick="switchTab('personal')"><i class="far fa-user"></i></button>
             </div>
-        </div>
-
-        <div class="bottom-nav">
-            <button class="nav-item active" onclick="switchTab('home')"><i class="fas fa-layer-group"></i></button>
-            <button class="nav-item" onclick="switchTab('progress')"><i class="far fa-calendar-check"></i></button>
-            <button class="nav-item"><i class="far fa-folder"></i></button>
-            <button class="nav-item" onclick="switchTab('personal')"><i class="far fa-user"></i></button>
-        </div>
-    </div>
+        
+        </div> 
+    </div> 
 
     <script>
+        // --- LOGIC ---
         let isAnimating = false;
+        const currentDay = 1; 
+        let currentSelectedCalendarDay = 1; 
 
-        window.addEventListener('load', () => {
-            const homeView = document.getElementById('home-view');
+        // Calculates exact height
+        function updateHeight() {
+            const activeSection = document.querySelector('.view-section.active');
             const wrapper = document.getElementById('dynamic-wrapper');
-            if(homeView && wrapper) {
-                wrapper.style.height = homeView.offsetHeight + 'px';
+            
+            if(activeSection && wrapper) {
+                const h = activeSection.getBoundingClientRect().height;
+                wrapper.style.height = h + 'px';
             }
-        });
+        }
+
+        window.addEventListener('load', () => { setTimeout(updateHeight, 100); });
+        window.addEventListener('resize', updateHeight);
+
+        function toggleFolder(element) {
+            const isActive = element.classList.contains('active');
+            document.querySelectorAll('.folder-item').forEach(el => el.classList.remove('active'));
+            if (!isActive) element.classList.add('active');
+            
+            let start = null;
+            function step(timestamp) {
+                if (!start) start = timestamp;
+                const progress = timestamp - start;
+                updateHeight();
+                if (progress < 600) window.requestAnimationFrame(step);
+            }
+            window.requestAnimationFrame(step);
+        }
+
+        function applyLockState(dayNumber) {
+            const cards = document.querySelectorAll('#shared-grid .cat-card');
+            const lockTexts = document.querySelectorAll('#shared-grid .lock-text');
+            if (dayNumber > currentDay) {
+                const daysLeft = dayNumber - currentDay;
+                const text = daysLeft === 1 ? "-1 DAY" : `-${daysLeft} DAYS`;
+                cards.forEach(card => card.classList.add('locked'));
+                lockTexts.forEach(lt => lt.innerText = text);
+            } else {
+                cards.forEach(card => card.classList.remove('locked'));
+            }
+        }
+
+        function selectDay(element, dayNumber) {
+            const days = document.querySelectorAll('.day');
+            days.forEach(d => d.classList.remove('selected'));
+            element.classList.add('selected');
+            currentSelectedCalendarDay = dayNumber;
+            applyLockState(dayNumber);
+        }
 
         function switchTab(tabName) {
             if (isAnimating) return;
+            isAnimating = true;
 
             const titleElement = document.getElementById('page-title');
             const wrapper = document.getElementById('dynamic-wrapper');
+            const gridWrapper = document.getElementById('shared-grid-wrapper');
             const navItems = document.querySelectorAll('.nav-item');
             
-            // Views
             const views = {
                 home: document.getElementById('home-view'),
                 progress: document.getElementById('progress-view'),
-                personal: document.getElementById('personal-view')
+                archive: document.getElementById('archive-view'),
+                personal: document.getElementById('personal-view'),
+                about: document.getElementById('about-view'),
+                contact: document.getElementById('contact-view')
             };
             
-            let incoming, outgoing, newTitleText, activeIndex;
+            const titles = { home: "TODAY'S<br>DISCOVERIES", progress: "PROGRESS", archive: "ARCHIVE", personal: "PERSONAL AREA", about: "WHO WE ARE", contact: "CONTACT US" };
+            
+            let incoming = views[tabName];
+            let outgoing = document.querySelector('.view-section.active');
+            
+            if (incoming === outgoing) { isAnimating = false; return; }
 
-            // Determina la view attiva corrente (chi sta uscendo)
-            for (const key in views) {
-                if (views[key].classList.contains('active')) {
-                    outgoing = views[key];
-                    break;
+            // Grid Logic (FADE OUT IN PLACE)
+            if(['home', 'progress'].includes(tabName)) {
+                gridWrapper.classList.remove('collapsed');
+                if(tabName === 'home') applyLockState(1);
+                else applyLockState(currentSelectedCalendarDay);
+            } else {
+                gridWrapper.classList.add('collapsed');
+            }
+
+            // Animation Trigger for Progress Calendar
+            if (tabName === 'progress') {
+                const calendar = incoming.querySelector('.calendar-container');
+                if (calendar) {
+                    calendar.classList.remove('animate-entrance');
+                    void calendar.offsetWidth; // Force reflow
+                    calendar.classList.add('animate-entrance');
                 }
             }
 
-            // Logica di selezione
-            if (tabName === 'home') {
-                if (outgoing === views.home) return;
-                incoming = views.home;
-                newTitleText = "TODAY'S<br>DISCOVERIES";
-                activeIndex = 0;
-            } 
-            else if (tabName === 'progress') {
-                if (outgoing === views.progress) return;
-                incoming = views.progress;
-                newTitleText = "PROGRESS";
-                activeIndex = 1;
-            }
-            else if (tabName === 'personal') {
-                if (outgoing === views.personal) return;
-                incoming = views.personal;
-                newTitleText = "PERSONAL AREA";
-                activeIndex = 3; // L'indice 3 è l'ultimo bottone (User)
-            } 
-            else {
-                return; // Tab folder non gestito o altro
-            }
+            // Nav Logic
+            let activeIndex = 0;
+            if(tabName === 'progress') activeIndex = 1;
+            else if(tabName === 'archive') activeIndex = 2;
+            else if(['personal', 'about', 'contact'].includes(tabName)) activeIndex = 3;
 
-            isAnimating = true;
-
-            // 1. Update Navigation Icons
             navItems.forEach(item => item.classList.remove('active'));
             if(navItems[activeIndex]) navItems[activeIndex].classList.add('active');
 
-            // 2. Misurazione Precisa
+            // 1. Prepare Incoming
             incoming.classList.add('measuring');
-            const newHeight = incoming.scrollHeight;
+            const newHeight = incoming.getBoundingClientRect().height;
             incoming.classList.remove('measuring');
 
-            // 3. Animazione Altezza Wrapper
+            // 2. Animate Height
             wrapper.style.height = newHeight + 'px';
 
-            // 4. Scambio Views
+            // 3. Transition Views
             if (outgoing) {
-                outgoing.style.position = 'absolute';
                 outgoing.classList.remove('active');
+                outgoing.style.opacity = 0;
             }
-
-            incoming.style.position = 'absolute';
-            incoming.style.visibility = 'visible';
+            
             incoming.classList.add('active');
+            void incoming.offsetWidth; // Force reflow
+            incoming.style.opacity = 1; 
+            incoming.style.transform = "translateY(0)";
 
-            // 5. Cleanup e sblocco
-            setTimeout(() => {
-                incoming.style.position = 'relative'; 
-                if(outgoing) outgoing.style.visibility = 'hidden'; 
-                isAnimating = false;
-            }, 600); // 0.6s
-
-            // 6. Cambio Titolo
+            // Title
             titleElement.style.opacity = 0;
             setTimeout(() => {
-                titleElement.innerHTML = newTitleText;
+                titleElement.innerHTML = titles[tabName] || "UNEC";
                 titleElement.style.opacity = 1;
-            }, 200);
+            }, 150);
+
+            document.getElementById('main-content').scrollTo({ top: 0, behavior: 'smooth' });
+
+            setTimeout(() => {
+                isAnimating = false;
+                if(outgoing) {
+                    outgoing.style.opacity = '';
+                    outgoing.style.transform = '';
+                }
+            }, 500);
         }
     </script>
 
