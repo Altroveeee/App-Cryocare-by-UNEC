@@ -3,304 +3,186 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>UNEC App Concept</title>
+    <title>UNEC App</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
-        /* --- CONFIGURAZIONE FONT AVENIR NEXT --- */
+        /* --- FONT & BASICS --- */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500&display=swap');
         
-        /* 1. REGULAR (Corpo del testo) */
-        @font-face {
-            font-family: 'Avenir Next';
-            src: url('assets/AvenirNextLTPro-Regular.otf') format('opentype');
-            font-weight: 400;
-            font-style: normal;
-        }
-
-        /* 2. MEDIUM (Titoli) */
-        @font-face {
-            font-family: 'Avenir Next';
-            src: url('assets/AvenirNextLTPro-Medium.otf') format('opentype');
-            font-weight: 500;
-            font-style: normal;
-        }
-
-        /* 3. DEMI (Sottotitoli / Enfasi) */
-        @font-face {
-            font-family: 'Avenir Next';
-            src: url('assets/AvenirNextLTPro-Demi.otf') format('opentype');
-            font-weight: 600;
-            font-style: normal;
-        }
+        @font-face { font-family: 'Avenir Next'; src: url('assets/AvenirNextLTPro-Regular.otf') format('opentype'); font-weight: 400; }
+        @font-face { font-family: 'Avenir Next'; src: url('assets/AvenirNextLTPro-Medium.otf') format('opentype'); font-weight: 500; }
+        @font-face { font-family: 'Avenir Next'; src: url('assets/AvenirNextLTPro-Demi.otf') format('opentype'); font-weight: 600; }
 
         :root {
-            --primary-blue: #8899B9;
+            --primary-blue: #8AA1CE;
             --selected-gray: #B0B0B0;
-            --bg-color: #F2F4F8; 
-            --text-dark: #1A1A1A;
-            --text-light: #666666;
-            --soft-shadow: 0 15px 35px -5px rgba(0,0,0,0.1);
-            --deep-shadow: 0 30px 60px -15px rgba(0,0,0,0.25);
+            --bg-color: #F6F9FF; 
+            --text-dark: #0E0E0E;
+            --text-light: #0E0E0E;
+            --pure-white: #FFFFFF;
             --anim-curve: cubic-bezier(0.2, 0.8, 0.2, 1);
-            --anim-speed: 0.5s;
+            --circle-bg: #E3E8F0;
+            --soft-shadow: 0 10px 25px -5px rgba(0,0,0,0.06);
+            --deep-shadow: 0 25px 50px -12px rgba(0,0,0,0.25);
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+        html, body { height: 100%; width: 100%; overflow: hidden; background-color: #d1dbe8; display: flex; justify-content: center; align-items: center; font-family: 'Avenir Next', sans-serif; }
 
-        html, body { height: 100%; width: 100%; overflow: hidden; }
+        .mobile-container { width: 375px; height: 812px; background-color: var(--bg-color); border-radius: 40px; box-shadow: 0 30px 60px -10px rgba(0,0,0,0.3); position: relative; display: flex; flex-direction: column; overflow: hidden; }
+        .screen-mask { width: 100%; height: 100%; border-radius: 40px; overflow: hidden; position: relative; display: flex; flex-direction: column; background-color: var(--bg-color); z-index: 1; }
 
-        body {
-            font-family: 'Avenir Next', sans-serif;
-            background-color: #d1dbe8; 
-            display: flex; justify-content: center; align-items: center;
-            /* DEFAULT: REGULAR (400) */
-            font-weight: 400; 
-        }
-
-        /* --- FRAME --- */
-        .mobile-container {
-            width: 375px; height: 812px;
-            background-color: var(--bg-color);
-            border-radius: 40px;
-            box-shadow: 0 30px 60px -10px rgba(0,0,0,0.3); 
-            position: relative; display: flex; flex-direction: column;
-            overflow: hidden;
-            transform: translate3d(0,0,0); 
-        }
-
-        .screen-mask {
-            width: 100%; height: 100%;
-            border-radius: 40px; overflow: hidden;
-            position: relative; display: flex; flex-direction: column;
-            background-color: var(--bg-color); z-index: 1;
-        }
-
-        @media (max-width: 480px) {
-            body { background-color: var(--bg-color); }
-            .mobile-container { width: 100%; height: 100%; border-radius: 0; box-shadow: none; }
-            .screen-mask { border-radius: 0; }
-        }
-
-        /* --- FIXED HEADER --- */
+        /* --- HEADER --- */
         .header { 
-            position: absolute; top: 0; left: 0; right: 0;
-            padding: 40px 24px 20px; z-index: 50; 
-            background: linear-gradient(to bottom, var(--bg-color) 90%, rgba(242, 244, 248, 0) 100%);
-            height: 110px; 
-            pointer-events: none;
+            position: absolute; top: 0; left: 0; right: 0; 
+            height: 83px; /* ALTEZZA FISSA SICURA */
+            padding: 0 24px 20px 24px; 
+            z-index: 50; 
+            display: flex; align-items: flex-end; /* Testo in basso */
+            background: linear-gradient(to bottom, var(--bg-color) 40%, rgba(246, 249, 255, 0) 100%); 
+            pointer-events: none; transition: opacity 0.3s; 
         }
-        
-        h1 {
-            color: var(--primary-blue); 
-            font-size: 28px; 
-            /* TITOLO -> MEDIUM (500) */
-            font-weight: 500; 
-            line-height: 1.1; text-transform: uppercase;
-            transition: opacity 0.3s;
-            pointer-events: auto;
+        .header.home-mode { opacity: 1; }
+        .header.home-mode h1 { opacity: 0; } 
+        h1 { 
+            color: var(--primary-blue); font-size: 32px; font-weight: 700; 
+            text-transform: uppercase; pointer-events: auto; transition: opacity 0.3s; margin: 0; line-height: 1; 
         }
 
-        .subtitle { 
-            font-size: 14px; color: var(--text-light); margin-bottom: 10px; line-height: 1.4; display: block; 
-            /* SOTTOTITOLO -> DEMI (600) */
-            font-weight: 600; 
+        /* --- CONTENT WRAPPER --- */
+        .content { 
+            flex: 1; padding: 0; 
+            overflow: hidden; /* Il content NON scrolla */
+            position: relative; z-index: 10; 
         }
+        .dynamic-wrapper { position: relative; height: 100%; width: 100%; transition: opacity 0.5s var(--anim-curve); }
 
-        /* --- SCROLLABLE CONTENT --- */
-        .content {
-            flex: 1; padding: 0 24px;
-            padding-top: 110px; 
-            padding-bottom: 100px;
-            overflow-y: auto; 
-            scrollbar-width: none; -webkit-overflow-scrolling: touch; 
-            position: relative; z-index: 10;
-        }
-        .content::-webkit-scrollbar { display: none; }
-
-        /* --- DYNAMIC WRAPPER --- */
-        .dynamic-wrapper {
-            position: relative; height: 100px; 
-            transition: height 0.5s var(--anim-curve);
-            overflow: visible; will-change: height;
-            padding-bottom: 20px;
-        }
-
-        .view-section {
-            width: 100%; position: absolute; top: 0; left: 0;
-            opacity: 0; transform: translateY(20px);
-            pointer-events: none; visibility: hidden;
+        /* --- VIEW SECTIONS (IL CUORE DEL LAYOUT) --- */
+        .view-section { 
+            width: 100%; height: 100%; 
+            position: absolute; top: 0; left: 0; 
+            opacity: 0; transform: translateY(20px); 
+            pointer-events: none; visibility: hidden; 
             transition: opacity 0.4s ease, transform 0.4s var(--anim-curve);
+            
+            /* CONFIGURAZIONE DI DEFAULT PER TUTTE LE PAGINE (Archive, Progress, etc) */
+            padding: 0 24px; 
+            padding-top: 88px !important; /* Spazio MASSICCIO per l'header */
+            padding-bottom: 120px; 
+            overflow-y: auto; /* Scroll interno abilitato */
+            scrollbar-width: none; 
+            -webkit-overflow-scrolling: touch;
         }
 
-        .view-section.active {
-            opacity: 1; transform: translateY(0); pointer-events: auto; visibility: visible;
+        .view-section.active { opacity: 1; transform: none; pointer-events: auto; visibility: visible; }
+        ::-webkit-scrollbar { display: none; }
+
+        /* --- ECCEZIONE: HOME VIEW --- */
+        /* La Home deve partire dall'alto (0px) per la foto */
+        #home-view {
+            padding-top: 0px !important; 
         }
+
+        /* --- FLOATING MENU --- */
+        .floating-menu-container { position: absolute; top: 50px; right: 38px; z-index: 2000; display: flex; align-items: flex-start; justify-content: flex-end; transition: opacity 0.3s ease, visibility 0.3s ease; opacity: 1; visibility: visible; }
+        .floating-menu-container.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
+        .glass-circle { width: 48px; height: 48px; border-radius: 50%; background-color: rgba(138, 161, 206, 0.25); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); border: 1px solid rgba(255, 255, 255, 0.4); box-shadow: 0 4px 10px rgba(0,0,0,0.05); display: flex; justify-content: center; align-items: center; cursor: pointer; transition: transform 0.2s; }
+        .glass-circle:active { transform: scale(0.9); }
+        .glass-circle i { font-size: 20px; color: #000; opacity: 0.9; }
+        .menu-trigger { position: absolute; right: 0; top: 0; transition: all 0.3s var(--anim-curve); }
+        .menu-expanded-options { display: flex; gap: 15px; opacity: 0; pointer-events: none; transform: translateX(20px); transition: all 0.4s var(--anim-curve); }
+        .menu-item-wrapper { display: flex; flex-direction: column; align-items: center; gap: 6px; }
+        .menu-label { font-size: 14px; font-weight: 600; color: #000; font-family: 'Avenir Next', sans-serif; text-shadow: 0 0 10px rgba(255,255,255,0.8); }
+        .floating-menu-container.active .menu-trigger { opacity: 0; transform: scale(0.5); pointer-events: none; }
+        .floating-menu-container.active .menu-expanded-options { opacity: 1; pointer-events: auto; transform: translateX(0); }
+
+        /* --- COMPONENTS --- */
+        .home-profile-card { background: var(--pure-white); border-radius: 32px; overflow: hidden; box-shadow: var(--soft-shadow); margin-bottom: 20px; margin-left: 2px; margin-right: 2px; margin-top: 0; /* No margin top for home card */ }
+        .home-profile-img { width: 100%; height: 420px; position: relative; }
+        .home-profile-img img { width: 100%; height: 100%; object-fit: cover; }
+        .home-img-gradient { position: absolute; bottom: 0; width: 100%; height: 150px; background: linear-gradient(to top, var(--pure-white) 20%, transparent); pointer-events: none;}
+        .home-profile-info { padding: 0 20px 25px; text-align: center; position: relative; z-index: 2; margin-top: -40px; }
+        .home-profile-info h2 { font-size: 32px; font-weight: 600; color: var(--text-dark); margin-bottom: 5px; }
+        .cryo-label { font-size: 15px; color: var(--text-dark); display: block; margin-bottom: 30px; opacity: 0.9; }
+        .profile-stats-grid { display: flex; justify-content: space-between; padding: 0 10px; }
+        .stat-item { display: flex; flex-direction: column; align-items: center; gap: 4px; }
+        .stat-label { font-size: 14px; color: #555; } .stat-value { font-size: 18px; color: #1A1A1A; font-weight: 600; }
+
+        .ui-parent-container { border-radius: 32px; overflow: visible; box-shadow: var(--soft-shadow); display: flex; flex-direction: column; z-index: 1000; background: var(--pure-white); position: relative; height: 140px; transition: height 0.5s var(--anim-curve); margin-bottom: 20px; margin-left: 2px; margin-right: 2px; }
+        .header-tab { border-radius: 32px; border-top-right-radius: 32px; overflow: visible; background-color: var(--pure-white); box-shadow: 0 0px 15px rgba(0, 0, 0, 0.1); padding: 17px 15px; cursor: pointer; height: 93px; flex-shrink: 0; position: relative; z-index: 2; }
+        .icon-grid { display: flex; justify-content: space-between; align-items: center; }
+        .squircle { width: 44px; height: 44px; background-color: rgba(0, 0, 0, 0.05); border-radius: 12px; display: flex; justify-content: center; align-items: center; font-size: 18px; color: var(--text-dark); overflow: hidden; }
+        .squircle-item { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+        .fractional-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 500; }
+        .v-divider { width: 1px; height: 60px; background-color: #D1D1D6; }
+        .permanent-title { height: 45px; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 800; color: var(--text-dark); letter-spacing: 0.15em; text-transform: uppercase; font-family: 'Inter', sans-serif; flex-shrink: 0; border-bottom: none; position: relative; z-index: 2; }
+        .content-body { background-color: var(--pure-white); padding: 0px 24px; opacity: 0; transition: opacity 0.3s ease; pointer-events: none; overflow: hidden; border-bottom-left-radius: 32px; border-bottom-right-radius: 32px; }
+        .ui-parent-container.expanded .content-body { opacity: 1; pointer-events: auto; }
+        .flow-list { padding-bottom: 20px; width: 100%; }
+        .table-row { display: flex; align-items: center; padding: 18px 0; border-bottom: 1px solid #E5E5EA; }
+        .table-row:last-child { border-bottom: none; }
+        .glyph { font-size: 20px; color: #000; width: 35px; text-align: center; margin-right: 15px; display: flex; justify-content: center; align-items: center; }
+        .label-roba { font-size: 16px; font-weight: 400; color: var(--text-dark); font-family: 'Inter', sans-serif; }
+
+        .generic-card { background-color: #FFFFFF; border-radius: 24px; padding: 20px; box-shadow: var(--soft-shadow); margin-bottom: 20px; margin-left: 2px; margin-right: 2px; }
+        .generic-card p { font-size: 15px; color: #333; line-height: 1.5; margin: 0; }
+        .generic-card h3 { font-size: 18px; font-weight: 700; color: var(--text-dark); margin-bottom: 8px; margin-top: 0; text-transform: uppercase; }
         
-        .view-section.measuring {
-            visibility: hidden !important; display: block !important; position: absolute !important; opacity: 0 !important; z-index: -100;
-        }
-
-        /* --- CARDS --- */
-        .profile-card, .text-card, .plan-card, .personal-footer-card {
-            background-color: #F4F6F9; margin-bottom: 20px; padding: 20px;
-            box-shadow: var(--soft-shadow); border-radius: 30px;
-        }
-        .profile-card { display: flex; align-items: center; }
-        .avatar-placeholder { width: 80px; height: 80px; font-size: 60px; color: black; display: flex; justify-content: center; align-items: center; margin-right: 20px; flex-shrink: 0; }
+        .text-card { background-color: #FFFFFF; margin-bottom: 20px; padding: 24px; box-shadow: var(--soft-shadow); border-radius: 30px; height: auto; }
+        .text-card p { overflow-wrap: break-word; line-height: 1.6; color: #333; margin-bottom: 15px; }
+        .text-card h3 { font-size: 20px; font-weight: 700; color: var(--text-dark); margin-bottom: 10px; margin-top: 15px; }
+        .subtitle { font-size: 16px; color: var(--text-light); margin-bottom: 10px; font-weight: 400; margin-left: 0; margin-right: 0; }
         
-        .profile-info h2 { 
-            font-size: 18px; color: var(--text-dark); margin-bottom: 10px; 
-            /* Titolo interno -> Medium */
-            font-weight: 500; 
-        }
-        
-        .info-grid { display: grid; grid-template-columns: auto auto; gap: 4px 15px; font-size: 14px; }
-        .label { color: #666; font-weight: 400; /* Regular */ } 
-        .value { color: var(--text-dark); font-weight: 600; /* Demi per i valori */ }
-        
-        .text-card p { font-size: 14px; color: var(--text-light); line-height: 1.6; margin-bottom: 10px; font-weight: 400; }
-        .text-card h3 { 
-            font-size: 16px; color: var(--primary-blue); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px;
-            /* Sottotitolo -> Demi */
-            font-weight: 600; 
-        }
-        .contact-detail { font-weight: 600; color: var(--text-dark); display: block; margin-top: 5px; }
-
-        .culture-card {
-            height: 200px; background: linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.6)), #777; 
-            background-size: cover; background-position: center;
-            display: flex; flex-direction: column; justify-content: flex-end;
-            padding: 20px; color: white; margin-bottom: 20px;
-            box-shadow: 0 20px 40px -5px rgba(0,0,0,0.3); border-radius: 30px;
-        }
-        .culture-label { font-size: 14px; opacity: 0.9; margin-bottom: 5px; font-weight: 400; }
-        .culture-title { font-size: 32px; font-weight: 500; text-transform: uppercase; letter-spacing: 1px; }
-
-        .plan-title { font-size: 18px; color: var(--text-dark); margin-bottom: 10px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.5px; }
-        .plan-price { font-size: 36px; font-weight: 600; color: var(--text-dark); margin-bottom: 20px; text-align: right;}
-        .personal-footer-card { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px; }
-
-        /* --- CALENDAR --- */
-        .calendar-container { margin-bottom: 24px; padding: 0 10px; opacity: 0; }
-        @keyframes introSlideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        .calendar-container { margin-bottom: 20px; padding: 0; opacity: 0; display: flex; justify-content: center; }
         .animate-entrance { animation: introSlideUp 0.6s var(--anim-curve) forwards; }
+        @keyframes introSlideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        .calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 10px; text-align: center; font-size: 14px; font-weight: 600; color: #333; width: 100%; max-width: 330px; }
+        .day { width: 36px; height: 36px; display: flex; justify-content: center; align-items: center; border-radius: 50%; cursor: pointer; margin: 0 auto; font-family: 'Inter', sans-serif; transition: all 0.2s; }
+        .day:active { transform: scale(0.85); background-color: #ddd; }
+        .day.selected { background-color: var(--selected-gray); color: white; transform: scale(1.1); box-shadow: 0 5px 15px rgba(0,0,0,0.15); }
+        .day.today { background-color: var(--primary-blue) !important; color: white !important; box-shadow: 0 5px 15px rgba(136, 153, 185, 0.4); }
+        .day-name { font-size: 11px; font-weight: 700; color: #aaa; text-transform: uppercase; display: flex; justify-content: center; align-items: center; height: 30px; }
 
-        .calendar-grid { 
-            display: grid; grid-template-columns: repeat(7, 1fr); gap: 12px; text-align: center; 
-            font-size: 14px; 
-            font-weight: 600; /* Demi per i numeri del calendario */
-            color: #333; 
-        }
-        .day { width: 36px; height: 36px; display: flex; justify-content: center; align-items: center; border-radius: 50%; cursor: pointer; transition: all 0.2s; }
-        .day.today { background-color: var(--primary-blue); color: white; box-shadow: 0 5px 15px rgba(136, 153, 185, 0.4); }
-        .day.selected { background-color: var(--selected-gray); color: white; }
-        .day.today.selected { background-color: var(--primary-blue); }
-
-        /* --- STACK FOLDER SYSTEM --- */
-        .archive-stack { display: flex; flex-direction: column; padding-top: 10px; }
-        
-        .folder-item { 
-            position: relative; width: 100%; 
-            margin-bottom: -45px; 
-            transition: margin-bottom 0.5s var(--anim-curve), transform 0.5s var(--anim-curve); z-index: 1; cursor: pointer; transform: translate3d(0,0,0); 
-        }
+        .archive-stack { display: flex; flex-direction: column; padding-top: 0px; }
+        .folder-item { position: relative; width: 100%; margin-bottom: -45px; transition: margin-bottom 0.5s var(--anim-curve), transform 0.5s var(--anim-curve); z-index: 1; cursor: pointer; transform: translate3d(0,0,0); }
         .folder-item:last-child { margin-bottom: 0; }
-
-        .folder-tab-area { 
-            height: 40px; width: 50%; background-color: #E2E6EA; 
-            border-top-left-radius: 20px; border-top-right-radius: 20px; 
-            display: flex; align-items: center; padding-left: 20px; 
-            font-size: 12px; 
-            font-weight: 600; /* Demi per la tab */
-            color: var(--primary-blue); text-transform: uppercase; 
-            position: relative; z-index: 1; box-shadow: inset 0 -5px 10px rgba(0,0,0,0.05); transition: background-color 0.3s; 
-        }
-        
+        .folder-tab-area { height: 40px; width: 50%; background-color: #E2E6EA; border-top-left-radius: 20px; border-top-right-radius: 20px; display: flex; align-items: center; padding-left: 20px; font-size: 12px; font-weight: 600; color: var(--primary-blue); text-transform: uppercase; position: relative; z-index: 1; box-shadow: inset 0 -5px 10px rgba(0,0,0,0.05); transition: background-color 0.3s; }
         .folder-face { 
-            background-color: #F8F9FB; border-radius: 25px; border-top-left-radius: 0; 
-            height: 120px; 
-            position: relative; top: -1px; z-index: 2; padding: 20px; 
-            box-shadow: 0 -2px 10px rgba(0,0,0,0.03), 0 10px 20px rgba(0,0,0,0.1); 
-            transition: height 0.5s var(--anim-curve), background-color 0.3s, box-shadow 0.3s; 
-            overflow: hidden; display: flex; flex-direction: column; 
-            will-change: height; 
+            background-color: #F8F9FB; border-radius: 25px; border-top-left-radius: 0; height: 120px; position: relative; top: -1px; z-index: 2; padding: 20px; 
+            box-shadow: var(--soft-shadow);
+            transition: height 0.5s var(--anim-curve), background-color 0.3s, box-shadow 0.3s; overflow: hidden; display: flex; flex-direction: column; will-change: height; 
         }
-
-        /* LABEL TITOLO FOLDER */
-        .folder-label-large { 
-            font-size: 24px; 
-            font-weight: 500; /* Titolo -> Medium */
-            color: var(--text-dark); 
-            max-height: 0; opacity: 0; margin-bottom: 0; 
-            transform: translateY(-20px);
-            transition: all 0.5s var(--anim-curve); 
-        }
-
-        .folder-index { 
-            position: absolute;
-            top: 33%; left: 20px; 
-            transform: translateY(-50%);
-            display: flex; gap: 10px; 
-            transition: all 0.6s var(--anim-curve);
-            z-index: 5;
-        }
-        
-        .pittogram { 
-            width: 40px; height: 40px; 
-            background-color: rgba(0,0,0,0.05); border-radius: 12px; 
-            display: flex; justify-content: center; align-items: center; 
-            color: #1A1A1A; font-size: 18px; 
-            transition: all 0.5s ease;
-        }
-
+        .folder-label-large { font-size: 24px; font-weight: 500; color: var(--text-dark); max-height: 0; opacity: 0; margin-bottom: 0; transform: translateY(-20px); transition: all 0.5s var(--anim-curve); }
+        .folder-index { position: absolute; top: 33%; left: 20px; transform: translateY(-50%); display: flex; align-items: center; gap: 8px; transition: all 0.6s var(--anim-curve); z-index: 5; }
+        .count-badge { font-size: 14px; font-weight: 600; color: var(--text-light); letter-spacing: 1px; }
+        .pittogram { width: 40px; height: 40px; background-color: rgba(0,0,0,0.05); border-radius: 12px; display: flex; justify-content: center; align-items: center; color: #1A1A1A; font-size: 18px; transition: all 0.5s ease; overflow: hidden; }
         .folder-icon-bg { position: absolute; right: -10px; bottom: -15px; font-size: 60px; color: rgba(136, 153, 185, 0.1); transform: rotate(-10deg); transition: 0.5s; }
-
-        /* --- ACTIVE STATE --- */
         .folder-item.active { margin-bottom: 20px; z-index: 100 !important; transform: scale(1.02); }
         .folder-item.active .folder-tab-area { background-color: var(--primary-blue); color: white; }
-        
-        .folder-item.active .folder-face { 
-            background-color: #FFFFFF; 
-            box-shadow: var(--deep-shadow); 
-            height: 300px; 
-        }
-
-        .folder-item.active .folder-label-large { 
-            max-height: 40px; opacity: 1; margin-bottom: 10px; 
-            transform: translateY(0);
-        }
-
-        .folder-item.active .folder-index {
-            top: 70px; left: 20px; 
-            transform: translateY(0);
-        }
-        
-        .folder-item.active .pittogram { background-color: #F0F2F5; color: #1A1A1A; }
-        .folder-item.active .folder-icon-bg { transform: rotate(0deg) scale(0.6); right: 15px; top: 15px; bottom: auto; opacity: 0.1; }
-
+        .folder-item.active .folder-face { background-color: #FFFFFF; box-shadow: 0 20px 40px -5px rgba(0,0,0,0.2); height: 300px; }
+        .folder-item.active .folder-label-large { max-height: 40px; opacity: 1; margin-bottom: 10px; transform: translateY(0); }
+        .folder-item.active .folder-index { top: 70px; left: 20px; transform: translateY(0); }
         .folder-content { opacity: 0; transition: opacity 0.3s 0.2s ease; margin-top: 60px; pointer-events: none; }
         .folder-item.active .folder-content { opacity: 1; pointer-events: auto; }
 
-        .file-list-item { display: flex; align-items: center; padding: 10px 0; border-bottom: 1px dashed #EEE; }
+        .file-list-item { display: flex; align-items: center; padding: 15px 0; border-bottom: 0.5px solid #000000; cursor: pointer; transition: background 0.2s; }
+        .file-list-item:active { opacity: 0.6; transform: scale(0.98); }
         .file-list-item:last-child { border-bottom: none; }
-        .file-text h4 { font-size: 13px; color: var(--text-dark); margin-bottom: 2px; font-weight: 600; /* Demi */ }
-        .file-text span { font-size: 11px; color: #888; text-transform: uppercase; font-weight: 400; /* Regular */ }
+        .file-icon-left { width: 30px; font-size: 16px; color: var(--primary-blue); text-align: center; margin-right: 10px; display: flex; justify-content: center; align-items: center; }
+        .file-text { flex: 1; }
+        .file-text h4 { font-size: 14px; color: var(--text-dark); margin-bottom: 2px; font-weight: 600; }
+        .file-text span { font-size: 11px; color: #0E0E0E; text-transform: uppercase; font-weight: 400; }
+        .file-arrow-right { font-size: 14px; color: #0E0E0E; margin-left: 10px;}
 
-        /* --- SHARED GRID --- */
-        #shared-grid-wrapper { 
-            transform: translateZ(0);
-            transition: opacity 0.4s ease, max-height 0.4s ease; 
-            max-height: 1000px; 
-            opacity: 1; 
-            overflow: visible; margin-top: 0px; 
-        }
+        .btn-back { background: none; border: none; color: var(--text-dark); font-weight: 600; font-size: 14px; cursor: pointer; text-transform: uppercase; display: inline-flex; align-items: center; gap: 8px; margin-bottom: 15px; padding: 5px 0; transition: opacity 0.2s; }
+        .back-btn-container { text-align: left; margin-bottom: 0px; padding-left: 5px; }
         
-        #shared-grid-wrapper.collapsed { max-height: 0; opacity: 0; margin: 0; padding: 0; pointer-events: none; }
-
-        .categories-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; padding: 5px; margin: -5px; }
-        .cat-card { aspect-ratio: 1; display: flex; flex-direction: column; justify-content: center; align-items: center; background-color: #F4F6F9; box-shadow: var(--soft-shadow); border-radius: 30px; position: relative; overflow: hidden; }
+        .categories-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; padding: 5px; margin-bottom: 30px; }
+        .cat-card { aspect-ratio: 1; display: flex; flex-direction: column; justify-content: center; align-items: center; background-color: #F4F6F9; box-shadow: var(--soft-shadow); border-radius: 30px; position: relative; overflow: hidden; transition: transform 0.2s; }
+        .cat-card:active { transform: scale(0.95); }
         .cat-content { display: flex; flex-direction: column; align-items: center; width: 100%; }
-        .cat-icon { font-size: 40px; margin-bottom: 15px; color: black; }
+        .cat-icon { font-size: 40px; margin-bottom: 15px; color: black; display: flex; justify-content: center; align-items: center; }
         .cat-title { font-weight: 500; font-size: 16px; color: var(--text-dark); }
         .cat-card.locked { background-color: #E6E9EF; pointer-events: none; }
         .cat-card.locked .cat-content { opacity: 0.4; filter: blur(4px) grayscale(100%); }
@@ -309,188 +191,183 @@
         .lock-icon { font-size: 24px; color: #8899B9; margin-bottom: 5px; }
         .lock-text { font-size: 12px; font-weight: 600; color: #8899B9; text-transform: uppercase; letter-spacing: 1px; }
 
-        /* BUTTONS & NAV */
-        .btn-primary { background-color: var(--primary-blue); color: white; border: none; padding: 12px 30px; border-radius: 20px; font-weight: 600; font-size: 14px; cursor: pointer; text-transform: uppercase; float: right; }
-        .btn-secondary { background-color: #99AACC; color: white; border: none; padding: 10px; border-radius: 20px; font-weight: 600; font-size: 12px; cursor: pointer; text-transform: uppercase; text-align: center; width: 100%; }
-        .btn-back { background: none; border: none; color: var(--text-dark); font-weight: 600; font-size: 14px; cursor: pointer; text-transform: uppercase; display: inline-flex; align-items: center; gap: 8px; margin-bottom: 15px; }
-        .back-btn-container { text-align: left; margin-bottom: 15px; padding-left: 5px; }
-        .footer-links { text-align: right; font-size: 12px; color: var(--text-dark); display: flex; flex-direction: column; justify-content: center; }
-        .footer-links a { color: var(--text-dark); text-decoration: none; margin-bottom: 5px; display: block; }
+        .immersive-card { background-color: #FFFFFF; border-radius: 32px; padding: 24px; box-shadow: var(--deep-shadow); display: flex; flex-direction: column; gap: 20px; min-height: 70vh; margin-bottom: 40px; margin-left: 2px; margin-right: 2px; margin-top: 5px; animation: fadeInCard 0.4s ease-out; position: relative; }
+        @keyframes fadeInCard { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .card-title { font-size: 32px; font-weight: 700; color: var(--text-dark); margin: 0; font-family: 'Avenir Next', sans-serif; letter-spacing: -0.5px; }
+        .card-image-container { width: 100%; height: 260px; border-radius: 24px; overflow: hidden; background-color: #f0f0f0; box-shadow: inset 0 0 20px rgba(0,0,0,0.05); position: relative; }
+        .card-image-container img { width: 100%; height: 100%; object-fit: cover; }
+        .card-tag { position: absolute; top: 15px; left: 15px; background: rgba(255,255,255,0.9); backdrop-filter: blur(10px); padding: 6px 12px; border-radius: 12px; font-size: 11px; font-weight: 700; color: var(--text-dark); text-transform: uppercase; letter-spacing: 0.5px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        .equation-row { display: flex; align-items: center; justify-content: center; gap: 15px; padding: 10px 0; font-size: 20px; color: var(--text-dark); font-weight: 800; opacity: 0.8; }
+        .equation-icon { font-size: 24px; color: var(--text-dark); display: flex; justify-content: center; align-items: center; }
+        .card-divider { height: 1px; background-color: #000; width: 100%; opacity: 0.08; }
+        .card-description { font-size: 16px; color: var(--text-light); line-height: 1.7; font-weight: 400; }
+        .detail-table-container { width: 100%; display: flex; flex-direction: column; gap: 0; margin-bottom: 10px; background: #F9FAFC; border-radius: 20px; padding: 15px; }
+        .detail-row { display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px dashed rgba(0,0,0,0.1); }
+        .detail-row:last-child { border-bottom: none; }
+        .detail-label { font-size: 13px; font-weight: 600; color: #888; text-transform: uppercase; }
+        .detail-value { font-size: 14px; font-weight: 600; color: var(--text-dark); text-align: right; }
 
-        .bottom-nav { position: absolute; bottom: 0; left: 0; width: 100%; height: 90px; background: rgba(242, 244, 248, 0.7); backdrop-filter: blur(20px) saturate(180%); border-top: 1px solid rgba(255, 255, 255, 0.6); box-shadow: 0 -10px 30px rgba(0,0,0,0.05); border-top-left-radius: 30px; border-top-right-radius: 30px; display: flex; justify-content: space-around; align-items: center; padding-bottom: 20px; z-index: 100; }
-        .nav-item { font-size: 24px; color: var(--primary-blue); cursor: pointer; opacity: 0.5; transition: 0.3s; border: none; background: none; }
-        .nav-item.active { opacity: 1; transform: scale(1.1); text-shadow: 0 0 10px rgba(136, 153, 185, 0.5); }
+        #personal-view { display: flex; flex-direction: column; min-height: calc(100% - 140px); /* Altezza totale meno header */ }
+        .personal-card { background-color: #FFFFFF; border-radius: 24px; padding: 24px; box-shadow: var(--soft-shadow); margin-bottom: 20px; margin-left: 2px; margin-right: 2px; transition: transform 0.2s; }
+        .personal-card:active { transform: scale(0.99); }
+        .p-card-label { font-size: 12px; font-weight: 700; color: #888; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 15px; }
+        .p-card-label-normal { font-size: 18px; font-weight: 500; color: var(--text-dark); margin-bottom: 8px; }
+        .cultures-row { display: flex; gap: 20px; align-items: flex-start; }
+        .culture-circle-wrapper { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+        .culture-circle { width: 64px; height: 64px; border-radius: 50%; background-color: var(--circle-bg); display: flex; justify-content: center; align-items: center; font-size: 24px; color: var(--text-dark); box-shadow: inset 0 2px 5px rgba(0,0,0,0.03); transition: transform 0.2s; cursor: pointer; }
+        .culture-circle:active { transform: scale(0.9); }
+        .culture-name { font-size: 13px; font-weight: 700; color: var(--text-dark); }
+        .plan-price-row { display: flex; justify-content: space-between; align-items: center; }
+        .plan-price { font-size: 36px; font-weight: 700; color: var(--text-dark); letter-spacing: -1px; }
+        .btn-view-plans { background-color: var(--primary-blue); color: white; border: none; padding: 12px 24px; border-radius: 20px; font-weight: 700; font-size: 12px; cursor: pointer; text-transform: uppercase; letter-spacing: 0.5px; transition: transform 0.2s; box-shadow: 0 5px 15px rgba(138, 161, 206, 0.4); }
+        .btn-view-plans:active { transform: scale(0.95); }
+        .bottom-actions { display: flex; gap: 15px; margin-top: auto; padding-top: 10px; padding-bottom: 10px; } 
+        .btn-action-pill { flex: 1; background-color: var(--primary-blue); color: white; border: none; padding: 14px 0; border-radius: 25px; font-weight: 700; font-size: 13px; cursor: pointer; text-transform: uppercase; text-align: center; box-shadow: 0 5px 15px rgba(138, 161, 206, 0.4); transition: transform 0.2s; }
+        .btn-action-pill:active { transform: scale(0.97); }
+
+        .bottom-nav { position: absolute; bottom: 0; left: 0; width: 100%; height: 95px; background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(25px) saturate(180%); border-top: 1px solid rgba(255, 255, 255, 0.5); box-shadow: 0 -10px 40px rgba(0,0,0,0.05); border-top-left-radius: 35px; border-top-right-radius: 35px; display: flex; justify-content: space-around; align-items: center; padding-bottom: 25px; z-index: 100; }
+        .nav-item { font-size: 26px; color: #000000; cursor: pointer; opacity: 0.3; transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1); border: none; background: none; }
+        .nav-item.active { opacity: 1; transform: scale(1.15) translateY(-2px); color: var(--primary-blue); text-shadow: 0 0 20px rgba(138, 161, 206, 0.6); }
+        
+        /* IMAGE UTILITIES */
+        .custom-img-icon { width: 100%; height: 55%; object-fit: contain; }
+        .pittogram .custom-img-icon { width: 60%; height: 60%; }
+        .glyph .custom-img-icon { width: 24px; height: 24px; }
+        .file-icon-left .custom-img-icon { width: 20px; height: 20px; }
+        .cat-icon .custom-img-icon { width: 40px; height: 40px; }
+        .equation-icon .custom-img-icon { width: 28px; height: 28px; }
     </style>
 </head>
 <body>
 
     <div class="mobile-container">
-        
-        <div class="screen-mask">
+        <div class="screen-mask" id="screen-mask">
+            
+            <div class="floating-menu-container" id="floating-menu">
+                <div class="glass-circle menu-trigger" onclick="toggleFloatingMenu(event)">
+                    <i class="fas fa-universal-access"></i>
+                </div>
+                <div class="menu-expanded-options">
+                    <div class="menu-item-wrapper" onclick="toggleFloatingMenu(event)">
+                        <div class="glass-circle"><i class="fas fa-child-reaching"></i></div>
+                        <span class="menu-label">Kurds</span>
+                    </div>
+                    <div class="menu-item-wrapper" onclick="toggleFloatingMenu(event)">
+                        <div class="glass-circle"><i class="fas fa-plus"></i></div>
+                    </div>
+                </div>
+            </div>
 
-            <div class="header" id="main-header">
+            <div class="header home-mode" id="main-header">
                 <h1 id="page-title">TODAY'S<br>DISCOVERIES</h1>
             </div>
 
-            <div class="content" id="main-content">
-                
+            <div class="content home-active" id="main-content">
                 <div class="dynamic-wrapper" id="dynamic-wrapper">
                     
                     <div id="home-view" class="view-section active">
-                        <div class="profile-card">
-                            <div class="avatar-placeholder"><i class="fas fa-child-reaching"></i></div>
-                            <div class="profile-info">
-                                <h2>Rojan Ehmed</h2>
-                                <div class="info-grid">
-                                    <span class="label">Age</span> <span class="value">21</span>
-                                    <span class="label">Culture</span> <span class="value">Kurdish</span>
-                                    <span class="label">Location</span> <span class="value">Şırnak</span>
-                                    <span class="label">Cryo</span> <span class="value">2075</span>
+                        <div class="home-profile-card">
+                            <div class="home-profile-img">
+                                <img id="p-img" src="" alt="Profile">
+                                <div class="home-img-gradient"></div>
+                            </div>
+                            <div class="home-profile-info">
+                                <h2 id="p-name"></h2>
+                                <span class="cryo-label" id="p-desc"></span>
+                                <div class="profile-stats-grid">
+                                    <div class="stat-item"><span class="stat-label">Age</span><span class="stat-value" id="p-age"></span></div>
+                                    <div class="stat-item"><span class="stat-label">Culture</span><span class="stat-value" id="p-culture"></span></div>
+                                    <div class="stat-item"><span class="stat-label">Location</span><span class="stat-value" id="p-loc"></span></div>
                                 </div>
+                            </div>
+                        </div>
+
+                        <div class="ui-parent-container" id="discovery-module">
+                            <div class="header-tab" onclick="toggleDiscovery()">
+                                <div class="icon-grid">
+                                    <div id="discovery-icons-placeholder" style="display:contents;"></div>
+                                </div>
+                            </div>
+                            <h2 class="section-title permanent-title">TODAY'S DISCOVERIES</h2>
+                            <div class="content-body" id="discovery-content">
+                                <div class="flow-list" id="discovery-list"></div>
                             </div>
                         </div>
                     </div>
 
                     <div id="progress-view" class="view-section">
-                        <p class="subtitle" style="margin-left: 10px;">Track your discoveries: select a day.</p>
+                        <p class="subtitle">Track your discoveries: select a day.</p>
                         <div class="calendar-container">
                             <div class="calendar-grid">
-                                <div class="day today" onclick="selectDay(this, 1)">1</div>
-                                <div class="day" onclick="selectDay(this, 2)">2</div>
-                                <div class="day" onclick="selectDay(this, 3)">3</div>
-                                <div class="day" onclick="selectDay(this, 4)">4</div>
-                                <div class="day" onclick="selectDay(this, 5)">5</div>
-                                <div class="day" onclick="selectDay(this, 6)">6</div>
-                                <div class="day" onclick="selectDay(this, 7)">7</div>
-                                <div class="day" onclick="selectDay(this, 8)">8</div>
-                                <div class="day" onclick="selectDay(this, 9)">9</div>
-                                <div class="day" onclick="selectDay(this, 10)">10</div>
-                                <div class="day" onclick="selectDay(this, 11)">11</div>
-                                <div class="day" onclick="selectDay(this, 12)">12</div>
-                                <div class="day" onclick="selectDay(this, 13)">13</div>
-                                <div class="day" onclick="selectDay(this, 14)">14</div>
-                                <div class="day" onclick="selectDay(this, 15)">15</div>
-                                <div class="day" onclick="selectDay(this, 16)">16</div>
-                                <div class="day" onclick="selectDay(this, 17)">17</div>
-                                <div class="day" onclick="selectDay(this, 18)">18</div>
-                                <div class="day" onclick="selectDay(this, 19)">19</div>
-                                <div class="day" onclick="selectDay(this, 20)">20</div>
-                                <div class="day" onclick="selectDay(this, 21)">21</div>
-                                <div class="day" onclick="selectDay(this, 22)">22</div>
-                                <div class="day" onclick="selectDay(this, 23)">23</div>
-                                <div class="day" onclick="selectDay(this, 24)">24</div>
-                                <div class="day" onclick="selectDay(this, 25)">25</div>
-                                <div class="day" onclick="selectDay(this, 26)">26</div>
-                                <div class="day" onclick="selectDay(this, 27)">27</div>
-                                <div class="day" onclick="selectDay(this, 28)">28</div>
-                                <div class="day" onclick="selectDay(this, 29)">29</div>
-                                <div class="day" onclick="selectDay(this, 30)">30</div>
+                                <div class="day-name">S</div><div class="day-name">M</div><div class="day-name">T</div><div class="day-name">W</div><div class="day-name">T</div><div class="day-name">F</div><div class="day-name">S</div>
+                                <div class="day today" onclick="selectDay(this, 1)">1</div><div class="day" onclick="selectDay(this, 2)">2</div><div class="day" onclick="selectDay(this, 3)">3</div><div class="day" onclick="selectDay(this, 4)">4</div><div class="day" onclick="selectDay(this, 5)">5</div><div class="day" onclick="selectDay(this, 6)">6</div><div class="day" onclick="selectDay(this, 7)">7</div><div class="day" onclick="selectDay(this, 8)">8</div><div class="day" onclick="selectDay(this, 9)">9</div><div class="day" onclick="selectDay(this, 10)">10</div><div class="day" onclick="selectDay(this, 11)">11</div><div class="day" onclick="selectDay(this, 12)">12</div><div class="day" onclick="selectDay(this, 13)">13</div><div class="day" onclick="selectDay(this, 14)">14</div><div class="day" onclick="selectDay(this, 15)">15</div><div class="day" onclick="selectDay(this, 16)">16</div><div class="day" onclick="selectDay(this, 17)">17</div><div class="day" onclick="selectDay(this, 18)">18</div><div class="day" onclick="selectDay(this, 19)">19</div><div class="day" onclick="selectDay(this, 20)">20</div><div class="day" onclick="selectDay(this, 21)">21</div><div class="day" onclick="selectDay(this, 22)">22</div><div class="day" onclick="selectDay(this, 23)">23</div><div class="day" onclick="selectDay(this, 24)">24</div><div class="day" onclick="selectDay(this, 25)">25</div><div class="day" onclick="selectDay(this, 26)">26</div><div class="day" onclick="selectDay(this, 27)">27</div><div class="day" onclick="selectDay(this, 28)">28</div><div class="day" onclick="selectDay(this, 29)">29</div><div class="day" onclick="selectDay(this, 30)">30</div><div class="day" onclick="selectDay(this, 31)">31</div>
                             </div>
                         </div>
+                        <div class="categories-grid" id="shared-grid-container"></div>
                     </div>
 
                     <div id="archive-view" class="view-section">
                         <p class="subtitle" style="margin-left: 5px;">Your digital preservation archive.</p>
-                        <div class="archive-stack" id="stack-container">
-                            
-                            <div class="folder-item" onclick="toggleFolder(this)">
-                                <div class="folder-tab-area">FOOD</div>
-                                <div class="folder-face">
-                                    <div class="folder-label-large">Cuisine</div>
-                                    <div class="folder-index">
-                                        <div class="pittogram"><i class="fas fa-utensil-spoon"></i></div>
-                                        <div class="pittogram"><i class="fas fa-bowl-rice"></i></div>
-                                    </div>
-                                    <i class="fas fa-bread-slice folder-icon-bg"></i>
-                                    <div class="folder-content">
-                                        <div class="file-list-item"><div class="file-text"><h4>Nanê Tîrî</h4><span>Recipe</span></div></div>
-                                        <div class="file-list-item"><div class="file-text"><h4>Kutilk</h4><span>Dish</span></div></div>
-                                    </div>
-                                </div>
-                            </div>
+                        <div class="archive-stack" id="stack-container"></div>
+                    </div>
 
-                            <div class="folder-item" onclick="toggleFolder(this)">
-                                <div class="folder-tab-area">CLOTHES</div>
-                                <div class="folder-face">
-                                    <div class="folder-label-large">Attire</div>
-                                    <div class="folder-index"><div class="pittogram"><i class="fas fa-hat-cowboy"></i></div></div>
-                                    <i class="fas fa-shirt folder-icon-bg"></i>
-                                    <div class="folder-content">
-                                        <div class="file-list-item"><div class="file-text"><h4>Şal û Şapik</h4><span>Suit</span></div></div>
-                                    </div>
-                                </div>
+                    <div id="universal-detail-view" class="view-section">
+                        <div class="back-btn-container">
+                            <button class="btn-back" onclick="switchTab('archive')">
+                                <i class="fas fa-arrow-left"></i> Back
+                            </button>
+                        </div>
+                        <div class="immersive-card">
+                            <h2 class="card-title" id="uni-title">Loading...</h2>
+                            <div class="card-image-container">
+                                <div class="card-tag" id="uni-tag">CATEGORY</div>
+                                <img id="uni-image" src="" alt="Detail">
                             </div>
-
-                             <div class="folder-item" onclick="toggleFolder(this)">
-                                <div class="folder-tab-area">RITUALS</div>
-                                <div class="folder-face">
-                                    <div class="folder-label-large">Rituals</div>
-                                    <div class="folder-index">
-                                        <div class="pittogram"><i class="fas fa-drum"></i></div>
-                                        <div class="pittogram"><i class="fas fa-fire"></i></div>
-                                    </div>
-                                    <i class="fas fa-music folder-icon-bg"></i>
-                                    <div class="folder-content">
-                                        <div class="file-list-item"><div class="file-text"><h4>Newroz</h4><span>Festival</span></div></div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="folder-item" onclick="toggleFolder(this)">
-                                <div class="folder-tab-area">MEMORIES</div>
-                                <div class="folder-face">
-                                    <div class="folder-label-large">Memories</div>
-                                    <div class="folder-index">
-                                        <div class="pittogram"><i class="fas fa-microphone"></i></div>
-                                        <div class="pittogram"><i class="fas fa-map-location-dot"></i></div>
-                                    </div>
-                                    <i class="fas fa-brain folder-icon-bg"></i>
-                                    <div class="folder-content">
-                                        <div class="file-list-item"><div class="file-text"><h4>Echoes</h4><span>Audio</span></div></div>
-                                    </div>
-                                </div>
-                            </div>
-
+                            <div class="equation-row" id="uni-icons"></div>
+                            <div class="card-divider"></div>
+                            <div id="uni-table" class="detail-table-container"></div>
+                            <p class="card-description" id="uni-desc">Description goes here.</p>
                         </div>
                     </div>
 
                     <div id="personal-view" class="view-section">
-                        <p class="subtitle">UNEC thanks you for supporting cryoconservation.</p>
-                        <div class="culture-card"><span class="culture-label">Your adopted culture</span><span class="culture-title">KURD</span></div>
-                        <div class="plan-card"><div class="plan-title">Your plan</div><div class="plan-price">0$/month</div><button class="btn-primary">VIEW PLANS</button><div style="clear:both;"></div></div>
-                        <div class="personal-footer-card">
-                            <div style="display:flex; flex-direction:column; gap:10px;">
-                                <button class="btn-secondary" onclick="switchTab('about')">WHO WE ARE</button>
-                                <button class="btn-secondary" onclick="switchTab('contact')">CONTACT US</button>
+                        <p class="personal-subtitle">UNEC thanks you for supporting the cryopreservation of endangered cultures.</p>
+                        <div class="personal-card">
+                            <h3 class="p-card-label">YOUR ADOPTED CULTURES</h3>
+                            <div class="cultures-row">
+                                <div class="culture-circle-wrapper">
+                                    <div class="culture-circle"><i class="fas fa-child-reaching"></i></div>
+                                    <span class="culture-name" id="p-cult-name">Kurds</span>
+                                </div>
+                                <div class="culture-circle-wrapper">
+                                    <div class="culture-circle"><i class="fas fa-plus"></i></div>
+                                </div>
                             </div>
-                            <div class="footer-links"><a href="#">Terms & conditions</a><a href="#"><i class="fab fa-instagram"></i> unec_org</a></div>
+                        </div>
+                        <div class="personal-card">
+                            <h3 class="p-card-label-normal">Your plan</h3>
+                            <div class="plan-price-row">
+                                <span class="plan-price" id="p-price">0$/month</span>
+                                <button class="btn-view-plans">VIEW PLANS</button>
+                            </div>
+                        </div>
+                        <div class="bottom-actions">
+                            <button class="btn-action-pill" onclick="switchTab('about')">WHO WE ARE</button>
+                            <button class="btn-action-pill" onclick="switchTab('contact')">CONTACT US</button>
                         </div>
                     </div>
-
+                    
                     <div id="about-view" class="view-section">
                         <div class="back-btn-container"><button class="btn-back" onclick="switchTab('personal')"><i class="fas fa-arrow-left"></i> BACK</button></div>
-                        <div class="text-card"><p>Established by the UN in 2075, UNEC responds to the rise in cultural conflicts, recognizing cultural preservation as a fundamental imperative for global peace. For cultures facing imminent extinction, UNEC offers a secure scientific procedure to enter biostasis, preserving the living source of cultural knowledge and tradition.</p></div>
-                        <div class="text-card"><h3>Vision</h3><p>UNEC envisions a world where every culture can continue to thrive through its own community.</p><h3>Mission</h3><p>Our mission is to preserve endangered cultures through a safe practice of cryoconservation.</p></div>
+                        <div id="about-content-area"></div>
                     </div>
 
                     <div id="contact-view" class="view-section">
                         <div class="back-btn-container"><button class="btn-back" onclick="switchTab('personal')"><i class="fas fa-arrow-left"></i> BACK</button></div>
-                        <div class="text-card"><h3>Headquarters</h3><p>Our central headquarters is located in a secured, climate-controlled facility in <strong>Antarctica</strong>.</p><p style="color:#888; font-size:12px; margin-top:5px;">Access is restricted to authorized personnel only, in accordance with international preservation protocols.</p></div>
-                        <div class="text-card"><h3>Liaison Network</h3><p>For all inquiries, our global liaison network is available to assist you. You can reach our dedicated operators via:</p><span class="contact-detail">Phone: +672 361 784 6525</span><span class="contact-detail">Email: unec@mail.org</span></div>
-                        <div class="text-card"><h3>Field Operations</h3><p>Our field operators are continuously deployed worldwide to document cultural conflict and manage our cryopreservation process. Your message will be routed to the regional team best equipped to respond to your specific situation.</p></div>
+                        <div id="contact-content-area"></div>
                     </div>
 
                 </div>
-                
-                <div id="shared-grid-wrapper">
-                    <div class="categories-grid" id="shared-grid">
-                        <div class="cat-card" id="card-food"><div class="cat-content"><div class="cat-icon"><i class="fas fa-bread-slice"></i></div><span class="cat-title">Food</span></div><div class="lock-overlay"><i class="fas fa-lock lock-icon"></i><span class="lock-text">LOCKED</span></div></div>
-                        <div class="cat-card" id="card-clothes"><div class="cat-content"><div class="cat-icon"><i class="fas fa-shirt"></i></div><span class="cat-title">Clothes</span></div><div class="lock-overlay"><i class="fas fa-lock lock-icon"></i><span class="lock-text">LOCKED</span></div></div>
-                        <div class="cat-card" id="card-ritual"><div class="cat-content"><div class="cat-icon"><i class="fas fa-music"></i></div><span class="cat-title">Ritual</span></div><div class="lock-overlay"><i class="fas fa-lock lock-icon"></i><span class="lock-text">LOCKED</span></div></div>
-                        <div class="cat-card" id="card-memories"><div class="cat-content"><div class="cat-icon"><i class="fas fa-brain"></i></div><span class="cat-title">Memories</span></div><div class="lock-overlay"><i class="fas fa-lock lock-icon"></i><span class="lock-text">LOCKED</span></div></div>
-                    </div>
-                </div>
-
             </div>
 
             <div class="bottom-nav">
@@ -504,151 +381,368 @@
     </div> 
 
     <script>
-        // --- LOGIC ---
+        // =================================================================
+        // --- ✏️ CONFIGURAZIONE CONTENUTI (MODIFICA QUI I LINK E I FLAG) ---
+        // =================================================================
+        
+        const DB = {
+            profile: {
+                name: "Rojan Ehmed",
+                desc: "Cryoconservated since: 2075",
+                img: "assets/assets/kurd/Foto_profilo.png", // TUA FOTO QUI
+                age: "21",
+                culture: "Kurdish",
+                location: "Şırnak"
+            },
+            discoveries: [
+                { icon: "assets/icone varie/icone_principali/food.png", isImage: true, label: "Nanê Tîrî" },
+                { icon: "assets/icone varie/icone_principali/dress.png", isImage: true, label: "Şal û Şapik" },
+                { icon: "assets/icone varie/icone_principali/ritual.png", isImage: true, label: "Newroz Rhythm" },
+                { icon: "assets/icone varie/icone_principali/memory.png", isImage: true, label: "Echoes" },
+                { icon: "fa-map-marker-alt", isImage: false, label: "Mountains" },
+                { icon: "assets/icone varie/icone_principali/food.png", isImage: true, label: "Feast" }
+            ],
+            archives: [
+                {
+                    id: "food", label: "FOOD", title: "Cuisine", 
+                    icon: "assets/icone varie/icone_principali/food.png", isIconImg: true,
+                    bgIcon: "fa-bread-slice",
+                    count: "2/7",
+                    items: [
+                        { id: "nane", icon: "fa-file-alt", isItemImg: false, title: "Nanê Tîrî", type: "Recipe" },
+                        { id: "kutilk", icon: "fa-file-alt", isItemImg: false, title: "Kutilk", type: "Dish" },
+                        { id: "pizza", icon: "fa-pizza-slice", isItemImg: false, title: "Pizza", type: "Special" }
+                    ]
+                },
+                {
+                    id: "clothes", label: "CLOTHES", title: "Attire", 
+                    icon: "assets/icone varie/icone_principali/dress.png", isIconImg: true,
+                    bgIcon: "fa-shirt", count: "1/7",
+                    items: [
+                        { id: "sal", icon: "fa-file-alt", isItemImg: false, title: "Şal û Şapik", type: "Suit" }
+                    ]
+                },
+                {
+                    id: "rituals", label: "RITUALS", title: "Rituals", 
+                    icon: "assets/icone varie/icone_principali/ritual.png", isIconImg: true,
+                    bgIcon: "fa-music", count: "1/7",
+                    items: [
+                        { id: "newroz", icon: "fa-file-alt", isItemImg: false, title: "Newroz", type: "Festival" }
+                    ]
+                },
+                {
+                    id: "memories", label: "MEMORIES", title: "Memories", 
+                    icon: "assets/icone varie/icone_principali/memory.png", isIconImg: true,
+                    bgIcon: "fa-brain", count: "1/7",
+                    items: [
+                        { id: "echoes", icon: "fa-file-alt", isItemImg: false, title: "Echoes", type: "Audio" }
+                    ]
+                }
+            ],
+            progress: [
+                { id: "card-food", title: "Food", icon: "assets/icone varie/icone_principali/food.png", isImage: true },
+                { id: "card-clothes", title: "Clothes", icon: "assets/icone varie/icone_principali/dress.png", isImage: true },
+                { id: "card-ritual", title: "Ritual", icon: "assets/icone varie/icone_principali/ritual.png", isImage: true },
+                { id: "card-memories", title: "Memories", icon: "assets/icone varie/icone_principali/memory.png", isImage: true }
+            ],
+            items: {
+                'nane': {
+                    tag: "CUISINE", title: "Nanê Tîrî",
+                    image: "https://images.unsplash.com/photo-1597393276632-6147d33d9f2c?q=80&w=600&auto=format&fit=crop",
+                    description: "Il Nanê Tîrî è un pane curdo tradizionale, sottilissimo e croccante...",
+                    icons: [
+                        { val: 'fa-wheat', isImg: false }, 
+                        { val: 'fa-fire', isImg: false }, 
+                        { val: 'fa-cookie-bite', isImg: false }
+                    ],
+                    details: { "Origin": "Kurdistan", "Type": "Flatbread", "Cook Time": "2 min", "Calories": "120 kcal" }
+                },
+                'kutilk': {
+                    tag: "CUISINE", title: "Kutilk",
+                    image: "https://images.unsplash.com/photo-1606525437679-037caa7b976e?q=80&w=600&auto=format&fit=crop",
+                    description: "Polpette di bulgur ripiene di carne macinata speziata...",
+                    icons: [
+                        { val: 'fa-bowl-rice', isImg: false }, 
+                        { val: 'fa-drumstick-bite', isImg: false }, 
+                        { val: 'fa-utensils', isImg: false }
+                    ],
+                    details: { "Origin": "Mardin", "Main Ing.": "Bulgur", "Prep Time": "45 min", "Occasion": "Festivals" }
+                },
+                'sal': {
+                    tag: "ATTIRE", title: "Şal û Şapik",
+                    image: "https://images.unsplash.com/photo-1552697818-47c47d7d55eb?q=80&w=600&auto=format&fit=crop",
+                    description: "Il tradizionale abito maschile curdo...",
+                    icons: [
+                        { val: 'fa-scissors', isImg: false }, 
+                        { val: 'fa-shirt', isImg: false }, 
+                        { val: 'fa-user-tie', isImg: false }
+                    ],
+                    details: { "Material": "Mohair Wool", "Gender": "Male", "Region": "Botan", "Weave": "Handloom" }
+                },
+                'newroz': {
+                    tag: "RITUAL", title: "Newroz",
+                    image: "https://images.unsplash.com/photo-1542358872-43ce9c629fb3?q=80&w=600&auto=format&fit=crop",
+                    description: "Il capodanno curdo celebrato all'equinozio di primavera...",
+                    icons: [
+                        { val: 'fa-fire', isImg: false }, 
+                        { val: 'fa-calendar-day', isImg: false }, 
+                        { val: 'fa-flag', isImg: false }
+                    ],
+                    details: { "Date": "March 21", "Symbol": "Fire", "Duration": "1 Day", "Season": "Spring" }
+                },
+                'echoes': {
+                    tag: "MEMORY", title: "Echoes",
+                    image: "https://images.unsplash.com/photo-1478737270239-2f02b77ac6d5?q=80&w=600&auto=format&fit=crop",
+                    description: "Una raccolta di registrazioni orali e canti tramandati dagli anziani...",
+                    icons: [
+                        { val: 'fa-microphone', isImg: false }, 
+                        { val: 'fa-wave-square', isImg: false }, 
+                        { val: 'fa-ear-listen', isImg: false }
+                    ],
+                    details: { "Format": "Audio", "Length": "450 hrs", "Source": "Elders", "Location": "Şırnak" }
+                },
+                'pizza': {
+                    tag: "SPECIAL", title: "Pizza",
+                    image: "https://images.unsplash.com/photo-1513104890138-7c749659a591?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+                    description: "Gnam super buona ehhhh??? Il classico che unisce tutti, anche nel 2075.",
+                    icons: [
+                        { val: 'fa-bread-slice', isImg: false }, 
+                        { val: 'fa-cheese', isImg: false }, 
+                        { val: 'fa-pepper-hot', isImg: false }
+                    ],
+                    details: { "Origin": "Napoli", "Type": "Round", "Cook Time": "90 sec", "Taste": "Legendary" }
+                }
+            },
+            about: [
+                { type: 'text', content: "Established by the UN in 2075, UNEC responds to the rise in cultural conflicts, recognizing cultural preservation as a fundamental imperative for global peace. For cultures facing imminent extinction, UNEC offers a secure scientific procedure to enter biostasis, preserving the living source of cultural knowledge and tradition." },
+                { type: 'card', title: "Vision", text: "UNEC envisions a world where every culture can continue to thrive through its own community." },
+                { type: 'card', title: "Mission", text: "Our mission is to preserve endangered cultures through a safe practice of cryoconservation." }
+            ],
+            contact: [
+                { type: 'card', title: "Headquarters", text: "Our central headquarters is located in a secured, climate-controlled facility in Antarctica.<br>Access is restricted to authorized personnel only, in accordance with international preservation protocols." },
+                { type: 'card', title: "Inquiries", text: "For all inquiries, our global liaison network is available to assist you. You can reach our dedicated operators via:<br><br><strong>Phone/messages:</strong> +672 361 784 6525<br><strong>Email:</strong> unec@mail.org" },
+                { type: 'card', title: "Field Operations", text: "Our field operators are continuously deployed worldwide to document cultural conflict and manage our cryopreservation process. Your message will be routed to the regional team best equipped to respond to your specific situation." }
+            ]
+        };
+
+        // =================================================================
+        // --- ⚙️ SYSTEM LOGIC ---
+        // =================================================================
         let isAnimating = false;
         const currentDay = 1; 
         let currentSelectedCalendarDay = 1; 
 
-        // Calculates exact height
-        function updateHeight() {
-            const activeSection = document.querySelector('.view-section.active');
-            const wrapper = document.getElementById('dynamic-wrapper');
-            
-            if(activeSection && wrapper) {
-                const h = activeSection.getBoundingClientRect().height;
-                wrapper.style.height = h + 'px';
-            }
+        // HELPER PER RENDERIZZARE ICONE O IMMAGINI
+        function renderIcon(val, isImg, className="") {
+            if(isImg) return `<img src="${val}" class="custom-img-icon ${className}" alt="icon">`;
+            return `<i class="fas ${val} ${className}"></i>`;
         }
 
-        window.addEventListener('load', () => { setTimeout(updateHeight, 100); });
+        function initApp() {
+            // 1. Profile
+            document.getElementById('p-name').innerText = DB.profile.name;
+            document.getElementById('p-desc').innerText = DB.profile.desc;
+            document.getElementById('p-img').src = DB.profile.img;
+            document.getElementById('p-age').innerText = DB.profile.age;
+            document.getElementById('p-culture').innerText = DB.profile.culture;
+            document.getElementById('p-loc').innerText = DB.profile.location;
+            document.getElementById('p-cult-name').innerText = DB.profile.culture; 
+
+            // 2. Discoveries
+            const discGrid = document.getElementById('discovery-icons-placeholder').parentElement;
+            let discHTML = '';
+            let listHTML = '';
+            DB.discoveries.forEach((d, i) => {
+                if(i < 3) {
+                    discHTML += `<div class="squircle-item"><div class="squircle">${renderIcon(d.icon, d.isImage)}</div><span class="fractional-label">1/1</span></div>`;
+                }
+                listHTML += `<div class="table-row"><div class="glyph">${renderIcon(d.icon, d.isImage)}</div><span class="label-roba">${d.label}</span></div>`;
+            });
+            // Manual Placeholder stuff
+            discHTML += `<div class="v-divider"></div>
+                         <div class="squircle-item"><div class="squircle"><i class="fas fa-brain"></i></div><span class="fractional-label">2/1</span></div>
+                         <div class="squircle-item"><div class="squircle"><i class="fas fa-question"></i></div><span class="fractional-label">0/1</span></div>
+                         <div class="squircle-item"><div class="squircle"><i class="fas fa-question"></i></div><span class="fractional-label">0/1</span></div>`;
+            
+            document.getElementById('discovery-icons-placeholder').innerHTML = discHTML;
+            document.getElementById('discovery-list').innerHTML = listHTML;
+
+            // 3. Progress Grid
+            const gridContainer = document.getElementById('shared-grid-container');
+            let gridHTML = '';
+            DB.progress.forEach(p => {
+                gridHTML += `
+                <div class="cat-card" id="${p.id}">
+                    <div class="cat-content">
+                        <div class="cat-icon">${renderIcon(p.icon, p.isImage)}</div>
+                        <span class="cat-title">${p.title}</span>
+                    </div>
+                    <div class="lock-overlay"><i class="fas fa-lock lock-icon"></i><span class="lock-text">LOCKED</span></div>
+                </div>`;
+            });
+            gridContainer.innerHTML = gridHTML;
+
+            // 4. Archive
+            const stack = document.getElementById('stack-container');
+            stack.innerHTML = '';
+            DB.archives.forEach(folder => {
+                let itemsHTML = '';
+                folder.items.forEach(item => {
+                    itemsHTML += `
+                        <div class="file-list-item" onclick="openItem('${item.id}')">
+                            <div class="file-icon-left">${renderIcon(item.icon, item.isItemImg)}</div>
+                            <div class="file-text"><h4>${item.title}</h4><span>${item.type}</span></div>
+                            <i class="fas fa-chevron-right file-arrow-right"></i>
+                        </div>`;
+                });
+
+                const folderHTML = `
+                    <div class="folder-item" onclick="toggleFolder(this)">
+                        <div class="folder-tab-area">${folder.label}</div>
+                        <div class="folder-face">
+                            <div class="folder-label-large">${folder.title}</div>
+                            <div class="folder-index"><div class="pittogram">${renderIcon(folder.icon, folder.isIconImg)}</div><span class="count-badge">${folder.count}</span></div>
+                            <div class="folder-content">${itemsHTML}</div>
+                        </div>
+                    </div>`;
+                stack.insertAdjacentHTML('beforeend', folderHTML);
+            });
+
+            // 5. About & Contact
+            const renderSection = (id, data) => {
+                const container = document.getElementById(id);
+                let html = '';
+                data.forEach(block => {
+                    if(block.type === 'text') html += `<div class="generic-card"><p>${block.content}</p></div>`;
+                    else if(block.type === 'card') html += `<div class="generic-card"><h3>${block.title}</h3><p>${block.text}</p></div>`;
+                });
+                container.innerHTML = html;
+            };
+            renderSection('about-content-area', DB.about);
+            renderSection('contact-content-area', DB.contact);
+        }
+
+        function openItem(itemId) {
+            const data = DB.items[itemId];
+            if(!data) { console.warn("Item not found:", itemId); return; }
+
+            document.getElementById('uni-title').innerText = data.title;
+            document.getElementById('uni-image').src = data.image;
+            document.getElementById('uni-desc').innerText = data.description;
+            document.getElementById('uni-tag').innerText = data.tag;
+
+            let iconHTML = '';
+            iconHTML += renderIcon(data.icons[0].val, data.icons[0].isImg, "equation-icon");
+            iconHTML += `<span>+</span>`;
+            iconHTML += renderIcon(data.icons[1].val, data.icons[1].isImg, "equation-icon");
+            iconHTML += `<span>=</span>`;
+            iconHTML += renderIcon(data.icons[2].val, data.icons[2].isImg, "equation-icon");
+
+            document.getElementById('uni-icons').innerHTML = iconHTML;
+
+            const table = document.getElementById('uni-table');
+            table.innerHTML = '';
+            for (const [k, v] of Object.entries(data.details)) {
+                table.innerHTML += `<div class="detail-row"><span class="detail-label">${k}</span><span class="detail-value">${v}</span></div>`;
+            }
+
+            switchTab('universal-detail');
+        }
+
+        function toggleFloatingMenu(e) { if(e) e.stopPropagation(); document.getElementById('floating-menu').classList.toggle('active'); }
+        document.body.addEventListener('click', e => { 
+            const menu = document.getElementById('floating-menu');
+            if(menu && menu.classList.contains('active') && !menu.contains(e.target)) menu.classList.remove('active');
+        });
+
+        function toggleDiscovery() {
+            const module = document.getElementById('discovery-module');
+            const list = document.getElementById('discovery-list');
+            const mainContent = document.getElementById('main-content');
+            if (!module.classList.contains('expanded')) {
+                module.classList.add('expanded');
+                module.style.height = (93 + 45 + list.offsetHeight + 30) + 'px';
+                setTimeout(() => module.scrollIntoView({ behavior: 'smooth', block: 'center' }), 300);
+            } else {
+                module.classList.remove('expanded');
+                module.style.height = '140px';
+                setTimeout(() => mainContent.scrollTo({ top: 0, behavior: 'smooth' }), 100);
+            }
+            updateHeight();
+        }
+
+        function toggleFolder(el) {
+            const isActive = el.classList.contains('active');
+            document.querySelectorAll('.folder-item').forEach(e => e.classList.remove('active'));
+            if (!isActive) el.classList.add('active');
+            let start = null;
+            const step = t => { if (!start) start = t; updateHeight(); if (t - start < 600) requestAnimationFrame(step); };
+            requestAnimationFrame(step);
+        }
+
+        function updateHeight() {
+            const active = document.querySelector('.view-section.active');
+            if(active) setTimeout(() => document.getElementById('dynamic-wrapper').style.height = active.getBoundingClientRect().height + 'px', 100);
+        }
+        window.addEventListener('load', () => { initApp(); setTimeout(updateHeight, 100); });
         window.addEventListener('resize', updateHeight);
 
-        function toggleFolder(element) {
-            const isActive = element.classList.contains('active');
-            document.querySelectorAll('.folder-item').forEach(el => el.classList.remove('active'));
-            if (!isActive) element.classList.add('active');
-            
-            let start = null;
-            function step(timestamp) {
-                if (!start) start = timestamp;
-                const progress = timestamp - start;
-                updateHeight();
-                if (progress < 600) window.requestAnimationFrame(step);
-            }
-            window.requestAnimationFrame(step);
+        function selectDay(el, d) {
+            document.querySelectorAll('.day').forEach(e => e.classList.remove('selected'));
+            el.classList.add('selected');
+            currentSelectedCalendarDay = d;
+            applyLockState(d);
         }
 
-        function applyLockState(dayNumber) {
-            const cards = document.querySelectorAll('#shared-grid .cat-card');
-            const lockTexts = document.querySelectorAll('#shared-grid .lock-text');
-            if (dayNumber > currentDay) {
-                const daysLeft = dayNumber - currentDay;
-                const text = daysLeft === 1 ? "-1 DAY" : `-${daysLeft} DAYS`;
-                cards.forEach(card => card.classList.add('locked'));
-                lockTexts.forEach(lt => lt.innerText = text);
-            } else {
-                cards.forEach(card => card.classList.remove('locked'));
-            }
+        function applyLockState(day) {
+            const locked = day > currentDay;
+            document.querySelectorAll('#shared-grid-container .cat-card').forEach(c => {
+                if(locked) { c.classList.add('locked'); c.querySelector('.lock-text').innerText = `-${day - currentDay} DAYS`; }
+                else c.classList.remove('locked');
+            });
         }
 
-        function selectDay(element, dayNumber) {
-            const days = document.querySelectorAll('.day');
-            days.forEach(d => d.classList.remove('selected'));
-            element.classList.add('selected');
-            currentSelectedCalendarDay = dayNumber;
-            applyLockState(dayNumber);
-        }
+        function switchTab(name) {
+            if (isAnimating) return; isAnimating = true;
+            const header = document.getElementById('main-header');
+            const titleEl = document.getElementById('page-title');
+            const menu = document.getElementById('floating-menu');
+            if(menu) menu.classList.remove('active');
+            
+            const titles = { home: "TODAY'S<br>DISCOVERIES", progress: "PROGRESS", archive: "ARCHIVE", personal: "PERSONAL AREA", about: "WHO WE ARE", contact: "CONTACT US", 'universal-detail': "ARCHIVE DETAIL" };
+            const views = { home: 'home-view', progress: 'progress-view', archive: 'archive-view', personal: 'personal-view', about: 'about-view', contact: 'contact-view', 'universal-detail': 'universal-detail-view' };
+            
+            const inc = document.getElementById(views[name]);
+            const out = document.querySelector('.view-section.active');
+            if (!inc || inc === out) { isAnimating = false; return; }
 
-        function switchTab(tabName) {
-            if (isAnimating) return;
-            isAnimating = true;
+            if(name === 'home') { header.classList.add('home-mode'); if(menu) menu.classList.remove('hidden'); }
+            else { header.classList.remove('home-mode'); titleEl.innerHTML = titles[name] || "UNEC"; if(menu) menu.classList.add('hidden'); }
 
-            const titleElement = document.getElementById('page-title');
-            const wrapper = document.getElementById('dynamic-wrapper');
-            const gridWrapper = document.getElementById('shared-grid-wrapper');
-            const navItems = document.querySelectorAll('.nav-item');
-            
-            const views = {
-                home: document.getElementById('home-view'),
-                progress: document.getElementById('progress-view'),
-                archive: document.getElementById('archive-view'),
-                personal: document.getElementById('personal-view'),
-                about: document.getElementById('about-view'),
-                contact: document.getElementById('contact-view')
-            };
-            
-            const titles = { home: "TODAY'S<br>DISCOVERIES", progress: "PROGRESS", archive: "ARCHIVE", personal: "PERSONAL AREA", about: "WHO WE ARE", contact: "CONTACT US" };
-            
-            let incoming = views[tabName];
-            let outgoing = document.querySelector('.view-section.active');
-            
-            if (incoming === outgoing) { isAnimating = false; return; }
-
-            // Grid Logic (FADE OUT IN PLACE)
-            if(['home', 'progress'].includes(tabName)) {
-                gridWrapper.classList.remove('collapsed');
-                if(tabName === 'home') applyLockState(1);
-                else applyLockState(currentSelectedCalendarDay);
-            } else {
-                gridWrapper.classList.add('collapsed');
+            if(name === 'progress') {
+                applyLockState(currentSelectedCalendarDay);
+                const cal = inc.querySelector('.calendar-container');
+                cal.classList.remove('animate-entrance'); void cal.offsetWidth; cal.classList.add('animate-entrance');
             }
 
-            // Animation Trigger for Progress Calendar
-            if (tabName === 'progress') {
-                const calendar = incoming.querySelector('.calendar-container');
-                if (calendar) {
-                    calendar.classList.remove('animate-entrance');
-                    void calendar.offsetWidth; // Force reflow
-                    calendar.classList.add('animate-entrance');
-                }
-            }
+            const navs = document.querySelectorAll('.nav-item');
+            navs.forEach(n => n.classList.remove('active'));
+            if(name === 'progress') navs[1].classList.add('active');
+            else if(name === 'archive' || name === 'universal-detail') navs[2].classList.add('active');
+            else if(['personal', 'about', 'contact'].includes(name)) navs[3].classList.add('active');
+            else navs[0].classList.add('active');
 
-            // Nav Logic
-            let activeIndex = 0;
-            if(tabName === 'progress') activeIndex = 1;
-            else if(tabName === 'archive') activeIndex = 2;
-            else if(['personal', 'about', 'contact'].includes(tabName)) activeIndex = 3;
+            inc.classList.add('measuring');
+            const h = inc.getBoundingClientRect().height;
+            inc.classList.remove('measuring');
+            document.getElementById('dynamic-wrapper').style.height = h + 'px';
 
-            navItems.forEach(item => item.classList.remove('active'));
-            if(navItems[activeIndex]) navItems[activeIndex].classList.add('active');
-
-            // 1. Prepare Incoming
-            incoming.classList.add('measuring');
-            const newHeight = incoming.getBoundingClientRect().height;
-            incoming.classList.remove('measuring');
-
-            // 2. Animate Height
-            wrapper.style.height = newHeight + 'px';
-
-            // 3. Transition Views
-            if (outgoing) {
-                outgoing.classList.remove('active');
-                outgoing.style.opacity = 0;
-            }
-            
-            incoming.classList.add('active');
-            void incoming.offsetWidth; // Force reflow
-            incoming.style.opacity = 1; 
-            incoming.style.transform = "translateY(0)";
-
-            // Title
-            titleElement.style.opacity = 0;
-            setTimeout(() => {
-                titleElement.innerHTML = titles[tabName] || "UNEC";
-                titleElement.style.opacity = 1;
-            }, 150);
-
+            if(out) { out.classList.remove('active'); out.style.opacity = 0; }
+            inc.classList.add('active'); void inc.offsetWidth; inc.style.opacity = 1; inc.style.transform = "none";
             document.getElementById('main-content').scrollTo({ top: 0, behavior: 'smooth' });
 
-            setTimeout(() => {
-                isAnimating = false;
-                if(outgoing) {
-                    outgoing.style.opacity = '';
-                    outgoing.style.transform = '';
-                }
-            }, 500);
+            setTimeout(() => { isAnimating = false; if(out) { out.style.opacity = ''; out.style.transform = ''; } }, 500);
         }
     </script>
-
 </body>
 </html>
