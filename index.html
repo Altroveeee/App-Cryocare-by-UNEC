@@ -30,13 +30,13 @@
         * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
         html, body { height: 100%; width: 100%; overflow: hidden; background-color: #d1dbe8; display: flex; justify-content: center; align-items: center; font-family: 'Avenir Next', sans-serif; }
 
-        .mobile-container { width: 375px; height: 812px; background-color: var(--bg-color); border-radius: 40px; box-shadow: 0 30px 60px -10px rgba(0,0,0,0.3); position: relative; display: flex; flex-direction: column; overflow: hidden; }
-        .screen-mask { width: 100%; height: 100%; border-radius: 40px; overflow: hidden; position: relative; display: flex; flex-direction: column; background-color: var(--bg-color); z-index: 1; }
+        .mobile-container { width: 100vw; height: 100vh; max-width: 100vw; max-height: 100vh; background-color: var(--bg-color); border-radius: 0; box-shadow: none; position: relative; display: flex; flex-direction: column; overflow: hidden; }
+        .screen-mask { width: 100%; height: 100%; border-radius: 0; overflow: hidden; position: relative; display: flex; flex-direction: column; background-color: var(--bg-color); z-index: 1; }
 
         /* --- HEADER --- */
         .header { 
             position: absolute; top: 0; left: 0; right: 0; 
-            height: 83px; 
+            height: calc(83px + 50px); /* increased to push title down */ 
             padding: 0 24px 20px 24px; 
             z-index: 50; 
             display: flex; align-items: flex-end; 
@@ -49,6 +49,7 @@
             color: var(--primary-blue); font-size: 32px; font-weight: 700; 
             text-transform: uppercase; pointer-events: auto; transition: opacity 0.3s; margin: 0; line-height: 1; 
         }
+        #page-title { margin-top: 50px; }
 
         /* --- CONTENT WRAPPER --- */
         .content { 
@@ -66,18 +67,20 @@
             pointer-events: none; visibility: hidden; 
             transition: opacity 0.4s ease, transform 0.4s var(--anim-curve);
             padding: 0 24px; 
-            padding-top: 88px !important; 
-            padding-bottom: 120px; 
+            padding-top: calc(88px + 50px) !important; /* shifted down by 50px */
+            padding-bottom: calc(120px + env(safe-area-inset-bottom, 0px)); 
             overflow-y: auto; 
             scrollbar-width: none; 
             -webkit-overflow-scrolling: touch;
+            overscroll-behavior: contain;
+            touch-action: pan-y;
         }
 
         .view-section.active { opacity: 1; transform: none; pointer-events: auto; visibility: visible; }
         ::-webkit-scrollbar { display: none; }
 
         /* --- ECCEZIONE: HOME VIEW --- */
-        #home-view { padding-top: 0px !important; }
+        #home-view { padding-top: 50px !important; } /* moved down */
 
         /* --- FLOATING MENU --- */
         .floating-menu-container { position: absolute; top: 50px; right: 38px; z-index: 2000; display: flex; align-items: flex-start; justify-content: flex-end; transition: opacity 0.3s ease, visibility 0.3s ease; opacity: 1; visibility: visible; }
@@ -296,14 +299,16 @@
         .plan-price { font-size: 36px; font-weight: 700; color: var(--text-dark); letter-spacing: -1px; }
         .btn-view-plans { background-color: var(--primary-blue); color: var(--bg-color); border: none; padding: 12px 24px; border-radius: 20px; font-weight: 700; font-size: 12px; cursor: pointer; text-transform: uppercase; letter-spacing: 0.5px; transition: transform 0.2s; box-shadow: 0 5px 15px rgba(138, 161, 206, 0.4); }
         .btn-view-plans:active { transform: scale(0.95); }
-        .bottom-actions { position: absolute; left: 20px; right: 20px; bottom: calc(95px + 14px); display: flex; gap: 15px; justify-content: center; z-index: 150; }
+        .bottom-actions { position: absolute; left: 20px; right: 20px; bottom: calc(48px + 12px + env(safe-area-inset-bottom, 0px)); display: flex; gap: 12px; justify-content: center; z-index: 150; }
         /* Riduci il gap sui bottoni se necessario e assicurati che si adattino su piccoli schermi */
         .bottom-actions .btn-action-pill { max-width: calc(50% - 7.5px); } 
         .btn-action-pill { flex: 1; background-color: var(--primary-blue); color: var(--bg-color); border: none; padding: 14px 0; border-radius: 25px; font-weight: 700; font-size: 13px; cursor: pointer; text-transform: uppercase; text-align: center; box-shadow: 0 5px 15px rgba(138, 161, 206, 0.4); transition: transform 0.2s; }
         .btn-action-pill:active { transform: scale(0.97); }
 
-        .bottom-nav { position: absolute; bottom: 0; left: 0; width: 100%; height: 95px; background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(25px) saturate(180%); border-top: 1px solid rgba(255, 255, 255, 0.5); box-shadow: 0 -10px 40px rgba(0,0,0,0.05); border-top-left-radius: 35px; border-top-right-radius: 35px; display: flex; justify-content: space-around; align-items: center; padding-bottom: 25px; z-index: 100; }
-        .nav-item { font-size: 26px; color: var(--text-dark); cursor: pointer; opacity: 0.3; transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1); border: none; background: none; }
+        .bottom-nav { position: absolute; bottom: calc(env(safe-area-inset-bottom, 0px) + 50px); left: 20px; right: 20px; height: 60px; background: linear-gradient(180deg, rgba(255,255,255,0.28), rgba(255,255,255,0.04)); backdrop-filter: blur(22px) saturate(140%); -webkit-backdrop-filter: blur(22px) saturate(140%); border: 1px solid rgba(255,255,255,0.22); box-shadow: 0 4px 12px rgba(0,0,0,0.05), inset 0 1px 0 rgba(255,255,255,0.3); border-radius: 18px; display: flex; justify-content: space-around; align-items: center; padding-bottom: calc(6px + env(safe-area-inset-bottom, 0px)); z-index: 100; transition: transform 0.14s var(--anim-curve), box-shadow 0.14s var(--anim-curve); overflow: hidden; }
+        .bottom-nav::before { content: ""; position: absolute; inset: 0; pointer-events: none; background: radial-gradient(150% 50% at 50% 8%, rgba(255,255,255,0.12), rgba(255,255,255,0) 50%); mix-blend-mode: overlay; opacity: 0.35; }
+        .bottom-nav:active { transform: translateY(0.5px); box-shadow: 0 2px 8px rgba(0,0,0,0.04); }
+        .nav-item { font-size: 20px; color: var(--text-dark); cursor: pointer; opacity: 0.3; transition: all 0.22s cubic-bezier(0.2, 0.8, 0.2, 1); border: none; background: none; }
         .nav-item.active { opacity: 1; transform: scale(1.15) translateY(-2px); color: var(--primary-blue); text-shadow: 0 0 20px rgba(138, 161, 206, 0.6); }
         
         /* IMAGE UTILITIES (Specifici per altri componenti, non toccare!) */
@@ -311,6 +316,16 @@
         .glyph .custom-img-icon { width: 24px; height: 24px; }
         .file-icon-left .custom-img-icon { width: 20px; height: 20px; }
         .cat-icon .custom-img-icon { width: 40px; height: 40px; }
+
+        /* Top gradient to keep header title visible when scrolling */
+        .top-gradient { position: absolute; top: 0; left: 0; right: 0; height: calc(120px + 50px + env(safe-area-inset-top, 0px)); pointer-events: none; background: linear-gradient(180deg, rgba(255,255,255,1) 0%, rgba(255,255,255,0.95) 40%, rgba(255,255,255,0.85) 60%, rgba(255,255,255,0) 100%); z-index: 40; opacity: 0; transition: opacity 0.22s ease; }
+        .top-gradient.visible { opacity: 1; }
+
+        /* Responsive: full-screen by default; restore phone card on wide screens */
+        @media (min-width: 900px) {
+            .mobile-container { width: 375px; height: 812px; border-radius: 40px; box-shadow: 0 30px 60px -10px rgba(0,0,0,0.3); margin: 20px auto; max-width: 375px; }
+            .screen-mask { border-radius: 40px; }
+        }
     </style>
 </head>
 <body>
@@ -336,6 +351,7 @@
             <div class="header home-mode" id="main-header">
                 <h1 id="page-title">TODAY'S<br>DISCOVERIES</h1>
             </div>
+            <div class="top-gradient" aria-hidden="true"></div>
 
             <div class="content home-active" id="main-content">
                 <div class="dynamic-wrapper" id="dynamic-wrapper">
@@ -695,6 +711,15 @@
             };
             renderSection('about-content-area', DB.about);
             renderSection('contact-content-area', DB.contact);
+
+            // Attach scroll listeners to toggle the top gradient only when user scrolls
+            const gradient = document.querySelector('.top-gradient');
+            document.querySelectorAll('.view-section').forEach(v => {
+                v.addEventListener('scroll', () => {
+                    if (v.scrollTop > 8) gradient.classList.add('visible');
+                    else gradient.classList.remove('visible');
+                }, { passive: true });
+            });
         }
 
         // --- NEW FUNCTION: Render Progress Grid based on Day ---
@@ -836,7 +861,7 @@
 
         function updateHeight() {
             const active = document.querySelector('.view-section.active');
-            if(active) setTimeout(() => document.getElementById('dynamic-wrapper').style.height = active.getBoundingClientRect().height + 'px', 100);
+            if(active) setTimeout(() => document.getElementById('dynamic-wrapper').style.height = '100%', 100);
         }
         window.addEventListener('load', () => { initApp(); setTimeout(updateHeight, 100); });
         window.addEventListener('resize', updateHeight);
@@ -888,7 +913,11 @@
             document.getElementById('dynamic-wrapper').style.height = h + 'px';
 
             if(out) { out.classList.remove('active'); out.style.opacity = 0; }
-            inc.classList.add('active'); void inc.offsetWidth; inc.style.opacity = 1; inc.style.transform = "none";
+            inc.classList.add('active');
+            // Update top-gradient visibility based on the incoming view's scroll position
+            const gradient = document.querySelector('.top-gradient');
+            if (inc.scrollTop > 8) gradient.classList.add('visible'); else gradient.classList.remove('visible');
+            void inc.offsetWidth; inc.style.opacity = 1; inc.style.transform = "none";
             document.getElementById('main-content').scrollTo({ top: 0, behavior: 'smooth' });
 
             setTimeout(() => { isAnimating = false; if(out) { out.style.opacity = ''; out.style.transform = ''; } }, 500);
