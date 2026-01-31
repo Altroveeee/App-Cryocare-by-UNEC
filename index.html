@@ -8,11 +8,9 @@
     
     <style>
         /* --- FONT & BASICS --- */
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500&display=swap');
         
-        @font-face { font-family: 'Avenir Next'; src: url('assets/AvenirNextLTPro-Regular.otf') format('opentype'); font-weight: 400; }
-        @font-face { font-family: 'Avenir Next'; src: url('assets/AvenirNextLTPro-Medium.otf') format('opentype'); font-weight: 500; }
-        @font-face { font-family: 'Avenir Next'; src: url('assets/AvenirNextLTPro-Demi.otf') format('opentype'); font-weight: 600; }
+        @font-face { font-family: 'Avenir Next'; src: url('assets/AvenirNextLTPro-Regular copia.otf') format('opentype'); font-weight: 400; }
+        @font-face { font-family: 'Avenir Next'; src: url('assets/avenir-next-demi-bold.otf') format('opentype'); font-weight: 500; }
 
         :root {
             --primary-blue: #8AA1CE;
@@ -49,7 +47,7 @@
             color: var(--primary-blue); font-size: 32px; font-weight: 700; 
             text-transform: uppercase; pointer-events: auto; transition: opacity 0.3s; margin: 0; line-height: 1; 
         }
-        #page-title { margin-top: 50px; }
+        #page-title { margin-top: 50px;}
 
         /* --- CONTENT WRAPPER --- */
         .content { 
@@ -694,13 +692,13 @@
                 'sharing': { 
                     id: 'sharing',
                     title: "Sharing is Caring", 
-                    text: "You shared your first meal with your guardian. It is a very important and beautiful thing, your guardian is grateful.",
+                    text: "You shared your first meal with your guardian. Your guardian is grateful.",
                     unlocked: true // <--- CAMBIA QUESTO IN TRUE PER SBLOCCARE
                 },
                 'privacy': { 
                     id: 'privacy',
                     title: "Privacy please", 
-                    text: "You undressed your guardian during the dressing ritual. How dare you.",
+                    text: "You undressed your guardian during the dressing ritual.",
                     unlocked: true // <--- CAMBIA QUESTO IN TRUE PER SBLOCCARE
                 }
             },
@@ -1082,7 +1080,7 @@
             const mainContent = document.getElementById('main-content');
             if (!module.classList.contains('expanded')) {
                 module.classList.add('expanded');
-                const desired = 93 + 45 + list.offsetHeight + 40; 
+                const desired = 93 + 45 + list.offsetHeight + 70; 
                 const maxAllowed = Math.max(140, window.innerHeight + 60); 
                 module.style.height = Math.min(desired, maxAllowed) + 'px';
                 setTimeout(() => module.scrollIntoView({ behavior: 'smooth', block: 'center' }), 300);
