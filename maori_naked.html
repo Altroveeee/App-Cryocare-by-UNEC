@@ -130,7 +130,7 @@
         .file-list-item.locked {
             pointer-events: none;
             position: relative;
-            background-color: none;
+            background-color: none; /* Visibile Grigio */
         }
         .table-row.locked .glyph, 
         .table-row.locked div, 
@@ -374,6 +374,7 @@
             transform: scale(0.95);
         }
         
+        /* Stile per le icone personalizzate dentro i cerchi (Menu e Personal Card) */
         .custom-circle-icon {
             width: 24px;  
             height: 24px;
@@ -476,14 +477,14 @@
             
             <div class="floating-menu-container" id="floating-menu">
                 <div class="glass-circle menu-trigger" onclick="toggleFloatingMenu(event)">
-                     <img src="assets/icone varie/kurd/pet/dress2.png" class="custom-circle-icon" alt="Icon">
+                     <img src="assets/icone varie/maori/pet/dress2.png" class="custom-circle-icon" alt="Icon">
                 </div>
                 <div class="menu-expanded-options">
                     <div class="menu-item-wrapper" onclick="switchTab('personal')">
                         <div class="glass-circle">
-                            <img src="assets/icone varie/kurd/pet/dress2.png" class="custom-circle-icon" alt="Icon">
+                            <img src="assets/icone varie/maori/pet/dress2.png" class="custom-circle-icon" alt="Icon">
                         </div>
-                        <span class="menu-label">Kurds</span>
+                        <span class="menu-label">Māori</span>
                     </div>
                     <div class="menu-item-wrapper" onclick="toggleFloatingMenu(event)">
                         <div class="glass-circle"><i class="fas fa-plus"></i></div>
@@ -502,7 +503,7 @@
                     <div id="home-view" class="view-section active">
                         <div class="home-profile-card">
                             <div class="home-profile-img">
-                                <img id="p-img" src="assets/icone varie/kurd/Img_profilo.png" alt="Profile" onerror="this.src='https://images.unsplash.com/photo-1511367461989-f85a21fda167?w=800&q=80'">
+                                <img id="p-img" src="assets/icone varie/maori/Img_profilo.png" alt="Profile" onerror="this.src='https://images.unsplash.com/photo-1511367461989-f85a21fda167?w=800&q=80'">
                                 <div class="home-img-gradient"></div>
                             </div>
                             <div class="home-profile-info">
@@ -643,9 +644,9 @@
                             <div class="cultures-row">
                                 <div class="culture-circle-wrapper">
                                     <div class="culture-circle" onclick="switchTab('personal')">
-                                        <img src="assets/icone varie/kurd/pet/dress2.png" class="custom-circle-icon" alt="Icon">
+                                        <img src="assets/icone varie/maori/pet/dress2.png" class="custom-circle-icon" alt="Icon">
                                     </div>
-                                    <span class="culture-name" id="p-cult-name">Kurds</span>
+                                    <span class="culture-name" id="p-cult-name">Māori</span>
                                 </div>
                                 <div class="culture-circle-wrapper">
                                     <div class="culture-circle"><i class="fas fa-plus"></i></div>
@@ -699,57 +700,57 @@
         
         const DB = {
             profile: {
-                name: "Rojan Ehmed",
+                name: "Marama Aroha",
                 desc: "Cryoconservated since: 2075",
-                img: "assets/icone varie/kurd/Img_profilo.png", 
-                age: "21",
-                culture: "Kurdish",
-                location: "Şırnak"
+                img: "assets/icone varie/maori/Img_profilo.png", 
+                age: "65",
+                culture: "Māori",
+                location: "Ngāti Wai"
             },
             discoveries: [
                 { icon: "assets/icone varie/icone_principali/food.png", isImage: true, label: "Food" },
                 { icon: "assets/icone varie/icone_principali/dress.png", isImage: true, label: "Dress" },
                 { icon: "assets/icone varie/icone_principali/ritual.png", isImage: true, label: "Rituals" },
                 { icon: "assets/icone varie/icone_principali/memory.png", isImage: true, label: "Memory" },
-                { icon: "fa-map-marker-alt", isImage: false, label: "Mountains" },
-                { icon: "assets/icone varie/icone_principali/food.png", isImage: true, label: "Feast" }
+                { icon: "fa-water", isImage: false, label: "Moana" },
+                { icon: "assets/icone varie/icone_principali/food.png", isImage: true, label: "Kūmara" }
             ],
             archives: [
                 {
-                    id: "food", label: "FOOD", title: "Cuisine", 
+                    id: "food", label: "FOOD", title: "Kai", 
                     icon: "assets/icone varie/icone_principali/food.png", isIconImg: true,
                     bgIcon: "assets/icone varie/icone_principali/food.png",
                     count: "1/31",
                     items: [
-                        { id: "nane", icon: "assets/icone varie/kurd/food/baked_food.png", isItemImg: true, title: "Nanê Tîrî", type: "Recipe" }
+                        { id: "hangi", icon: "assets/icone varie/maori/food/baked_food.png", isItemImg: true, title: "Hāngī", type: "Recipe" }
                     ]
                 },
                 {
-                    id: "clothes", label: "CLOTHES", title: "Attire", 
+                    id: "clothes", label: "CLOTHES", title: "Taonga", 
                     icon: "assets/icone varie/icone_principali/dress.png", isIconImg: true,
                     bgIcon: "assets/icone varie/icone_principali/dress.png", count: "3/31",
                     items: [
-                        { id: "Şal", icon: "assets/icone varie/kurd/pet/dress1.png", isItemImg: true, title: "Şal", type: "Pants" },
-                        { id: "Faranji/Kawa", icon: "assets/icone varie/kurd/pet/dress2.png", isItemImg: true, title: "Faranji/Kawa", type: "Robe" },
-                        { id: "Pishtewen", icon: "assets/icone varie/kurd/pet/dress3.png", isItemImg: true, title: "Pishtewen", type: "Belt" }
+                        { id: "moko", icon: "assets/icone varie/maori/pet/dress3.png", isItemImg: true, title: "Moko Kauae", type: "Tattoo" },
+                        { id: "piupiu", icon: "assets/icone varie/maori/pet/dress1.png", isItemImg: true, title: "Piupiu (Skirt)", type: "Garment" },
+                        { id: "kahu", icon: "assets/icone varie/maori/pet/dress2.png", isItemImg: true, title: "Kahu & Heru", type: "Regalia" }
                     ]
                 },
                 {
-                    id: "rituals", label: "RITUALS", title: "Rituals", 
+                    id: "rituals", label: "RITUALS", title: "Tikanga", 
                     icon: "assets/icone varie/icone_principali/ritual.png", isIconImg: true,
                     bgIcon: "assets/icone varie/icone_principali/ritual.png", count: "1/31",
                     items: [
-                        { id: "Govend", icon: "assets/icone varie/kurd/pet/ritual.png", isItemImg: true, title: "Govend", type: "Dance" }
+                        { id: "haka", icon: "assets/icone varie/maori/pet/ritual.png", isItemImg: true, title: "Haka", type: "Dance" }
                     ]
                 },
                 {
-                    id: "memories", label: "MEMORIES", title: "Memories", 
+                    id: "memories", label: "MEMORIES", title: "Whakapapa", 
                     icon: "assets/icone varie/icone_principali/memory.png", isIconImg: true,
                     bgIcon: "assets/icone varie/icone_principali/memory.png", count: "3/31",
                     items: [
-                        { id: "The smell of walnuts", icon: "assets/icone varie/kurd/memories/ico_mem_1.png", isItemImg: true, title: "The smell of walnuts", type: "Festivity" },
-                        { id: "The weight of my camera", icon: "assets/icone varie/kurd/memories/ico_mem_2.png", isItemImg: true, title: "The weight of my camera", type: "History" },
-                        { id: "My hands painted with henna", icon: "assets/icone varie/kurd/memories/ico_mem_3.png", isItemImg: true, title: "My hands painted with henna", type: "Tradition" }
+                        { id: "mem1", icon: "assets/icone varie/maori/memories/ico_mem_2.png", isItemImg: true, title: "Reading the Currents", type: "Navigation" },
+                        { id: "mem2", icon: "assets/icone varie/maori/memories/ico_mem_1.png", isItemImg: true, title: "Maramataka (Moon)", type: "Knowledge" },
+                        { id: "mem3", icon: "assets/icone varie/maori/memories/ico_mem_3.png", isItemImg: true, title: "Taste of the Earth", type: "Sensory" }
                     ]
                 }
             ],
@@ -762,83 +763,83 @@
             achievements: {
                 'sharing': { 
                     id: 'sharing',
-                    title: "Sharing is Caring", 
-                    text: "You shared your first meal with your guardian. It is a very important and beautiful thing, your guardian is grateful.",
+                    title: "Manaakitanga", 
+                    text: "You shared the Hāngī. In Māori culture, hospitality enhances the mana of both the giver and the receiver.",
                     unlocked: true 
                 },
                 'privacy': { 
                     id: 'privacy',
-                    title: "Privacy please", 
-                    text: "You undressed your guardian during the dressing ritual.",
-                    unlocked: false 
+                    title: "Tapu", 
+                    text: "You touched the sacred Heru (comb) without permission. This object is tapu (sacred/restricted).",
+                    unlocked: true 
                 }
             },
             items: {
-                'nane': {
-                    tag: "CUISINE", title: "Dolma",
-                    image: "assets/icone varie/kurd/food/foto_cibo.avif",
-                    description: "A traditional dish made of stuffed vegetables.",
+                'hangi': {
+                    tag: "RECIPE", title: "Hāngī",
+                    image: "assets/icone varie/maori/food/foto_cibo.jpg",
+                    description: "A traditional method of cooking food using heated rocks buried in a pit oven. The kai (food) absorbs the flavors of the earth and wood smoke.",
                     icons: [
-                        { val: 'assets/icone varie/kurd/food/food1.png', isImg: true }, 
-                        { val: 'assets/icone varie/kurd/food/food2.png', isImg: true }, 
-                        { val: 'assets/icone varie/kurd/food/food3.png', isImg: true },
-                        { val: 'assets/icone varie/kurd/food/baked_food.png', isImg: true } 
+                        { val: 'assets/icone varie/maori/food/food1.png', isImg: true }, 
+                        { val: 'assets/icone varie/maori/food/food2.png', isImg: true }, 
+                        { val: 'assets/icone varie/maori/food/food3.png', isImg: true },
+                        { val: 'assets/icone varie/maori/food/baked_food.png', isImg: true } 
                     ],
-                    details: { "Origin": "Kurdistan", "Type": "Stuffed Vine", "Cook Time": "50 min" }
+                    details: { "Method": "Earth Oven", "Ingredients": "Kūmara/Seafood", "Occasion": "Hui (Gathering)", "Taste": "Smoky/Earthy" }
                 },
-                'Şal': {
-                    tag: "PANTS", title: "Şal",
-                    image: "assets/icone varie/kurd/pet/dress1_photo.jpg",
-                    description: "Wide, loose-fitting trousers woven from goat hair, engineered for agility in rugged terrain.",
-                    details: { "Material": "Mohair Wool", "Gender": "Male", "Region": "Botan", "Weave": "Handloom" }
+                'moko': {
+                    tag: "TATTOO", title: "Moko Kauae",
+                    image: "assets/icone varie/maori/pet/dress1_photo.jpg",
+                    description: "The sacred chin tattoo worn by wāhine (women). It is a visual language connecting the wearer to her whakapapa (genealogy) and status.",
+                    details: { "Tool": "Uhi (Chisel)", "Ink": "Ngārahu", "Meaning": "Lineage", "Status": "Kuia (Elder)" }
                 },
-                'Faranji/Kawa': { 
-                tag: "ROBE", 
-                title: "Faranji", 
-                image: "assets/icone varie/kurd/pet/dress2_photo.jpg", 
-                description: "A rigid, felted wool waistcoat with exaggerated shoulders, evolved to act as both armor against the elements and a load-bearing support.", 
-                details: { "Material": "Compressed Felt", "Gender": "Male", "Origin": "Hawraman", "Property": "Impact Resistant" } 
-            },
-                'Pishtewen': { 
-                tag: "BELT", 
-                title: "Pishtewen", 
-                image: "assets/icone varie/kurd/pet/dress3_photo.jpg", 
-                description: "A long, patterned sash tightly wound around the waist, functioning as both a utility belt and essential lumbar support for rugged terrain.", 
-                details: { "Material": "Patterned Fabric", "Gender": "Male", "Length": "4-6 Meters", "Function": "Support" } 
-            },
-                'Govend': { 
-                tag: "DANCE", 
-                title: "Govend", 
-                image: "assets/icone varie/kurd/pet/ritual_gif.webp", 
-                description: "A collective biomechanical ritual where participants link fingers to form a synchronous chain, physically manifesting social unity through complex repetitive footwork.", 
-                details: { "Formation": "Unbroken Line", "Link": "Pinky Finger", "Leader": "Sergovend", "Symbol": "Unity" } 
-            },
-                'The smell of walnuts': {
-                    tag: "FESTIVITY", title: "The smell of walnuts",
-                    image: "assets/icone varie/kurd/memories/ico_mem_1.png",
-                    description: "I will never forget the smell of the roasted walnuts we shared every Newroz, our Kurdish New Year celebration."
-            },
-                'The weight of my camera': {
-                    tag: "HISTORY", title: "The weight of my camera",
-                    image: "assets/icone varie/kurd/memories/ico_mem_2.png",
-                    description: "Carrying my camera through the mountains, capturing the essence of my people, I felt the weight of our history in every shot."
-            },
-            'My hands painted with henna': {
-                    tag: "TRADITION", title: "My hands painted with henna",
-                    image: "assets/icone varie/kurd/memories/ico_mem_3.png",
-                    description: "The intricate henna designs on my hands symbolized our traditions and the stories passed down through generations.",
-                    unlocked: false // Esempio: decommenta questa riga per testare il blocco di questo elemento
-            }
+                'piupiu': { 
+                    tag: "SKIRT", 
+                    title: "Piupiu", 
+                    image: "assets/icone varie/maori/pet/dress3_photo.jpeg", 
+                    description: "A skirt made of prepared flax (harakeke) strands that dry into tubes. They sway and create a rhythmic rustling sound during dance.", 
+                    details: { "Material": "Harakeke (Flax)", "Pattern": "Geometric", "Sound": "Percussive", "Craft": "Weaving" } 
+                },
+                'kahu': { 
+                    tag: "REGALIA", 
+                    title: "Kahu & Heru", 
+                    image: "assets/icone varie/maori/pet/dress2_photo.webp", 
+                    description: "A feathered cloak (Kahu Huruhuru) and a carved wooden comb (Heru). These items carry high mana and connect the wearer to the birds of the forest.", 
+                    details: { "Feathers": "Kiwi/Kererū", "Comb": "Carved Wood", "Symbolism": "Mana/Prestige", "Wearer": "Rangatira" } 
+                },
+                'haka': { 
+                    tag: "DANCE", 
+                    title: "Haka", 
+                    image: "assets/icone varie/maori/pet/ritual_gif.gif", 
+                    description: "A passionate posture dance involving rhythmic stamping, loud chanting, and strong facial expressions (pūkana) to demonstrate vitality and unity.", 
+                    details: { "Type": "Ceremonial", "Expression": "Pūkana (Eyes)", "Leader": "Kaitātaki", "Purpose": "Unity/Challenge" } 
+                },
+                'mem1': {
+                    tag: "NAVIGATION", title: "Reading the Currents",
+                    image: "assets/icone varie/maori/memories/ico_mem_2.png",
+                    description: "I remember my grandfather teaching me to read the ocean currents and the stars to steer our boat. The ocean is a roadway, not a barrier."
+                },
+                'mem2': {
+                    tag: "KNOWLEDGE", title: "Maramataka (Moon)",
+                    image: "assets/icone varie/maori/memories/ico_mem3.png",
+                    description: "I recall knowing exactly when to fish and when to plant by watching the phases of the moon. Nature provided the calendar."
+                },
+                'mem3': {
+                    tag: "SENSORY", title: "Taste of the Earth",
+                    image: "assets/icone varie/maori/memories/ico_mem_1.png",
+                    description: "I will never forget the taste of seafood and vegetables steamed in a pit dug on the beach. Salt, earth, and fire combined.",
+                    unlocked: false     
+                }
             },
             about: [
-                { type: 'text', content: "Established by the UN in 2075, UNEC responds to the rise in cultural conflicts, recognizing cultural preservation as a fundamental imperative for global peace. For cultures facing imminent extinction, UNEC offers a secure scientific procedure to enter biostasis, preserving the living source of cultural knowledge and tradition." },
+                { type: 'text', content: "Established by the UN in 2075, UNEC responds to the rise in cultural conflicts, recognizing cultural preservation as a fundamental imperative for global peace." },
                 { type: 'card', title: "Vision", text: "UNEC envisions a world where every culture can continue to thrive through its own community." },
                 { type: 'card', title: "Mission", text: "Our mission is to preserve endangered cultures through a safe practice of cryoconservation." }
             ],
             contact: [
-                { type: 'card', title: "Headquarters", text: "Our central headquarters is located <br>in a secured, climate-controlled facility in Antarctica.<br>Access is restricted to authorized personnel only, in accordance with international preservation protocols." },
-                { type: 'card', title: "Inquiries", text: "For all inquiries, our global liaison network is available to assist you. You can reach our dedicated operators via:<br><br><strong>Phone/messages:</strong> +672 361 784 6525<br><strong>Email:</strong> unec@mail.org" },
-                { type: 'card', title: "Field Operations", text: "Our field operators are continuously deployed worldwide to document cultural conflict and manage our cryopreservation process. Your message will be routed to the regional team best equipped to respond to your specific situation." }
+                { type: 'card', title: "Headquarters", text: "Our central headquarters is located <br>in a secured, climate-controlled facility in Antarctica." },
+                { type: 'card', title: "Inquiries", text: "Phone/messages: +672 361 784 6525<br>Email: unec@mail.org" },
+                { type: 'card', title: "Field Operations", text: "Our field operators are continuously deployed worldwide to document cultural conflict." }
             ]
         };
 
@@ -868,6 +869,7 @@
             }, 420);
         }
 
+        // --- NEW HELPER: Select Plan ---
         function selectPlan(price) {
             // Aggiorna visivamente il prezzo nella pagina Personal
             const priceEl = document.getElementById('p-price');
@@ -887,7 +889,7 @@
             for (const key in DB.achievements) {
                 const item = DB.achievements[key];
                 const lockedClass = item.unlocked ? '' : 'locked';
-                const lockOverlay = item.unlocked ? '' : `<div class="lock-overlay"><i class="fas fa-lock lock-icon"></i><span class="lock-text">INTERACT WITH YOUR GUARDIAN TO FIND OUT</span></div>`;
+                const lockOverlay = item.unlocked ? '' : `<div class="lock-overlay"><i class="fas fa-lock lock-icon"></i><span class="lock-text">INTERACT WITH YOUR GUARDIAN<br>TO FIND OUT</span></div>`;
                 
                 html += `
                     <div class="generic-card ${lockedClass}" style="margin-top: 10px; animation: fadeInCard 0.4s ease-out;">
@@ -910,6 +912,7 @@
             document.getElementById('p-age').innerText = DB.profile.age;
             document.getElementById('p-culture').innerText = DB.profile.culture;
             document.getElementById('p-loc').innerText = DB.profile.location;
+            document.getElementById('p-cult-name').innerText = DB.profile.culture; 
 
             // --- CALCOLO DEI CONTEGGI SBLOCCATI ---
             const getUnlockedCount = (archiveId) => {

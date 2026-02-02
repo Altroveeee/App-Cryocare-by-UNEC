@@ -34,7 +34,7 @@
         /* --- HEADER --- */
         .header { 
             position: absolute; top: 0; left: 0; right: 0; 
-            height: calc(83px + 50px); 
+            height: calc(83px + 0px); 
             padding: 0 24px 20px 24px; 
             z-index: 50; 
             display: flex; align-items: flex-end; 
@@ -65,7 +65,7 @@
             pointer-events: none; visibility: hidden; 
             transition: opacity 0.4s ease, transform 0.4s var(--anim-curve);
             padding: 0 24px; 
-            padding-top: calc(88px + 50px) !important; 
+            padding-top: calc(88px + 0px) !important; 
             padding-bottom: calc(140px + env(safe-area-inset-bottom, 20px));
             overflow-y: auto; 
             scrollbar-width: none; 
@@ -77,10 +77,10 @@
         .view-section.active { opacity: 1; transform: none; pointer-events: auto; visibility: visible; }
         ::-webkit-scrollbar { display: none; }
 
-        #home-view { padding-top: 50px !important; }
+        #home-view { padding-top: 0px !important; }
 
         /* --- FLOATING MENU --- */
-        .floating-menu-container { position: absolute; top: calc(50px + 50px); right: 38px; z-index: 2000; display: flex; align-items: flex-start; justify-content: flex-end; transition: opacity 0.3s ease, visibility 0.3s ease; opacity: 1; visibility: visible; }
+        .floating-menu-container { position: absolute; top: calc(50px + 0px); right: 38px; z-index: 2000; display: flex; align-items: flex-start; justify-content: flex-end; transition: opacity 0.3s ease, visibility 0.3s ease; opacity: 1; visibility: visible; }
         .floating-menu-container.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
         .glass-circle { width: 48px; height: 48px; border-radius: 50%; background-color: rgba(138, 161, 206, 0.25); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); border: 1px solid rgba(255, 255, 255, 0.4); box-shadow: var(--soft-shadow); display: flex; justify-content: center; align-items: center; cursor: pointer; transition: transform 0.2s; }
         .glass-circle:active { transform: scale(0.9); }
@@ -125,13 +125,45 @@
         .glyph { font-size: 20px; color: #000; width: 35px; text-align: center; margin-right: 15px; display: flex; justify-content: center; align-items: center; }
         .label-roba { font-size: 16px; font-weight: 400; color: var(--text-dark); font-family: 'Inter', sans-serif; }
 
+        /* --- STILI BLOCCO ELEMENTI (LOCKED) --- */
+        .table-row.locked, 
+        .file-list-item.locked {
+            pointer-events: none;
+            position: relative;
+            background-color: none; /* Aggiornato per visibilità */
+        }
+        .table-row.locked .glyph, 
+        .table-row.locked div, 
+        .file-list-item.locked .file-icon-left, 
+        .file-list-item.locked .file-text {
+            opacity: 0.4;
+            filter: blur(2px) grayscale(100%);
+        }
+        .table-row.locked .fa-chevron-right,
+        .file-list-item.locked .file-arrow-right {
+            display: none;
+        }
+        .table-row.locked::after,
+        .file-list-item.locked::after {
+            content: "\f023";
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 14px;
+            color: #8899B9;
+            opacity: 1;
+            filter: none;
+        }
+
         .generic-card { background-color:var(--bg-color); border-radius: 24px; padding: 20px; box-shadow: var(--soft-shadow); margin-bottom: 20px; margin-left: 2px; margin-right: 2px; transition: transform 0.15s; position: relative; overflow: hidden; }
         .generic-card:active { transform: scale(0.99); }
         .generic-card p { font-size: 15px; color: #333; line-height: 1.5; margin: 0; }
         .generic-card h3 { font-size: 18px; font-weight: 600; color: var(--text-dark); margin-bottom: 8px; margin-top: 0; text-transform: uppercase; } 
         .blue-title, .generic-card h3.blue-title { color: var(--primary-blue); }
         
-        /* NEW LOCKED STATE FOR GENERIC CARDS */
         .generic-card.locked { pointer-events: none; background-color: #F8F9FB; }
         .generic-card.locked .content-blur-wrapper { opacity: 0.4; filter: blur(5px) grayscale(100%); }
         .generic-card.locked .lock-overlay { opacity: 1; pointer-events: none; }
@@ -246,8 +278,8 @@
         }
 
         .custom-img-icon {
-            width: 100%;       
-            height: 55%;       
+            width: 100%;        
+            height: 55%;        
             object-fit: contain;
             margin: 0;
             padding: 0;
@@ -303,9 +335,9 @@
             line-height: 1.4;
         }
         .plan-features li::before {
-            content: "\f061"; /* Codice Unicode per fa-arrow-left */
-            font-family: "Font Awesome 6 Free"; /* Specifica il font SOLO per l'icona */
-            font-weight: 600; /* Necessario per le icone Solid (fas) */
+            content: "\f061"; 
+            font-family: "Font Awesome 6 Free"; 
+            font-weight: 600; 
             
             position: absolute;
             left: 0;
@@ -314,14 +346,14 @@
             margin-top: auto;
             display: flex;
             flex-direction: column;
-            align-items: center; /* Centra il bottone come nel design */
+            align-items: center; 
             gap: 15px;
         }
         .plan-price {
             font-size: 18px;
             font-weight: 600; 
             color: var(--text-dark);
-            align-self: flex-end; /* Prezzo a destra come standard UI, o togli per centrare */
+            align-self: flex-end; 
             margin-right: 5px;
         }
         .btn-choose {
@@ -341,12 +373,13 @@
         .btn-choose:active {
             transform: scale(0.95);
         }
+        
         /* Stile per le icone personalizzate dentro i cerchi (Menu e Personal Card) */
         .custom-circle-icon {
-            width: 24px;  /* Dimensione simile alle icone font-awesome precedenti */
+            width: 24px;  
             height: 24px;
             object-fit: contain;
-            display: block; /* Rimuove comportamenti strani degli inline elements */
+            display: block; 
         }
         .card-description { font-size: 16px; color: var(--text-light); line-height: 1.7; font-weight: 400; }
         .detail-table-container { width: 100%; display: flex; flex-direction: column; gap: 0; margin-bottom: 0px; background: var(--bg-color); padding: 0px; }
@@ -382,7 +415,23 @@
         .plan-price { font-size: 24px; font-weight: 600; color: var(--text-dark); letter-spacing: -1px; } 
         .btn-view-plans { background-color: var(--primary-blue); color: var(--bg-color); border: none; padding: 12px 24px; border-radius: 20px; font-weight: 600; font-size: 12px; cursor: pointer; text-transform: uppercase; letter-spacing: 0.5px; transition: transform 0.2s; box-shadow: var(--soft-shadow); } 
         .btn-view-plans:active { transform: scale(0.95); }
-        .bottom-actions { position: absolute; left: 20px; right: 20px; bottom: calc(100px + env(safe-area-inset-bottom, 20px)); display: flex; gap: 12px; justify-content: center; z-index: 150; }
+        
+        /* --- BOTTOM ACTIONS FIXED POSITION --- */
+        .bottom-actions {
+            position: fixed; /* Ancoraggio alla viewport */
+            bottom: calc(95px + env(safe-area-inset-bottom, 20px)); /* Sollevati sopra la navbar */
+            left: 50%; 
+            transform: translateX(-50%); /* Centratura geometrica assoluta */
+            
+            width: calc(100% - 48px); /* Larghezza dinamica meno i margini laterali */
+            max-width: 327px; /* Vincolo per non esplodere su schermi desktop */
+            
+            display: flex; 
+            gap: 12px; 
+            justify-content: center; 
+            z-index: 150; 
+        }
+            
         .bottom-actions .btn-action-pill { max-width: calc(50% - 7.5px); } 
         .btn-action-pill { flex: 1; background-color: var(--primary-blue); color: var(--bg-color); border: none; padding: 14px 0; border-radius: 25px; font-weight: 600; font-size: 13px; cursor: pointer; text-transform: uppercase; text-align: center; box-shadow: var(--soft-shadow); transition: transform 0.2s; } 
         .btn-action-pill:active { transform: scale(0.97); }
@@ -398,15 +447,12 @@
             width: 24px;
             height: 24px;
             object-fit: contain;
-            /* Opzionale: rende l'immagine leggermente trasparente quando inattiva, 
-            per imitare l'opacity: 0.3 degli altri bottoni */
             transition: all 0.2s cubic-bezier(0.2, 0.8, 0.2, 1);
         }
 
         .nav-item.active .nav-custom-img {
-            /* Questo filtro trasforma il nero in un colore simile al tuo #8AA1CE */
             filter: invert(65%) sepia(12%) saturate(1076%) hue-rotate(185deg) brightness(93%) contrast(89%);
-            transform: scale(1.15); /* Mantiene l'effetto zoom esistente */
+            transform: scale(1.15); 
             opacity: 1;
         }
         /* IMAGE UTILITIES */
@@ -725,7 +771,7 @@
                     id: 'privacy',
                     title: "Respect", 
                     text: "You interrupted the carving of the Dutar. Craftsmanship requires silence.",
-                    unlocked: true 
+                    unlocked: false 
                 }
             },
             items: {
@@ -781,7 +827,8 @@
                 'mem3': {
                     tag: "TRADITION", title: "Stories & Salt Tea",
                     image: "assets/icone varie/uyghurus/memories/ico_mem_3.png",
-                    description: "I will never forget the taste of salt tea (Atkan Chay) shared after a gathering where stories of our ancestors, called dastan, were recited for the last time."
+                    description: "I will never forget the taste of salt tea (Atkan Chay) shared after a gathering where stories of our ancestors, called dastan, were recited for the last time.",
+                    unlocked: false
                 }
             },
             about: [
@@ -867,6 +914,22 @@
             document.getElementById('p-loc').innerText = DB.profile.location;
             document.getElementById('p-cult-name').innerText = DB.profile.culture; 
 
+            // --- CALCOLO DEI CONTEGGI SBLOCCATI ---
+            const getUnlockedCount = (archiveId) => {
+                const folder = DB.archives.find(a => a.id === archiveId);
+                if (!folder) return 0;
+                return folder.items.filter(item => {
+                    const dbItem = DB.items[item.id];
+                    // Se unlocked è undefined, lo consideriamo true (sbloccato) per default
+                    return dbItem && dbItem.unlocked !== false; 
+                }).length;
+            };
+
+            const getTotalCount = (archiveId) => {
+                const folder = DB.archives.find(a => a.id === archiveId);
+                return folder ? folder.items.length : 0;
+            }
+
             // 2. Discoveries
             const discGrid = document.getElementById('discovery-icons-placeholder');
             let discHTML = '';
@@ -875,35 +938,49 @@
                 if(i < 3) {
                     const targetId = DB.archives.find(a => a.label.toLowerCase() === d.label.toLowerCase())?.id || '';
                     const clickAction = targetId ? `onclick="goToFolder('${targetId}')"` : '';
-                    discHTML += `<div class="squircle-item" ${clickAction}>
-                                    <div class="squircle">${renderIcon(d.icon, d.isImage)}</div>
-                                    <span class="fractional-label">1/1</span>
-                                 </div>`;
+                    
+                    // Se è memory, usiamo il conteggio dinamico
+                    if (d.label === "Memory") {
+                         // Saltiamo qui, lo aggiungiamo dopo
+                    } else {
+                        discHTML += `<div class="squircle-item" ${clickAction}>
+                                        <div class="squircle">${renderIcon(d.icon, d.isImage)}</div>
+                                        <span class="fractional-label">1/1</span>
+                                     </div>`;
+                    }
                 }
             });
 
-            // Controllo lo stato ATTUALE del codice
+            // 1. Leggo lo stato
             const isShareUnlocked = DB.achievements.sharing.unlocked;
             const isPrivUnlocked = DB.achievements.privacy.unlocked;
 
             const iconShare = isShareUnlocked 
-                ? renderIcon('assets/icone varie/defaults/bowl.png', true) // <--- CAMBIA QUI L'IMMAGINE SBLOCCATA
+                ? renderIcon('assets/icone varie/defaults/bowl.png', true) 
                 : '<i class="fas fa-question"></i>';
 
             const iconPriv = isPrivUnlocked 
-                ? renderIcon('assets/icone varie/defaults/default_covers.png', true) // <--- CAMBIA QUI L'IMMAGINE SBLOCCATA
+                ? renderIcon('assets/icone varie/defaults/default_covers.png', true) 
                 : '<i class="fas fa-question"></i>';
-            
+
+            // Conteggio memorie
+            const memUnlocked = getUnlockedCount('memories');
+            const memTotal = getTotalCount('memories');
+
+            // 3. Genero l'HTML
             discHTML += `
                 <div class="v-divider"></div>
+                
                 <div class="squircle-item" onclick="goToFolder('memories')">
                     <div class="squircle">${renderIcon('assets/icone varie/icone_principali/memory.png', true)}</div>
-                    <span class="fractional-label">3/3</span>
+                    <span class="fractional-label">${memUnlocked}/${memTotal}</span>
                 </div>
+
                 <div class="squircle-item" onclick="switchTab('extra-content')">
                     <div class="squircle">${iconShare}</div>
                     <span class="fractional-label">${isShareUnlocked ? '1/1' : '0/1'}</span>
                 </div>
+
                 <div class="squircle-item" onclick="switchTab('extra-content')">
                     <div class="squircle">${iconPriv}</div>
                     <span class="fractional-label">${isPrivUnlocked ? '1/1' : '0/1'}</span>
@@ -914,12 +991,21 @@
             // Inizializza il rendering anche se nascosto
             renderExtraContent();
 
-            // B. LISTA (DATA REALE)
+            // 3. Generazione LISTA DISCOVERY (table-row) con logica Locked
             let listHTML = '';
             DB.archives.forEach(folder => {
                 folder.items.forEach(item => {
+                    // Controllo stato
+                    const fullItem = DB.items[item.id];
+                    const isLocked = fullItem && fullItem.unlocked === false;
+                    
+                    const lockedClass = isLocked ? 'locked' : '';
+                    // Se è bloccato, rimuoviamo l'onclick
+                    const clickAttr = isLocked ? '' : `onclick="openItem('${item.id}')"`;
+                    const cursorStyle = isLocked ? 'cursor: default;' : 'cursor: pointer;';
+
                     listHTML += `
-                    <div class="table-row" onclick="openItem('${item.id}')" style="cursor: pointer;">
+                    <div class="table-row ${lockedClass}" ${clickAttr} style="${cursorStyle}">
                         <div class="glyph">${renderIcon(item.icon, item.isItemImg)}</div>
                         <div style="display: flex; flex-direction: column; flex: 1;">
                             <span class="label-roba" style="font-weight: 600;">${item.title}</span>
@@ -934,26 +1020,44 @@
             // 3. Progress Grid
             renderProgressGrid(currentDay);
 
-            // 4. Archive
+            // 5. Generazione ARCHIVE STACK (Cartelle e File)
             const stack = document.getElementById('stack-container');
             stack.innerHTML = '';
+            
             DB.archives.forEach(folder => {
                 let itemsHTML = '';
+                
+                // Calcolo conteggio per badge cartella
+                const folderUnlocked = getUnlockedCount(folder.id);
+                const folderTotal = folder.items.length;
+                
                 folder.items.forEach(item => {
+                    // Controllo stato item
+                    const fullItem = DB.items[item.id];
+                    const isLocked = fullItem && fullItem.unlocked === false;
+                    const lockedClass = isLocked ? 'locked' : '';
+                    const clickAttr = isLocked ? '' : `onclick="openItem('${item.id}')"`;
+
                     itemsHTML += `
-                        <div class="file-list-item" onclick="openItem('${item.id}')">
+                        <div class="file-list-item ${lockedClass}" ${clickAttr}>
                             <div class="file-icon-left">${renderIcon(item.icon, item.isItemImg)}</div>
                             <div class="file-text"><h4>${item.title}</h4><span>${item.type}</span></div>
                             <i class="fas fa-chevron-right file-arrow-right"></i>
                         </div>`;
                 });
 
+                // Aggiorna il badge con il conteggio reale (Sbloccati / Totali)
+                const dynamicCount = `${folderUnlocked}/${folderTotal}`;
+
                 const folderHTML = `
                     <div class="folder-item" data-folder-id="${folder.id}" onclick="toggleFolder(this)">
                         <div class="folder-tab-area">${folder.label}</div>
                         <div class="folder-face">
                             <div class="folder-label-large">${folder.title}</div>
-                            <div class="folder-index"><div class="pittogram">${renderIcon(folder.icon, folder.isIconImg)}</div><span class="count-badge">${folder.count}</span></div>
+                            <div class="folder-index">
+                                <div class="pittogram">${renderIcon(folder.icon, folder.isIconImg)}</div>
+                                <span class="count-badge">${dynamicCount}</span>
+                            </div>
                             <div class="folder-content">${itemsHTML}</div>
                         </div>
                     </div>`;
@@ -1047,12 +1151,21 @@
             const data = DB.items[itemId];
             if(!data) { console.warn("Item not found:", itemId); return; }
 
+            // 1. Riferimenti al DOM
+            const card = document.querySelector('.immersive-card');
+            
+            // 2. Pulizia preliminare (Rimuovi vecchi stati di lock)
+            // Anche se ora li blocchiamo prima del click, è buona norma lasciare la pulizia
+            card.classList.remove('locked');
+            const oldOverlay = card.querySelector('.lock-overlay');
+            if(oldOverlay) oldOverlay.remove();
+
             document.getElementById('uni-title').innerText = data.title;
             const imgContainer = document.querySelector('.card-image-container');
             imgContainer.innerHTML = `<div class="card-tag" id="uni-tag">${data.tag}</div>`;
             
             if (data.image.endsWith('.mp4') || data.image.endsWith('.webm')) {
-                imgContainer.innerHTML += `<video src="${data.image}" autoplay loop muted playsinline style="width:100%; height:100%; object-fit:cover;"></video>`;
+                imgContainer.innerHTML += `<video src="${data.image}" controls autoplay loop muted style="width:100%; height:100%; object-fit:cover;"></video>`;
             } else {
                 imgContainer.innerHTML += `<img id="uni-image" src="${data.image}" alt="Detail">`;
             }

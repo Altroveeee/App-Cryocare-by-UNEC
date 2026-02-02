@@ -374,6 +374,7 @@
             transform: scale(0.95);
         }
         
+        /* Stile per le icone personalizzate dentro i cerchi (Menu e Personal Card) */
         .custom-circle-icon {
             width: 24px;  
             height: 24px;
@@ -476,14 +477,14 @@
             
             <div class="floating-menu-container" id="floating-menu">
                 <div class="glass-circle menu-trigger" onclick="toggleFloatingMenu(event)">
-                     <img src="assets/icone varie/kurd/pet/dress2.png" class="custom-circle-icon" alt="Icon">
+                     <img src="assets/icone varie/amazigh/pet/dress2.png" class="custom-circle-icon" alt="Icon">
                 </div>
                 <div class="menu-expanded-options">
                     <div class="menu-item-wrapper" onclick="switchTab('personal')">
                         <div class="glass-circle">
-                            <img src="assets/icone varie/kurd/pet/dress2.png" class="custom-circle-icon" alt="Icon">
+                            <img src="assets/icone varie/amazigh/pet/dress2.png" class="custom-circle-icon" alt="Icon">
                         </div>
-                        <span class="menu-label">Kurds</span>
+                        <span class="menu-label">Amazigh</span>
                     </div>
                     <div class="menu-item-wrapper" onclick="toggleFloatingMenu(event)">
                         <div class="glass-circle"><i class="fas fa-plus"></i></div>
@@ -502,7 +503,7 @@
                     <div id="home-view" class="view-section active">
                         <div class="home-profile-card">
                             <div class="home-profile-img">
-                                <img id="p-img" src="assets/icone varie/kurd/Img_profilo.png" alt="Profile" onerror="this.src='https://images.unsplash.com/photo-1511367461989-f85a21fda167?w=800&q=80'">
+                                <img id="p-img" src="assets/icone varie/amazigh/Img_profilo.png" alt="Profile" onerror="this.src='https://images.unsplash.com/photo-1511367461989-f85a21fda167?w=800&q=80'">
                                 <div class="home-img-gradient"></div>
                             </div>
                             <div class="home-profile-info">
@@ -643,9 +644,9 @@
                             <div class="cultures-row">
                                 <div class="culture-circle-wrapper">
                                     <div class="culture-circle" onclick="switchTab('personal')">
-                                        <img src="assets/icone varie/kurd/pet/dress2.png" class="custom-circle-icon" alt="Icon">
+                                        <img src="assets/icone varie/amazigh/pet/dress2.png" class="custom-circle-icon" alt="Icon">
                                     </div>
-                                    <span class="culture-name" id="p-cult-name">Kurds</span>
+                                    <span class="culture-name" id="p-cult-name">Amazigh</span>
                                 </div>
                                 <div class="culture-circle-wrapper">
                                     <div class="culture-circle"><i class="fas fa-plus"></i></div>
@@ -697,22 +698,22 @@
         // --- ✏️ CONFIGURAZIONE CONTENUTI ---
         // =================================================================
         
-        const DB = {
+       const DB = {
             profile: {
-                name: "Rojan Ehmed",
-                desc: "Cryoconservated since: 2075",
-                img: "assets/icone varie/kurd/Img_profilo.png", 
-                age: "21",
-                culture: "Kurdish",
-                location: "Şırnak"
+                name: "Meryem Id-Hamou",
+                desc: "Cryoconservated since: 2077",
+                img: "assets/icone varie/amazigh/Img_profilo.png", 
+                age: "34",
+                culture: "Amazigh",
+                location: "Kel Aïr"
             },
             discoveries: [
                 { icon: "assets/icone varie/icone_principali/food.png", isImage: true, label: "Food" },
                 { icon: "assets/icone varie/icone_principali/dress.png", isImage: true, label: "Dress" },
                 { icon: "assets/icone varie/icone_principali/ritual.png", isImage: true, label: "Rituals" },
                 { icon: "assets/icone varie/icone_principali/memory.png", isImage: true, label: "Memory" },
-                { icon: "fa-map-marker-alt", isImage: false, label: "Mountains" },
-                { icon: "assets/icone varie/icone_principali/food.png", isImage: true, label: "Feast" }
+                { icon: "fa-map-marker-alt", isImage: false, label: "Atlas" },
+                { icon: "assets/icone varie/icone_principali/food.png", isImage: true, label: "Tea" }
             ],
             archives: [
                 {
@@ -721,7 +722,7 @@
                     bgIcon: "assets/icone varie/icone_principali/food.png",
                     count: "1/31",
                     items: [
-                        { id: "nane", icon: "assets/icone varie/kurd/food/baked_food.png", isItemImg: true, title: "Nanê Tîrî", type: "Recipe" }
+                        { id: "seksu", icon: "assets/icone varie/amazigh/food/baked_food.png", isItemImg: true, title: "Seksu", type: "Recipe" }
                     ]
                 },
                 {
@@ -729,9 +730,9 @@
                     icon: "assets/icone varie/icone_principali/dress.png", isIconImg: true,
                     bgIcon: "assets/icone varie/icone_principali/dress.png", count: "3/31",
                     items: [
-                        { id: "Şal", icon: "assets/icone varie/kurd/pet/dress1.png", isItemImg: true, title: "Şal", type: "Pants" },
-                        { id: "Faranji/Kawa", icon: "assets/icone varie/kurd/pet/dress2.png", isItemImg: true, title: "Faranji/Kawa", type: "Robe" },
-                        { id: "Pishtewen", icon: "assets/icone varie/kurd/pet/dress3.png", isItemImg: true, title: "Pishtewen", type: "Belt" }
+                        { id: "djellaba", icon: "assets/icone varie/amazigh/pet/dress2.png", isItemImg: true, title: "Djellaba", type: "Robe" },
+                        { id: "collane", icon: "assets/icone varie/amazigh/pet/dress1.png", isItemImg: true, title: "Tizerzai", type: "Accessory" },
+                        { id: "tatoo", icon: "assets/icone varie/amazigh/pet/dress3.png", isItemImg: true, title: "Tizert", type: "Marking" }
                     ]
                 },
                 {
@@ -739,7 +740,7 @@
                     icon: "assets/icone varie/icone_principali/ritual.png", isIconImg: true,
                     bgIcon: "assets/icone varie/icone_principali/ritual.png", count: "1/31",
                     items: [
-                        { id: "Govend", icon: "assets/icone varie/kurd/pet/ritual.png", isItemImg: true, title: "Govend", type: "Dance" }
+                        { id: "ahidouss", icon: "assets/icone varie/amazigh/pet/ritual.png", isItemImg: true, title: "Ahidouss", type: "Dance" }
                     ]
                 },
                 {
@@ -747,98 +748,98 @@
                     icon: "assets/icone varie/icone_principali/memory.png", isIconImg: true,
                     bgIcon: "assets/icone varie/icone_principali/memory.png", count: "3/31",
                     items: [
-                        { id: "The smell of walnuts", icon: "assets/icone varie/kurd/memories/ico_mem_1.png", isItemImg: true, title: "The smell of walnuts", type: "Festivity" },
-                        { id: "The weight of my camera", icon: "assets/icone varie/kurd/memories/ico_mem_2.png", isItemImg: true, title: "The weight of my camera", type: "History" },
-                        { id: "My hands painted with henna", icon: "assets/icone varie/kurd/memories/ico_mem_3.png", isItemImg: true, title: "My hands painted with henna", type: "Tradition" }
+                        { id: "mem1", icon: "assets/icone varie/amazigh/memories/ico_mem_2.png", isItemImg: true, title: "Reading the Dunes", type: "Skill" },
+                        { id: "mem2", icon: "assets/icone varie/amazigh/memories/ico_mem_1.png", isItemImg: true, title: "The Tea Ceremony", type: "Community" },
+                        { id: "mem3", icon: "assets/icone varie/amazigh/memories/ico_mem_3.png", isItemImg: true, title: "Whispering Thorns", type: "Instinct" }
                     ]
                 }
             ],
             progress: [
                 { id: "card-food", title: "Food", icon: "assets/icone varie/icone_principali/food.png", isImage: true },
                 { id: "card-clothes", title: "Clothes", icon: "assets/icone varie/icone_principali/dress.png", isImage: true },
-                { id: "card-ritual", title: "Ritual", icon: "assets/icone varie/icone_principali/ritual.png", isImage: true },
+                { id: "card-ritual", title: "Ritual", icon: "assets/icone varie/icone_principali/ritual.tiff", isImage: true },
                 { id: "card-memories", title: "Memories", icon: "assets/icone varie/icone_principali/memory.png", isImage: true }
             ],
             achievements: {
                 'sharing': { 
                     id: 'sharing',
                     title: "Sharing is Caring", 
-                    text: "You shared your first meal with your guardian. It is a very important and beautiful thing, your guardian is grateful.",
+                    text: "You shared your first meal with your guardian. Hospitality is the core of Amazigh culture.",
                     unlocked: true 
                 },
                 'privacy': { 
                     id: 'privacy',
                     title: "Privacy please", 
-                    text: "You undressed your guardian during the dressing ritual.",
-                    unlocked: false 
+                    text: "You undressed your guardian during the dressing ritual. How dare you.",
+                    unlocked: true 
                 }
             },
             items: {
-                'nane': {
-                    tag: "CUISINE", title: "Dolma",
-                    image: "assets/icone varie/kurd/food/foto_cibo.avif",
-                    description: "A traditional dish made of stuffed vegetables.",
+                'seksu': {
+                    tag: "RECIPE", title: "Seksu",
+                    image: "assets/icone varie/amazigh/food/foto_cibo.jpg",
+                    description: "Steamed granules of rolled durum wheat semolina, the heart of our communal meals on Fridays and celebrations.",
                     icons: [
-                        { val: 'assets/icone varie/kurd/food/food1.png', isImg: true }, 
-                        { val: 'assets/icone varie/kurd/food/food2.png', isImg: true }, 
-                        { val: 'assets/icone varie/kurd/food/food3.png', isImg: true },
-                        { val: 'assets/icone varie/kurd/food/baked_food.png', isImg: true } 
+                        { val: 'assets/icone varie/amazigh/food/food1.png', isImg: true }, 
+                        { val: 'assets/icone varie/amazigh/food/food2.png', isImg: true }, 
+                        { val: 'assets/icone varie/amazigh/food/food3.png', isImg: true },
+                        { val: 'assets/icone varie/amazigh/food/baked_food.png', isImg: true } 
                     ],
-                    details: { "Origin": "Kurdistan", "Type": "Stuffed Vine", "Cook Time": "50 min" }
+                    details: { "Grain": "Durum Semolina", "Method": "Steamed (Taseksut)", "Served": "Communal Dish", "Significance": "Unity" }
                 },
-                'Şal': {
-                    tag: "PANTS", title: "Şal",
-                    image: "assets/icone varie/kurd/pet/dress1_photo.jpg",
-                    description: "Wide, loose-fitting trousers woven from goat hair, engineered for agility in rugged terrain.",
-                    details: { "Material": "Mohair Wool", "Gender": "Male", "Region": "Botan", "Weave": "Handloom" }
+                'djellaba': {
+                    tag: "ROBE", title: "Djellaba",
+                    image: "assets/icone varie/amazigh/pet/dress1_photo.webp",
+                    description: "A long, loose-fitting unisex outer robe with full sleeves and a distinctive pointed hood (qob) to protect against the desert sun and wind.",
+                    details: { "Material": "Wool/Cotton", "Feature": "Qob (Hood)", "Region": "Atlas/Sahara", "Function": "Protection" }
                 },
-                'Faranji/Kawa': { 
-                tag: "ROBE", 
-                title: "Faranji", 
-                image: "assets/icone varie/kurd/pet/dress2_photo.jpg", 
-                description: "A rigid, felted wool waistcoat with exaggerated shoulders, evolved to act as both armor against the elements and a load-bearing support.", 
-                details: { "Material": "Compressed Felt", "Gender": "Male", "Origin": "Hawraman", "Property": "Impact Resistant" } 
-            },
-                'Pishtewen': { 
-                tag: "BELT", 
-                title: "Pishtewen", 
-                image: "assets/icone varie/kurd/pet/dress3_photo.jpg", 
-                description: "A long, patterned sash tightly wound around the waist, functioning as both a utility belt and essential lumbar support for rugged terrain.", 
-                details: { "Material": "Patterned Fabric", "Gender": "Male", "Length": "4-6 Meters", "Function": "Support" } 
-            },
-                'Govend': { 
-                tag: "DANCE", 
-                title: "Govend", 
-                image: "assets/icone varie/kurd/pet/ritual_gif.webp", 
-                description: "A collective biomechanical ritual where participants link fingers to form a synchronous chain, physically manifesting social unity through complex repetitive footwork.", 
-                details: { "Formation": "Unbroken Line", "Link": "Pinky Finger", "Leader": "Sergovend", "Symbol": "Unity" } 
-            },
-                'The smell of walnuts': {
-                    tag: "FESTIVITY", title: "The smell of walnuts",
-                    image: "assets/icone varie/kurd/memories/ico_mem_1.png",
-                    description: "I will never forget the smell of the roasted walnuts we shared every Newroz, our Kurdish New Year celebration."
-            },
-                'The weight of my camera': {
-                    tag: "HISTORY", title: "The weight of my camera",
-                    image: "assets/icone varie/kurd/memories/ico_mem_2.png",
-                    description: "Carrying my camera through the mountains, capturing the essence of my people, I felt the weight of our history in every shot."
-            },
-            'My hands painted with henna': {
-                    tag: "TRADITION", title: "My hands painted with henna",
-                    image: "assets/icone varie/kurd/memories/ico_mem_3.png",
-                    description: "The intricate henna designs on my hands symbolized our traditions and the stories passed down through generations.",
-                    unlocked: false // Esempio: decommenta questa riga per testare il blocco di questo elemento
-            }
+                'collane': { 
+                    tag: "JEWELRY", 
+                    title: "Tizerzai", 
+                    image: "assets/icone varie/amazigh/pet/dress2_photo.jpg", 
+                    description: "Large silver fibulae used to hold drapes together. More than ornaments, they are symbols of identity, social status, and protection.", 
+                    details: { "Material": "Silver & Enamel", "Shape": "Triangular", "Symbolism": "Fertility/Protection", "Craft": "Berber Smithing" } 
+                },
+                'tatoo': { 
+                    tag: "MARKING", 
+                    title: "Tizert", 
+                    image: "assets/icone varie/amazigh/pet/dress3_photo.webp", 
+                    description: "Traditional facial tattoos symbolizing social status, tribal affiliation, and protection against evil spirits (jinn).", 
+                    details: { "Location": "Chin/Forehead", "Ink": "Indigo/Charcoal", "Meaning": "Tribal ID", "Status": "Matriarch" } 
+                },
+                'ahidouss': { 
+                    tag: "DANCE", 
+                    title: "Ahidouss", 
+                    image: "assets/icone varie/amazigh/pet/ritual_gif.gif", 
+                    description: "A collective performance where men and women stand shoulder to shoulder in a circle or line, moving rhythmically to the beat of the allun (frame drum).", 
+                    details: { "Formation": "Circle/Line", "Instrument": "Allun (Drum)", "Theme": "Harvest/Wedding", "Region": "Middle Atlas" } 
+                },
+                'mem1': {
+                    tag: "NAVIGATION", title: "Reading the Dunes",
+                    image: "assets/icone varie/amazigh/memories/ico_mem_2.png",
+                    description: "I remember learning to navigate the desert not by compass, but by reading the shifting shape of the dunes and the color of the sand."
+                },
+                'mem2': {
+                    tag: "COMMUNITY", title: "The Tea Ceremony",
+                    image: "assets/icone varie/amazigh/memories/ico_mem_1.png",
+                    description: "I recall the taste of strong, sweet tea (Atay) shared from a single pot after a long journey. The foam represents the turban of the guest."
+                },
+                'mem3': {
+                    tag: "NATURE", title: "Whispering Thorns",
+                    image: "assets/icone varie/amazigh/memories/ico_mem_3.png",
+                    description: "I remember learning to distinguish a simple breeze from the seasonal wind that whistles through acacia thorns as a warning of change.",
+                    unlocked: false
+                }
             },
             about: [
-                { type: 'text', content: "Established by the UN in 2075, UNEC responds to the rise in cultural conflicts, recognizing cultural preservation as a fundamental imperative for global peace. For cultures facing imminent extinction, UNEC offers a secure scientific procedure to enter biostasis, preserving the living source of cultural knowledge and tradition." },
+                { type: 'text', content: "Established by the UN in 2075, UNEC responds to the rise in cultural conflicts, recognizing cultural preservation as a fundamental imperative for global peace." },
                 { type: 'card', title: "Vision", text: "UNEC envisions a world where every culture can continue to thrive through its own community." },
                 { type: 'card', title: "Mission", text: "Our mission is to preserve endangered cultures through a safe practice of cryoconservation." }
             ],
             contact: [
-                { type: 'card', title: "Headquarters", text: "Our central headquarters is located <br>in a secured, climate-controlled facility in Antarctica.<br>Access is restricted to authorized personnel only, in accordance with international preservation protocols." },
-                { type: 'card', title: "Inquiries", text: "For all inquiries, our global liaison network is available to assist you. You can reach our dedicated operators via:<br><br><strong>Phone/messages:</strong> +672 361 784 6525<br><strong>Email:</strong> unec@mail.org" },
-                { type: 'card', title: "Field Operations", text: "Our field operators are continuously deployed worldwide to document cultural conflict and manage our cryopreservation process. Your message will be routed to the regional team best equipped to respond to your specific situation." }
+                { type: 'card', title: "Headquarters", text: "Our central headquarters is located <br>in a secured, climate-controlled facility in Antarctica." },
+                { type: 'card', title: "Inquiries", text: "Phone/messages: +672 361 784 6525<br>Email: unec@mail.org" },
+                { type: 'card', title: "Field Operations", text: "Our field operators are continuously deployed worldwide to document cultural conflict." }
             ]
         };
 
