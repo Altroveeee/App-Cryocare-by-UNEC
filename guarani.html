@@ -34,7 +34,7 @@
         /* --- HEADER --- */
         .header { 
             position: absolute; top: 0; left: 0; right: 0; 
-            height: calc(83px + 50px); 
+            height: calc(83px + 30px); 
             padding: 0 24px 20px 24px; 
             z-index: 50; 
             display: flex; align-items: flex-end; 
@@ -65,7 +65,7 @@
             pointer-events: none; visibility: hidden; 
             transition: opacity 0.4s ease, transform 0.4s var(--anim-curve);
             padding: 0 24px; 
-            padding-top: calc(88px + 50px) !important; 
+            padding-top: calc(88px + 30px) !important; 
             padding-bottom: calc(140px + env(safe-area-inset-bottom, 20px));
             overflow-y: auto; 
             scrollbar-width: none; 
@@ -77,10 +77,10 @@
         .view-section.active { opacity: 1; transform: none; pointer-events: auto; visibility: visible; }
         ::-webkit-scrollbar { display: none; }
 
-        #home-view { padding-top: 50px !important; }
+        #home-view { padding-top: 30px !important; }
 
         /* --- FLOATING MENU --- */
-        .floating-menu-container { position: absolute; top: calc(50px + 50px); right: 38px; z-index: 2000; display: flex; align-items: flex-start; justify-content: flex-end; transition: opacity 0.3s ease, visibility 0.3s ease; opacity: 1; visibility: visible; }
+        .floating-menu-container { position: absolute; top: calc(50px + 30px); right: 38px; z-index: 2000; display: flex; align-items: flex-start; justify-content: flex-end; transition: opacity 0.3s ease, visibility 0.3s ease; opacity: 1; visibility: visible; }
         .floating-menu-container.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
         .glass-circle { width: 48px; height: 48px; border-radius: 50%; background-color: rgba(138, 161, 206, 0.25); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); border: 1px solid rgba(255, 255, 255, 0.4); box-shadow: var(--soft-shadow); display: flex; justify-content: center; align-items: center; cursor: pointer; transition: transform 0.2s; }
         .glass-circle:active { transform: scale(0.9); }
