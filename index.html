@@ -3,21 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>UNEC Network</title>
+    <title>UNEC Dev Hub</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
         /* --- SYSTEM CORE --- */
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500&family=Nunito:wght@300;400;600;700;800&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap');
+
+        @font-face { font-family: 'Avenir Next'; src: url('assets/AvenirNextLTPro-Regular copia.otf') format('opentype'); font-weight: 400; }
+        @font-face { font-family: 'Avenir Next'; src: url('assets/avenir-next-demi-bold.otf') format('opentype'); font-weight: 600; }
 
         :root {
             --primary-blue: #8AA1CE;
-            --bg-gradient-start: #E2E6EA;
-            --bg-gradient-end: #FFFFFF;
+            --bg-color: #F6F9FF; 
             --text-dark: #0E0E0E;
             --pure-white: #FFFFFF;
             --soft-shadow: 0 4px 20px rgba(138, 161, 206, 0.15);
-            --hover-shadow: 0 8px 25px rgba(138, 161, 206, 0.25);
             --anim-curve: cubic-bezier(0.2, 0.8, 0.2, 1);
         }
 
@@ -27,11 +28,12 @@
             height: 100%; width: 100%; overflow: hidden; 
             background-color: #d1dbe8; 
             display: flex; justify-content: center; align-items: center; 
-            font-family: 'Nunito', sans-serif; 
+            font-family: 'Avenir Next', 'Inter', sans-serif; 
         }
 
         .mobile-container { 
-            width: 100vw; height: 100vh; max-width: 100vw; max-height: 100vh; 
+            width: 100vw; height: 100dvh; max-width: 100vw; max-height: 100dvh; 
+            background-color: var(--bg-color);
             border-radius: 0; box-shadow: none; position: relative; 
             display: flex; flex-direction: column; overflow: hidden; 
         }
@@ -39,88 +41,123 @@
         .screen-mask { 
             width: 100%; height: 100%; position: relative; 
             display: flex; flex-direction: column; z-index: 1; 
-            background: linear-gradient(to top, var(--bg-gradient-start) 0%, var(--bg-gradient-end) 40%);
+            background: linear-gradient(180deg, #F6F9FF 0%, #EBF1F9 100%);
         }
 
-        /* --- HEADER & TITLES --- */
+        /* --- HEADER --- */
         .header {
-            padding: 60px 24px 20px 24px;
+            padding: 50px 24px 15px 24px;
             z-index: 10;
         }
 
         h1 {
-            color: var(--primary-blue); font-size: 32px; font-weight: 800;
+            color: var(--primary-blue); font-size: 28px; font-weight: 600;
             text-transform: uppercase; line-height: 1; margin-bottom: 5px;
+            letter-spacing: -0.5px;
         }
 
         .subtitle {
-            font-size: 14px; color: #666; font-weight: 600;
-            margin-bottom: 20px; display: block;
-            font-family: 'Inter', sans-serif; letter-spacing: 0.5px;
+            font-size: 13px; color: #666; font-weight: 400;
+            margin-bottom: 10px; display: block;
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .debug-badge {
+            display: inline-block; padding: 4px 8px; background: #000; color: #fff;
+            border-radius: 6px; font-size: 10px; font-family: 'JetBrains Mono', monospace;
+            text-transform: uppercase; letter-spacing: 1px;
         }
 
-        /* --- NAVIGATION LIST --- */
+        /* --- CONTENT LIST --- */
         .content-scroll {
             flex: 1; overflow-y: auto; padding: 0 24px 40px 24px;
             scrollbar-width: none; -webkit-overflow-scrolling: touch;
         }
         .content-scroll::-webkit-scrollbar { display: none; }
 
-        .culture-link {
-            display: flex; align-items: center; justify-content: space-between;
+        .culture-card {
             background-color: var(--pure-white);
-            padding: 20px;
+            padding: 16px;
             margin-bottom: 16px;
             border-radius: 24px;
-            text-decoration: none;
             box-shadow: var(--soft-shadow);
-            transition: all 0.2s var(--anim-curve);
-            position: relative;
-            overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.8);
+            animation: slideUp 0.5s var(--anim-curve) forwards;
+            opacity: 0;
         }
 
-        .culture-link:active { transform: scale(0.97); }
-        .culture-link:hover { transform: translateY(-2px); box-shadow: var(--hover-shadow); }
+        .card-header {
+            display: flex; align-items: center; gap: 12px;
+            margin-bottom: 15px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid #eee;
+        }
 
-        .link-content { display: flex; align-items: center; gap: 15px; }
-        
         .icon-box {
-            width: 45px; height: 45px;
+            width: 40px; height: 40px;
             background-color: rgba(138, 161, 206, 0.15);
-            border-radius: 14px;
+            border-radius: 12px;
             display: flex; justify-content: center; align-items: center;
-            color: var(--primary-blue); font-size: 18px;
+            color: var(--text-dark);
+        }
+        .custom-icon { width: 20px; height: 20px; object-fit: contain; }
+
+        .culture-name { font-size: 16px; font-weight: 600; color: var(--text-dark); }
+
+        /* --- LINKS GRID --- */
+        .links-grid {
+            display: grid;
+            /* CAMBIATO: 4 colonne per farci stare tutto */
+            grid-template-columns: 1fr 1fr 1fr 1fr; 
+            gap: 6px;
         }
 
-        .text-box { display: flex; flex-direction: column; }
-        .culture-name { font-size: 18px; font-weight: 700; color: var(--text-dark); }
-        .status-dot { 
-            font-size: 11px; color: #888; font-weight: 600; text-transform: uppercase; margin-top: 2px;
-            display: flex; align-items: center; gap: 5px;
-        }
-        .status-dot::before {
-            content: ''; width: 6px; height: 6px; border-radius: 50%; background-color: #4CAF50;
-            display: inline-block;
+        .file-link {
+            text-decoration: none;
+            background-color: #F8F9FA;
+            border-radius: 12px;
+            padding: 10px 2px; /* Padding ridotto */
+            text-align: center;
+            border: 1px solid #E5E5EA;
+            transition: all 0.2s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
         }
 
-        .arrow-icon { color: #ccc; font-size: 14px; transition: transform 0.2s; }
-        .culture-link:active .arrow-icon { transform: translateX(3px); color: var(--primary-blue); }
+        .file-link:active {
+            background-color: var(--primary-blue);
+            border-color: var(--primary-blue);
+            transform: scale(0.95);
+        }
+        
+        .file-link:active span, .file-link:active i { color: white; }
 
-        /* Animation */
-        .culture-link { opacity: 0; animation: slideUp 0.5s forwards; }
-        .culture-link:nth-child(1) { animation-delay: 0.1s; }
-        .culture-link:nth-child(2) { animation-delay: 0.15s; }
-        .culture-link:nth-child(3) { animation-delay: 0.2s; }
-        .culture-link:nth-child(4) { animation-delay: 0.25s; }
-        .culture-link:nth-child(5) { animation-delay: 0.3s; }
-        .culture-link:nth-child(6) { animation-delay: 0.35s; }
+        .file-link span {
+            font-size: 9px; /* Font leggermente ridotto per stare su una riga */
+            font-weight: 600;
+            color: #333;
+            font-family: 'JetBrains Mono', monospace;
+            text-transform: uppercase;
+            white-space: nowrap;
+        }
+
+        .file-link i { font-size: 12px; color: #8AA1CE; margin-bottom: 2px; }
+
+        /* Animation delays */
+        .culture-card:nth-child(1) { animation-delay: 0.05s; }
+        .culture-card:nth-child(2) { animation-delay: 0.1s; }
+        .culture-card:nth-child(3) { animation-delay: 0.15s; }
+        .culture-card:nth-child(4) { animation-delay: 0.2s; }
+        .culture-card:nth-child(5) { animation-delay: 0.25s; }
+        .culture-card:nth-child(6) { animation-delay: 0.3s; }
 
         @keyframes slideUp {
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* Responsive Desktop */
         @media (min-width: 900px) {
             .mobile-container { width: 375px; height: 812px; border-radius: 40px; box-shadow: var(--soft-shadow); margin: 20px auto; }
             .screen-mask { border-radius: 40px; }
@@ -133,80 +170,110 @@
         <div class="screen-mask">
             
             <div class="header">
-                <h1>UNEC<br>NETWORK</h1>
-                <span class="subtitle">Select a preservation node to access.</span>
+                <h1>UNEC<br>DEV HUB</h1>
+                <span class="subtitle">Full system access.</span>
+                <span class="debug-badge">V 2.0 BETA</span>
             </div>
 
             <div class="content-scroll">
                 
-                <a href="amazigh.html" class="culture-link">
-                    <div class="link-content">
-                        <div class="icon-box"><i class="fas fa-mountain"></i></div>
-                        <div class="text-box">
-                            <span class="culture-name">Amazigh</span>
-                            <span class="status-dot">Online</span>
+                <div class="culture-card">
+                    <div class="card-header">
+                        <div class="icon-box">
+                            <img src="assets/icone varie/amazigh/pet/dress2.png" class="custom-icon" onerror="this.style.display='none'; this.nextElementSibling.style.display='block'">
+                            <i class="fas fa-mountain" style="display:none"></i>
                         </div>
+                        <span class="culture-name">Amazigh</span>
                     </div>
-                    <i class="fas fa-chevron-right arrow-icon"></i>
-                </a>
+                    <div class="links-grid">
+                        <a href="amazigh.html" class="file-link"><i class="fas fa-home"></i><span>Main</span></a>
+                        <a href="amazigh_mem.html" class="file-link"><i class="fas fa-brain"></i><span>Mem</span></a>
+                        <a href="amazigh_naked.html" class="file-link"><i class="fas fa-code"></i><span>Naked</span></a>
+                        <a href="amazigh_mem_naked.html" class="file-link"><i class="fas fa-flask"></i><span>M.Nak</span></a>
+                    </div>
+                </div>
 
-                <a href="kurds.html" class="culture-link">
-                    <div class="link-content">
-                        <div class="icon-box"><i class="fas fa-sun"></i></div>
-                        <div class="text-box">
-                            <span class="culture-name">Kurds</span>
-                            <span class="status-dot">Active</span>
+                <div class="culture-card">
+                    <div class="card-header">
+                        <div class="icon-box">
+                            <img src="assets/icone varie/kurd/pet/dress2.png" class="custom-icon" onerror="this.style.display='none'; this.nextElementSibling.style.display='block'">
+                            <i class="fas fa-sun" style="display:none"></i>
                         </div>
+                        <span class="culture-name">Kurds</span>
                     </div>
-                    <i class="fas fa-chevron-right arrow-icon"></i>
-                </a>
+                    <div class="links-grid">
+                        <a href="kurds.html" class="file-link"><i class="fas fa-home"></i><span>Main</span></a>
+                        <a href="kurds_mem.html" class="file-link"><i class="fas fa-brain"></i><span>Mem</span></a>
+                        <a href="kurds_naked.html" class="file-link"><i class="fas fa-code"></i><span>Naked</span></a>
+                        <a href="kurds_mem_naked.html" class="file-link"><i class="fas fa-flask"></i><span>M.Nak</span></a>
+                    </div>
+                </div>
 
-                <a href="guarani.html" class="culture-link">
-                    <div class="link-content">
-                        <div class="icon-box"><i class="fas fa-leaf"></i></div>
-                        <div class="text-box">
-                            <span class="culture-name">Guaraní</span>
-                            <span class="status-dot">Online</span>
+                <div class="culture-card">
+                    <div class="card-header">
+                        <div class="icon-box">
+                            <img src="assets/icone varie/guarani/pet/dress2.png" class="custom-icon" onerror="this.style.display='none'; this.nextElementSibling.style.display='block'">
+                            <i class="fas fa-leaf" style="display:none"></i>
                         </div>
+                        <span class="culture-name">Guaraní</span>
                     </div>
-                    <i class="fas fa-chevron-right arrow-icon"></i>
-                </a>
+                    <div class="links-grid">
+                        <a href="guarani.html" class="file-link"><i class="fas fa-home"></i><span>Main</span></a>
+                        <a href="guarani_mem.html" class="file-link"><i class="fas fa-brain"></i><span>Mem</span></a>
+                        <a href="guarani_naked.html" class="file-link"><i class="fas fa-code"></i><span>Naked</span></a>
+                        <a href="guarani_mem_naked.html" class="file-link"><i class="fas fa-flask"></i><span>M.Nak</span></a>
+                    </div>
+                </div>
 
-                <a href="maori.html" class="culture-link">
-                    <div class="link-content">
-                        <div class="icon-box"><i class="fas fa-water"></i></div>
-                        <div class="text-box">
-                            <span class="culture-name">Māori</span>
-                            <span class="status-dot">Online</span>
+                <div class="culture-card">
+                    <div class="card-header">
+                        <div class="icon-box">
+                            <img src="assets/icone varie/maori/pet/dress2.png" class="custom-icon" onerror="this.style.display='none'; this.nextElementSibling.style.display='block'">
+                            <i class="fas fa-water" style="display:none"></i>
                         </div>
+                        <span class="culture-name">Māori</span>
                     </div>
-                    <i class="fas fa-chevron-right arrow-icon"></i>
-                </a>
+                    <div class="links-grid">
+                        <a href="maori.html" class="file-link"><i class="fas fa-home"></i><span>Main</span></a>
+                        <a href="maori_mem.html" class="file-link"><i class="fas fa-brain"></i><span>Mem</span></a>
+                        <a href="maori_naked.html" class="file-link"><i class="fas fa-code"></i><span>Naked</span></a>
+                        <a href="maori_mem_naked.html" class="file-link"><i class="fas fa-flask"></i><span>M.Nak</span></a>
+                    </div>
+                </div>
 
-                <a href="palestinian.html" class="culture-link">
-                    <div class="link-content">
-                        <div class="icon-box"><i class="fas fa-key"></i></div>
-                        <div class="text-box">
-                            <span class="culture-name">Palestinian</span>
-                            <span class="status-dot">Online</span>
+                <div class="culture-card">
+                    <div class="card-header">
+                        <div class="icon-box">
+                            <img src="assets/icone varie/palestinian/pet/dress2.png" class="custom-icon" onerror="this.style.display='none'; this.nextElementSibling.style.display='block'">
+                            <i class="fas fa-key" style="display:none"></i>
                         </div>
+                        <span class="culture-name">Palestinian</span>
                     </div>
-                    <i class="fas fa-chevron-right arrow-icon"></i>
-                </a>
+                    <div class="links-grid">
+                        <a href="palestinian.html" class="file-link"><i class="fas fa-home"></i><span>Main</span></a>
+                        <a href="palestinian_mem.html" class="file-link"><i class="fas fa-brain"></i><span>Mem</span></a>
+                        <a href="palestinian_naked.html" class="file-link"><i class="fas fa-code"></i><span>Naked</span></a>
+                        <a href="palestinian_mem_naked.html" class="file-link"><i class="fas fa-flask"></i><span>M.Nak</span></a>
+                    </div>
+                </div>
 
-                <a href="uyghur.html" class="culture-link">
-                    <div class="link-content">
-                        <div class="icon-box"><i class="fas fa-moon"></i></div>
-                        <div class="text-box">
-                            <span class="culture-name">Uyghurs</span>
-                            <span class="status-dot">Online</span>
+                <div class="culture-card">
+                    <div class="card-header">
+                        <div class="icon-box">
+                            <img src="assets/icone varie/uyghurus/pet/dress2.png" class="custom-icon" onerror="this.style.display='none'; this.nextElementSibling.style.display='block'">
+                            <i class="fas fa-moon" style="display:none"></i>
                         </div>
+                        <span class="culture-name">Uyghur</span>
                     </div>
-                    <i class="fas fa-chevron-right arrow-icon"></i>
-                </a>
+                    <div class="links-grid">
+                        <a href="uyghur.html" class="file-link"><i class="fas fa-home"></i><span>Main</span></a>
+                        <a href="uyghur_mem.html" class="file-link"><i class="fas fa-brain"></i><span>Mem</span></a>
+                        <a href="uyghur_naked.html" class="file-link"><i class="fas fa-code"></i><span>Naked</span></a>
+                        <a href="uyghur_mem_naked.html" class="file-link"><i class="fas fa-flask"></i><span>M.Nak</span></a>
+                    </div>
+                </div>
 
             </div>
-
         </div>
     </div>
 
