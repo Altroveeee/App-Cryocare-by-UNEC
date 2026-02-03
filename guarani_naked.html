@@ -136,6 +136,39 @@
         .generic-card.locked .content-blur-wrapper { opacity: 0.4; filter: blur(5px) grayscale(100%); }
         .generic-card.locked .lock-overlay { opacity: 1; pointer-events: none; }
 
+        /* --- STILI BLOCCO ELEMENTI (LOCKED) --- */
+        .table-row.locked, 
+        .file-list-item.locked {
+            pointer-events: none;
+            position: relative;
+            background-color: none; /* Visibile Grigio */
+        }
+        .table-row.locked .glyph, 
+        .table-row.locked div, 
+        .file-list-item.locked .file-icon-left, 
+        .file-list-item.locked .file-text {
+            opacity: 0.4;
+            filter: blur(2px) grayscale(100%);
+        }
+        .table-row.locked .fa-chevron-right,
+        .file-list-item.locked .file-arrow-right {
+            display: none;
+        }
+        .table-row.locked::after,
+        .file-list-item.locked::after {
+            content: "\f023";
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 14px;
+            color: #8899B9;
+            opacity: 1;
+            filter: none;
+        }
+
         .text-card { background-color: #FFFFFF; margin-bottom: 20px; padding: 24px; box-shadow: var(--soft-shadow); border-radius: 30px; height: auto; transition: transform 0.15s; }
         .text-card:active { transform: scale(0.99); }
         .text-card p { overflow-wrap: break-word; line-height: 1.6; color: #333; margin-bottom: 15px; }
@@ -921,8 +954,17 @@
             let listHTML = '';
             DB.archives.forEach(folder => {
                 folder.items.forEach(item => {
+                    const fullItem = DB.items[item.id];
+                    // Se unlocked è esplicitamente false, è bloccato. Altrimenti è sbloccato.
+                    const isLocked = fullItem && fullItem.unlocked === false;
+                    
+                    const lockedClass = isLocked ? 'locked' : '';
+                    // Se è bloccato, rimuoviamo l'onclick
+                    const clickAttr = isLocked ? '' : `onclick="openItem('${item.id}')"`;
+                    const cursorStyle = isLocked ? 'cursor: default;' : 'cursor: pointer;';
+
                     listHTML += `
-                    <div class="table-row" onclick="openItem('${item.id}')" style="cursor: pointer;">
+                    <div class="table-row ${lockedClass}" ${clickAttr} style="${cursorStyle}">
                         <div class="glyph">${renderIcon(item.icon, item.isItemImg)}</div>
                         <div style="display: flex; flex-direction: column; flex: 1;">
                             <span class="label-roba" style="font-weight: 600;">${item.title}</span>
@@ -943,8 +985,13 @@
             DB.archives.forEach(folder => {
                 let itemsHTML = '';
                 folder.items.forEach(item => {
+                    const fullItem = DB.items[item.id];
+                    const isLocked = fullItem && fullItem.unlocked === false;
+                    const lockedClass = isLocked ? 'locked' : '';
+                    const clickAttr = isLocked ? '' : `onclick="openItem('${item.id}')"`;
+
                     itemsHTML += `
-                        <div class="file-list-item" onclick="openItem('${item.id}')">
+                        <div class="file-list-item ${lockedClass}" ${clickAttr}>
                             <div class="file-icon-left">${renderIcon(item.icon, item.isItemImg)}</div>
                             <div class="file-text"><h4>${item.title}</h4><span>${item.type}</span></div>
                             <i class="fas fa-chevron-right file-arrow-right"></i>
