@@ -47,7 +47,7 @@
             color: var(--primary-blue); font-size: 32px; font-weight: 600; 
             text-transform: uppercase; pointer-events: auto; transition: opacity 0.3s; margin: 0; line-height: 1; 
         }
-        #page-title { margin-top: 50px;}
+        #page-title { margin-top: 0px;}
 
         /* --- CONTENT WRAPPER --- */
         .content { 
@@ -65,7 +65,7 @@
             pointer-events: none; visibility: hidden; 
             transition: opacity 0.4s ease, transform 0.4s var(--anim-curve);
             padding: 0 24px; 
-            padding-top: calc(88px + 0px) !important; 
+            padding-top: calc(88px + 10px) !important; 
             padding-bottom: calc(140px + env(safe-area-inset-bottom, 20px));
             overflow-y: auto; 
             scrollbar-width: none; 
@@ -125,45 +125,13 @@
         .glyph { font-size: 20px; color: #000; width: 35px; text-align: center; margin-right: 15px; display: flex; justify-content: center; align-items: center; }
         .label-roba { font-size: 16px; font-weight: 400; color: var(--text-dark); font-family: 'Inter', sans-serif; }
 
-        /* --- STILI BLOCCO ELEMENTI (LOCKED) --- */
-        .table-row.locked, 
-        .file-list-item.locked {
-            pointer-events: none;
-            position: relative;
-            background-color: none; /* Visibile Grigio */
-        }
-        .table-row.locked .glyph, 
-        .table-row.locked div, 
-        .file-list-item.locked .file-icon-left, 
-        .file-list-item.locked .file-text {
-            opacity: 0.4;
-            filter: blur(2px) grayscale(100%);
-        }
-        .table-row.locked .fa-chevron-right,
-        .file-list-item.locked .file-arrow-right {
-            display: none;
-        }
-        .table-row.locked::after,
-        .file-list-item.locked::after {
-            content: "\f023";
-            font-family: "Font Awesome 6 Free";
-            font-weight: 900;
-            position: absolute;
-            right: 20px;
-            top: 50%;
-            transform: translateY(-50%);
-            font-size: 14px;
-            color: #8899B9;
-            opacity: 1;
-            filter: none;
-        }
-
         .generic-card { background-color:var(--bg-color); border-radius: 24px; padding: 20px; box-shadow: var(--soft-shadow); margin-bottom: 20px; margin-left: 2px; margin-right: 2px; transition: transform 0.15s; position: relative; overflow: hidden; }
         .generic-card:active { transform: scale(0.99); }
         .generic-card p { font-size: 15px; color: #333; line-height: 1.5; margin: 0; }
         .generic-card h3 { font-size: 18px; font-weight: 600; color: var(--text-dark); margin-bottom: 8px; margin-top: 0; text-transform: uppercase; } 
         .blue-title, .generic-card h3.blue-title { color: var(--primary-blue); }
         
+        /* NEW LOCKED STATE FOR GENERIC CARDS */
         .generic-card.locked { pointer-events: none; background-color: #F8F9FB; }
         .generic-card.locked .content-blur-wrapper { opacity: 0.4; filter: blur(5px) grayscale(100%); }
         .generic-card.locked .lock-overlay { opacity: 1; pointer-events: none; }
@@ -271,7 +239,7 @@
             justify-content: center; 
             gap: 10px;        
             width: 100%;
-            height: 20px;            
+            height: 20px;             
             padding: 0;
             margin: 0px 0;
             box-sizing: border-box;
@@ -335,9 +303,9 @@
             line-height: 1.4;
         }
         .plan-features li::before {
-            content: "\f061"; 
-            font-family: "Font Awesome 6 Free"; 
-            font-weight: 600; 
+            content: "\f061"; /* Codice Unicode per fa-arrow-left */
+            font-family: "Font Awesome 6 Free"; /* Specifica il font SOLO per l'icona */
+            font-weight: 600; /* Necessario per le icone Solid (fas) */
             
             position: absolute;
             left: 0;
@@ -346,14 +314,14 @@
             margin-top: auto;
             display: flex;
             flex-direction: column;
-            align-items: center; 
+            align-items: center; /* Centra il bottone come nel design */
             gap: 15px;
         }
         .plan-price {
             font-size: 18px;
             font-weight: 600; 
             color: var(--text-dark);
-            align-self: flex-end; 
+            align-self: flex-end; /* Prezzo a destra come standard UI, o togli per centrare */
             margin-right: 5px;
         }
         .btn-choose {
@@ -373,13 +341,12 @@
         .btn-choose:active {
             transform: scale(0.95);
         }
-        
         /* Stile per le icone personalizzate dentro i cerchi (Menu e Personal Card) */
         .custom-circle-icon {
-            width: 24px;  
+            width: 24px;  /* Dimensione simile alle icone font-awesome precedenti */
             height: 24px;
             object-fit: contain;
-            display: block; 
+            display: block; /* Rimuove comportamenti strani degli inline elements */
         }
         .card-description { font-size: 16px; color: var(--text-light); line-height: 1.7; font-weight: 400; }
         .detail-table-container { width: 100%; display: flex; flex-direction: column; gap: 0; margin-bottom: 0px; background: var(--bg-color); padding: 0px; }
@@ -415,23 +382,7 @@
         .plan-price { font-size: 24px; font-weight: 600; color: var(--text-dark); letter-spacing: -1px; } 
         .btn-view-plans { background-color: var(--primary-blue); color: var(--bg-color); border: none; padding: 12px 24px; border-radius: 20px; font-weight: 600; font-size: 12px; cursor: pointer; text-transform: uppercase; letter-spacing: 0.5px; transition: transform 0.2s; box-shadow: var(--soft-shadow); } 
         .btn-view-plans:active { transform: scale(0.95); }
-        
-        /* --- BOTTOM ACTIONS FIXED POSITION --- */
-        .bottom-actions {
-            position: fixed; /* Ancoraggio alla viewport */
-            bottom: calc(95px + env(safe-area-inset-bottom, 20px)); /* Sollevati sopra la navbar */
-            left: 50%; 
-            transform: translateX(-50%); /* Centratura geometrica assoluta */
-            
-            width: calc(100% - 48px); /* Larghezza dinamica meno i margini laterali */
-            max-width: 327px; /* Vincolo per non esplodere su schermi desktop */
-            
-            display: flex; 
-            gap: 12px; 
-            justify-content: center; 
-            z-index: 150; 
-        }
-            
+        .bottom-actions { position: absolute; left: 20px; right: 20px; bottom: calc(100px + env(safe-area-inset-bottom, 20px)); display: flex; gap: 12px; justify-content: center; z-index: 150; }
         .bottom-actions .btn-action-pill { max-width: calc(50% - 7.5px); } 
         .btn-action-pill { flex: 1; background-color: var(--primary-blue); color: var(--bg-color); border: none; padding: 14px 0; border-radius: 25px; font-weight: 600; font-size: 13px; cursor: pointer; text-transform: uppercase; text-align: center; box-shadow: var(--soft-shadow); transition: transform 0.2s; } 
         .btn-action-pill:active { transform: scale(0.97); }
@@ -447,12 +398,15 @@
             width: 24px;
             height: 24px;
             object-fit: contain;
+            /* Opzionale: rende l'immagine leggermente trasparente quando inattiva, 
+            per imitare l'opacity: 0.3 degli altri bottoni */
             transition: all 0.2s cubic-bezier(0.2, 0.8, 0.2, 1);
         }
 
         .nav-item.active .nav-custom-img {
+            /* Questo filtro trasforma il nero in un colore simile al tuo #8AA1CE */
             filter: invert(65%) sepia(12%) saturate(1076%) hue-rotate(185deg) brightness(93%) contrast(89%);
-            transform: scale(1.15); 
+            transform: scale(1.15); /* Mantiene l'effetto zoom esistente */
             opacity: 1;
         }
         /* IMAGE UTILITIES */
@@ -477,14 +431,14 @@
             
             <div class="floating-menu-container" id="floating-menu">
                 <div class="glass-circle menu-trigger" onclick="toggleFloatingMenu(event)">
-                     <img src="assets/icone varie/palestinian/pet/dress2.png" class="custom-circle-icon" alt="Icon">
+                     <img src="assets/icone varie/guarani/pet/dress2.png" class="custom-circle-icon" alt="Icon">
                 </div>
                 <div class="menu-expanded-options">
                     <div class="menu-item-wrapper" onclick="switchTab('personal')">
                         <div class="glass-circle">
-                            <img src="assets/icone varie/palestinian/pet/dress2.png" class="custom-circle-icon" alt="Icon">
+                            <img src="assets/icone varie/guarani/pet/dress2.png" class="custom-circle-icon" alt="Icon">
                         </div>
-                        <span class="menu-label">Palestinian</span>
+                        <span class="menu-label">Guaranì</span>
                     </div>
                     <div class="menu-item-wrapper" onclick="toggleFloatingMenu(event)">
                         <div class="glass-circle"><i class="fas fa-plus"></i></div>
@@ -503,7 +457,7 @@
                     <div id="home-view" class="view-section active">
                         <div class="home-profile-card">
                             <div class="home-profile-img">
-                                <img id="p-img" src="assets/icone varie/palestinian/Img_profilo.png" alt="Profile" onerror="this.src='https://images.unsplash.com/photo-1511367461989-f85a21fda167?w=800&q=80'">
+                                <img id="p-img" src="assets/icone varie/guarani/Img_profilo.png" alt="Profile" onerror="this.src='https://images.unsplash.com/photo-1511367461989-f85a21fda167?w=800&q=80'">
                                 <div class="home-img-gradient"></div>
                             </div>
                             <div class="home-profile-info">
@@ -644,9 +598,9 @@
                             <div class="cultures-row">
                                 <div class="culture-circle-wrapper">
                                     <div class="culture-circle" onclick="switchTab('personal')">
-                                        <img src="assets/icone varie/palestinian/pet/dress2.png" class="custom-circle-icon" alt="Icon">
+                                        <img src="assets/icone varie/guarani/pet/dress2.png" class="custom-circle-icon" alt="Icon">
                                     </div>
-                                    <span class="culture-name" id="p-cult-name">Palestinian</span>
+                                    <span class="culture-name" id="p-cult-name">Guaranì</span>
                                 </div>
                                 <div class="culture-circle-wrapper">
                                     <div class="culture-circle"><i class="fas fa-plus"></i></div>
@@ -700,57 +654,57 @@
         
         const DB = {
             profile: {
-                name: "Ibrahim Barghouti",
+                name: "Araí Ramírez",
                 desc: "Cryoconservated since: 2078",
-                img: "assets/icone varie/palestinian/Img_profilo.png", 
-                age: "8",
-                culture: "Palestinian",
-                location: "Ramallah"
+                img: "assets/icone varie/guarani/Img_profilo.png", 
+                age: "27",
+                culture: "Guaraní",
+                location: "Tekohá Añetete"
             },
             discoveries: [
                 { icon: "assets/icone varie/icone_principali/food.png", isImage: true, label: "Food" },
                 { icon: "assets/icone varie/icone_principali/dress.png", isImage: true, label: "Dress" },
                 { icon: "assets/icone varie/icone_principali/ritual.png", isImage: true, label: "Rituals" },
                 { icon: "assets/icone varie/icone_principali/memory.png", isImage: true, label: "Memory" },
-                { icon: "fa-key", isImage: false, label: "Return" },
-                { icon: "assets/icone varie/icone_principali/food.png", isImage: true, label: "Olive" }
+                { icon: "fa-leaf", isImage: false, label: "Forest" },
+                { icon: "assets/icone varie/icone_principali/food.png", isImage: true, label: "Yerba" }
             ],
             archives: [
                 {
-                    id: "food", label: "FOOD", title: "Aklat", 
+                    id: "food", label: "FOOD", title: "Cuisine", 
                     icon: "assets/icone varie/icone_principali/food.png", isIconImg: true,
                     bgIcon: "assets/icone varie/icone_principali/food.png",
                     count: "1/31",
                     items: [
-                        { id: "maqluba", icon: "assets/icone varie/palestinian/food/baked_food.png", isItemImg: true, title: "Maqluba", type: "Main Dish" }
+                        { id: "chipa", icon: "assets/icone varie/guarani/food/baked_food.png", isItemImg: true, title: "Chipa", type: "Recipe" }
                     ]
                 },
                 {
-                    id: "clothes", label: "CLOTHES", title: "Libas", 
+                    id: "clothes", label: "CLOTHES", title: "Attire", 
                     icon: "assets/icone varie/icone_principali/dress.png", isIconImg: true,
                     bgIcon: "assets/icone varie/icone_principali/dress.png", count: "3/31",
                     items: [
-                        { id: "keffiyeh", icon: "assets/icone varie/palestinian/pet/dress1.png", isItemImg: true, title: "Keffiyeh", type: "Scarf" },
-                        { id: "qumbaz", icon: "assets/icone varie/palestinian/pet/dress3.png", isItemImg: true, title: "Qumbaz", type: "Robe" },
-                        { id: "thobe", icon: "assets/icone varie/palestinian/pet/dress2.png", isItemImg: true, title: "Thobe", type: "Dress" }
+                        { id: "avae", icon: "assets/icone varie/guarani/pet/dress3.png", isItemImg: true, title: "Ava’ẽ rague", type: "Headdress" },
+                        { id: "tembiporu", icon: "assets/icone varie/guarani/pet/dress2.png", isItemImg: true, title: "Tembiporu’ẽ", type: "Artifact" },
+                        { id: "orecchini", icon: "assets/icone varie/guarani/pet/dress1.png", isItemImg: true, title: "Namichai (Earrings)", type: "Ornament" }
                     ]
                 },
                 {
-                    id: "rituals", label: "RITUALS", title: "Taqalid", 
+                    id: "rituals", label: "RITUALS", title: "Rituals", 
                     icon: "assets/icone varie/icone_principali/ritual.png", isIconImg: true,
                     bgIcon: "assets/icone varie/icone_principali/ritual.png", count: "1/31",
                     items: [
-                        { id: "dabke", icon: "assets/icone varie/palestinian/pet/ritual.png", isItemImg: true, title: "Dabke", type: "Dance" }
+                        { id: "xondaru", icon: "assets/icone varie/guarani/pet/ritual.png", isItemImg: true, title: "Xondaru Dance", type: "Ceremony" }
                     ]
                 },
                 {
-                    id: "memories", label: "MEMORIES", title: "Thikrayat", 
+                    id: "memories", label: "MEMORIES", title: "Memories", 
                     icon: "assets/icone varie/icone_principali/memory.png", isIconImg: true,
                     bgIcon: "assets/icone varie/icone_principali/memory.png", count: "3/31",
                     items: [
-                        { id: "mem1", icon: "assets/icone varie/palestinian/memories/ico_mem_3.png", isItemImg: true, title: "Vitality", type: "Sensory" },
-                        { id: "mem2", icon: "assets/icone varie/palestinian/memories/ico_mem_2.png", isItemImg: true, title: "The Iron Key", type: "Symbol" },
-                        { id: "mem3", icon: "assets/icone varie/palestinian/memories/ico_mem_1.png", isItemImg: true, title: "Unseen Roots", type: "Oral History" }
+                        { id: "mem1", icon: "assets/icone varie/guarani/memories/ico_mem_3.png", isItemImg: true, title: "Petrichor & Medicine", type: "Botany" },
+                        { id: "mem2", icon: "assets/icone varie/guarani/memories/ico_mem_2.png", isItemImg: true, title: "The Peccary Chant", type: "Lineage" },
+                        { id: "mem3", icon: "assets/icone varie/guarani/memories/ico_mem_1.png", isItemImg: true, title: "Wild Honey", type: "Sensory" }
                     ]
                 }
             ],
@@ -763,71 +717,71 @@
             achievements: {
                 'sharing': { 
                     id: 'sharing',
-                    title: "Sahtain (Bon Appétit)", 
-                    text: "You shared the Maqluba. Even a child knows that food tastes better when shared.",
+                    title: "Jopoi (Sharing)", 
+                    text: "You shared the Chipa with your guardian. In Guaraní culture, food is never eaten alone.",
                     unlocked: true 
                 },
                 'privacy': { 
                     id: 'privacy',
-                    title: "Respect", 
-                    text: "You stepped into the Dabke circle out of turn. Learn the rhythm first.",
+                    title: "Respect the Spirit", 
+                    text: "You interrupted the Xondaru ritual. The guardians are watching.",
                     unlocked: false 
                 }
             },
             items: {
-                'maqluba': {
-                    tag: "RECIPE", title: "Maqluba",
-                    image: "assets/icone varie/palestinian/food/foto_cibo.avif",
-                    description: "Meaning 'Upside Down', this layered dish of rice, fried vegetables (cauliflower or eggplant), and meat is flipped onto a serving tray to reveal its structure.",
+                'chipa': {
+                    tag: "RECIPE", title: "Chipa",
+                    image: "assets/icone varie/guarani/food/foto_cibo.webp",
+                    description: "A sacred baked ring made of cassava starch (mandioca) and cheese. It represents the circle of life and community sustenance.",
                     icons: [
-                        { val: 'assets/icone varie/palestinian/food/food1.png', isImg: true }, 
-                        { val: 'assets/icone varie/palestinian/food/food2.png', isImg: true }, 
-                        { val: 'assets/icone varie/palestinian/food/food3.png', isImg: true },
-                        { val: 'assets/icone varie/palestinian/food/baked_food.png', isImg: true } 
+                        { val: 'assets/icone varie/guarani/food/food1.png', isImg: true }, 
+                        { val: 'assets/icone varie/guarani/food/food2.png', isImg: true }, 
+                        { val: 'assets/icone varie/guarani/food/food3.png', isImg: true },
+                        { val: 'assets/icone varie/guarani/food/baked_food.png', isImg: true } 
                     ],
-                    details: { "Layering": "Vertical", "Action": "Flipping", "Spice": "Allspice/Cinnamon", "Occasion": "Friday Lunch" }
+                    details: { "Base": "Cassava Starch", "Origin": "Guaraní Region", "Cook": "Tatakua (Oven)", "Meaning": "Sacred Bread" }
                 },
-                'keffiyeh': { 
-                    tag: "SCARF", 
-                    title: "Keffiyeh", 
-                    image: "assets/icone varie/palestinian/pet/dress1_photo.avif", 
-                    description: "The traditional black and white checkered scarf. The fishnet pattern represents the sea, the bold lines the trade routes, and the olive leaves the land.", 
-                    details: { "Pattern": "Fishnet", "Color": "Black/White", "Symbolism": "Resilience", "Origin": "Agrarian" } 
+                'avae': {
+                    tag: "HEADDRESS", title: "Ava’ẽ rague",
+                    image: "assets/icone varie/guarani/pet/dress1_photo.webp",
+                    description: "A feather ornament worn during ceremonies. The feathers connect the wearer to the birds, who are messengers of the divine.",
+                    details: { "Material": "Toucan/Macaw Feathers", "Symbolism": "Sky Connection", "Wearer": "Spiritual Leaders", "Craft": "Weaving" }
                 },
-                'qumbaz': { 
-                    tag: "ROBE", 
-                    title: "Qumbaz", 
-                    image: "assets/icone varie/palestinian/pet/dress2_photo.jpg", 
-                    description: "A traditional long-sleeved coat worn by men, open at the front and overlapping. It represents dignity and tradition in formal gatherings.", 
-                    details: { "Material": "Striped Silk/Cotton", "Closure": "Side Slit", "Accessory": "Sirwal (Pants)", "Status": "Traditional" } 
+                'tembiporu': { 
+                    tag: "ARTIFACT", 
+                    title: "Tembiporu’ẽ", 
+                    image: "assets/icone varie/guarani/pet/dress2_photo.jpg", 
+                    description: "Traditional woven garments and ceremonial tools passed down through generations, embodying the 'Teko Porã' (Good Living).", 
+                    details: { "Material": "Native Cotton", "Technique": "Handloom", "Usage": "Ritual", "Status": "Elder" } 
                 },
-                'thobe': {
-                    tag: "DRESS", title: "Thobe",
-                    image: "assets/icone varie/palestinian/pet/dress3_photo.jpg",
-                    description: "A cross-stitch embroidered dress. Though worn by women, for a child, it represents the visual history of his village and his mother's identity.",
-                    details: { "Technique": "Tatreez", "Motif": "Cypress/Star", "Region": "Ramallah", "Heritage": "UNESCO" }
+                'orecchini': { 
+                    tag: "ORNAMENT", 
+                    title: "Namichai", 
+                    image: "assets/icone varie/guarani/pet/dress3_photo.webp", 
+                    description: "Ear pendants made from feathers or light wood. They symbolize the willingness to listen to the wisdom of the forest and the ancestors.", 
+                    details: { "Material": "Feathers/Wood", "Placement": "Earlobe", "Function": "Spiritual Listening", "Gender": "Unisex" } 
                 },
-                'dabke': { 
+                'xondaru': { 
                     tag: "DANCE", 
-                    title: "Dabke", 
-                    image: "assets/icone varie/palestinian/pet/ritual_gif.gif", 
-                    description: "A folk dance combining circle and line dancing, marked by rhythmic stomping. It signifies unity, joy, and the connection of feet to the soil.", 
-                    details: { "Formation": "Line/Semi-circle", "Leader": "Al-Lawih", "Action": "Stomping", "Meaning": "Solidarity" } 
+                    title: "Xondaru", 
+                    image: "assets/icone varie/guarani/pet/ritual_gif.gif", 
+                    description: "A dance of agility and defense performed by the guardians. It trains the body to dodge evil and connects the dancer to Nhanderu (God).", 
+                    details: { "Movement": "Circular/Evasive", "Purpose": "Spiritual Defense", "Music": "Mbaraká/Raju", "Participants": "Warriors" } 
                 },
                 'mem1': {
-                    tag: "SENSORY", title: "Vitality",
-                    image: "assets/icone varie/palestinian/memories/ico_mem_3.png",
-                    description: "I will never forget the deep red of a split pomegranate, vibrant with life. It stains the fingers like memory stains the soul."
+                    tag: "BOTANY", title: "Petrichor & Medicine",
+                    image: "assets/icone varie/guarani/memories/ico_mem_3.png",
+                    description: "I remember the exact smell of the forest after the rain, and which plants to pick for medicine then. The Ka'a He'ẽ heals the body."
                 },
                 'mem2': {
-                    tag: "SYMBOL", title: "The Iron Key",
-                    image: "assets/icone varie/palestinian/memories/ico_mem_2.png",
-                    description: "I remember the old iron key my father kept on a hook by the door, even though we had no house for it to open. It was heavy with hope."
+                    tag: "LINEAGE", title: "The Peccary Chant",
+                    image: "assets/icone varie/guarani/memories/ico_mem_2.png",
+                    description: "I recall my grandfather teaching me the hunting chant for the peccary. We ask permission from the forest masters before we take."
                 },
                 'mem3': {
-                    tag: "ORAL HISTORY", title: "Unseen Roots",
-                    image: "assets/icone varie/palestinian/memories/ico_mem_1.png",
-                    description: "I will never forget the sound of my father telling me stories about our olive trees back home, even though I never saw them.",
+                    tag: "SENSORY", title: "Wild Honey",
+                    image: "assets/icone varie/guarani/memories/ico_mem_1.png",
+                    description: "I will never forget the taste of the wild honey my people gathered. It tastes like the soul of the blossoms we protect.",
                     unlocked: true
                 }
             },
@@ -869,7 +823,6 @@
             }, 420);
         }
 
-        // --- NEW HELPER: Select Plan ---
         function selectPlan(price) {
             // Aggiorna visivamente il prezzo nella pagina Personal
             const priceEl = document.getElementById('p-price');
@@ -889,7 +842,7 @@
             for (const key in DB.achievements) {
                 const item = DB.achievements[key];
                 const lockedClass = item.unlocked ? '' : 'locked';
-                const lockOverlay = item.unlocked ? '' : `<div class="lock-overlay"><i class="fas fa-lock lock-icon"></i><span class="lock-text">INTERACT WITH YOUR GUARDIAN<br>TO FIND OUT</span></div>`;
+                const lockOverlay = item.unlocked ? '' : `<div class="lock-overlay"><i class="fas fa-lock lock-icon"></i><span class="lock-text">INTERACT WITH YOUR GUARDIAN TO FIND OUT</span></div>`;
                 
                 html += `
                     <div class="generic-card ${lockedClass}" style="margin-top: 10px; animation: fadeInCard 0.4s ease-out;">
@@ -912,23 +865,6 @@
             document.getElementById('p-age').innerText = DB.profile.age;
             document.getElementById('p-culture').innerText = DB.profile.culture;
             document.getElementById('p-loc').innerText = DB.profile.location;
-            document.getElementById('p-cult-name').innerText = DB.profile.culture; 
-
-            // --- CALCOLO DEI CONTEGGI SBLOCCATI ---
-            const getUnlockedCount = (archiveId) => {
-                const folder = DB.archives.find(a => a.id === archiveId);
-                if (!folder) return 0;
-                return folder.items.filter(item => {
-                    const dbItem = DB.items[item.id];
-                    // Se unlocked è undefined, lo consideriamo true (sbloccato) per default
-                    return dbItem && dbItem.unlocked !== false; 
-                }).length;
-            };
-
-            const getTotalCount = (archiveId) => {
-                const folder = DB.archives.find(a => a.id === archiveId);
-                return folder ? folder.items.length : 0;
-            }
 
             // 2. Discoveries
             const discGrid = document.getElementById('discovery-icons-placeholder');
@@ -938,16 +874,10 @@
                 if(i < 3) {
                     const targetId = DB.archives.find(a => a.label.toLowerCase() === d.label.toLowerCase())?.id || '';
                     const clickAction = targetId ? `onclick="goToFolder('${targetId}')"` : '';
-                    
-                    // Se è memory, usiamo il conteggio dinamico
-                    if (d.label === "Memory") {
-                         // Saltiamo qui, lo aggiungiamo dopo
-                    } else {
-                        discHTML += `<div class="squircle-item" ${clickAction}>
-                                        <div class="squircle">${renderIcon(d.icon, d.isImage)}</div>
-                                        <span class="fractional-label">1/1</span>
-                                     </div>`;
-                    }
+                    discHTML += `<div class="squircle-item" ${clickAction}>
+                                    <div class="squircle">${renderIcon(d.icon, d.isImage)}</div>
+                                    <span class="fractional-label">1/1</span>
+                                 </div>`;
                 }
             });
 
@@ -956,24 +886,20 @@
             const isPrivUnlocked = DB.achievements.privacy.unlocked;
 
             const iconShare = isShareUnlocked 
-                ? renderIcon('assets/icone varie/defaults/bowl.png', true) 
+                ? renderIcon('assets/icone varie/defaults/bowl.png', true) // <--- CAMBIA QUI L'IMMAGINE SBLOCCATA
                 : '<i class="fas fa-question"></i>';
 
             const iconPriv = isPrivUnlocked 
-                ? renderIcon('assets/icone varie/defaults/default_covers.png', true) 
+                ? renderIcon('assets/icone varie/defaults/default_covers.png', true) // <--- CAMBIA QUI L'IMMAGINE SBLOCCATA
                 : '<i class="fas fa-question"></i>';
 
-            // Conteggio memorie
-            const memUnlocked = getUnlockedCount('memories');
-            const memTotal = getTotalCount('memories');
-
-            // 3. Genero l'HTML
+            // 3. Genero l'HTML iniettando la variabile icona
             discHTML += `
                 <div class="v-divider"></div>
                 
                 <div class="squircle-item" onclick="goToFolder('memories')">
                     <div class="squircle">${renderIcon('assets/icone varie/icone_principali/memory.png', true)}</div>
-                    <span class="fractional-label">${memUnlocked}/${memTotal}</span>
+                    <span class="fractional-label">3/3</span>
                 </div>
 
                 <div class="squircle-item" onclick="switchTab('extra-content')">
@@ -991,21 +917,12 @@
             // Inizializza il rendering anche se nascosto
             renderExtraContent();
 
-            // 3. Generazione LISTA DISCOVERY (table-row) con logica Locked
+            // B. LISTA (DATA REALE)
             let listHTML = '';
             DB.archives.forEach(folder => {
                 folder.items.forEach(item => {
-                    // Controllo stato
-                    const fullItem = DB.items[item.id];
-                    const isLocked = fullItem && fullItem.unlocked === false;
-                    
-                    const lockedClass = isLocked ? 'locked' : '';
-                    // Se è bloccato, rimuoviamo l'onclick
-                    const clickAttr = isLocked ? '' : `onclick="openItem('${item.id}')"`;
-                    const cursorStyle = isLocked ? 'cursor: default;' : 'cursor: pointer;';
-
                     listHTML += `
-                    <div class="table-row ${lockedClass}" ${clickAttr} style="${cursorStyle}">
+                    <div class="table-row" onclick="openItem('${item.id}')" style="cursor: pointer;">
                         <div class="glyph">${renderIcon(item.icon, item.isItemImg)}</div>
                         <div style="display: flex; flex-direction: column; flex: 1;">
                             <span class="label-roba" style="font-weight: 600;">${item.title}</span>
@@ -1020,44 +937,26 @@
             // 3. Progress Grid
             renderProgressGrid(currentDay);
 
-            // 5. Generazione ARCHIVE STACK (Cartelle e File)
+            // 4. Archive
             const stack = document.getElementById('stack-container');
             stack.innerHTML = '';
-            
             DB.archives.forEach(folder => {
                 let itemsHTML = '';
-                
-                // Calcolo conteggio per badge cartella
-                const folderUnlocked = getUnlockedCount(folder.id);
-                const folderTotal = folder.items.length;
-                
                 folder.items.forEach(item => {
-                    // Controllo stato item
-                    const fullItem = DB.items[item.id];
-                    const isLocked = fullItem && fullItem.unlocked === false;
-                    const lockedClass = isLocked ? 'locked' : '';
-                    const clickAttr = isLocked ? '' : `onclick="openItem('${item.id}')"`;
-
                     itemsHTML += `
-                        <div class="file-list-item ${lockedClass}" ${clickAttr}>
+                        <div class="file-list-item" onclick="openItem('${item.id}')">
                             <div class="file-icon-left">${renderIcon(item.icon, item.isItemImg)}</div>
                             <div class="file-text"><h4>${item.title}</h4><span>${item.type}</span></div>
                             <i class="fas fa-chevron-right file-arrow-right"></i>
                         </div>`;
                 });
 
-                // Aggiorna il badge con il conteggio reale (Sbloccati / Totali)
-                const dynamicCount = `${folderUnlocked}/${folderTotal}`;
-
                 const folderHTML = `
                     <div class="folder-item" data-folder-id="${folder.id}" onclick="toggleFolder(this)">
                         <div class="folder-tab-area">${folder.label}</div>
                         <div class="folder-face">
                             <div class="folder-label-large">${folder.title}</div>
-                            <div class="folder-index">
-                                <div class="pittogram">${renderIcon(folder.icon, folder.isIconImg)}</div>
-                                <span class="count-badge">${dynamicCount}</span>
-                            </div>
+                            <div class="folder-index"><div class="pittogram">${renderIcon(folder.icon, folder.isIconImg)}</div><span class="count-badge">${folder.count}</span></div>
                             <div class="folder-content">${itemsHTML}</div>
                         </div>
                     </div>`;
@@ -1150,15 +1049,6 @@
         function openItem(itemId) {
             const data = DB.items[itemId];
             if(!data) { console.warn("Item not found:", itemId); return; }
-
-            // 1. Riferimenti al DOM
-            const card = document.querySelector('.immersive-card');
-            
-            // 2. Pulizia preliminare (Rimuovi vecchi stati di lock)
-            // Anche se ora li blocchiamo prima del click, è buona norma lasciare la pulizia
-            card.classList.remove('locked');
-            const oldOverlay = card.querySelector('.lock-overlay');
-            if(oldOverlay) oldOverlay.remove();
 
             document.getElementById('uni-title').innerText = data.title;
             const imgContainer = document.querySelector('.card-image-container');
